@@ -131,42 +131,50 @@ select { min-width: 170px; height: 40px; color: white; background: var(--panel-l
   place-items: center;
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 28%, color-mix(in srgb, var(--theme-accent) 90%, transparent) 0%, transparent 52%),
-    linear-gradient(145deg, #151a31, #0e1121);
+  isolation: isolate;
+  background: #0e1121;
 }
+
+/* The room image is stored locally at images/vault-card-bg.webp */
 .sprite-visual::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: var(--theme-overlay), url('images/vault-card-bg.webp');
+  z-index: -2;
+  background-image: url('images/vault-card-bg.webp');
   background-size: cover;
-  background-position: center;
-  opacity: .42;
-  transform: scale(1.02);
-  transition: opacity .28s ease, transform .28s ease, filter .28s ease, background-image .28s ease;
-  filter: saturate(1.15) brightness(.9);
+  background-position: center 48%;
+  opacity: .76;
+  transform: scale(1.025);
+  filter: saturate(1.05) brightness(.82) contrast(1.02);
+  transition: opacity .32s ease, transform .32s ease, filter .32s ease;
 }
-.sprite-card:hover .sprite-visual::before {
-  background-image: var(--theme-overlay-hover), url('images/vault-card-bg.webp');
-  opacity: .88;
-  transform: scale(1.08);
-  filter: saturate(1.25) brightness(1.02);
-}
+
+/* Each Sprite type adds its own Gold, Galaxy, Gummy, Gem, etc. color tint. */
 .sprite-visual::after {
   content: "";
   position: absolute;
-  inset: auto 10% -66% 10%;
-  height: 76%;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--theme-accent) 48%, rgba(255,255,255,.06));
-  filter: blur(26px);
-  transition: transform .28s ease, opacity .28s ease;
-  opacity: .85;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--theme-accent) 58%, transparent) 0%, transparent 49%),
+    var(--theme-overlay);
+  opacity: .92;
+  transition: opacity .32s ease, background .32s ease;
 }
-.sprite-card:hover .sprite-visual::after {
-  transform: scale(1.08);
+
+/* Hover reveals the room image more clearly and gently zooms it. */
+.sprite-card:hover .sprite-visual::before {
   opacity: 1;
+  transform: scale(1.10);
+  filter: saturate(1.18) brightness(1.02) contrast(1.04);
+}
+
+.sprite-card:hover .sprite-visual::after {
+  background:
+    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--theme-accent) 42%, transparent) 0%, transparent 52%),
+    var(--theme-overlay-hover);
+  opacity: .54;
 }
 .sprite-image {
   width: 90%; height: 90%; object-fit: contain; position: relative; z-index: 1;

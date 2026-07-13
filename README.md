@@ -70,3 +70,11 @@ El sitio incluye el aviso exigido por Epic:
 - La imagen del fondo se revela más al pasar el mouse (hover).
 - Cada variante tiene un color de ambiente distinto, por ejemplo Dorado y Galaxia.
 - Se agregó `images/vault-card-bg.webp` como fondo local para las tarjetas.
+
+
+## Actualización V5 — Fondo visible
+
+- La imagen `images/vault-card-bg.webp` aparece claramente detrás de cada Sprite.
+- En estado normal se ve con un tinte según la variante.
+- Al pasar el mouse, el fondo se aclara y hace un zoom suave.
+- Se conservó la clave de progreso anterior para evitar reiniciar las colecciones guardadas.

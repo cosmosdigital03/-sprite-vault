@@ -1,4 +1,4 @@
-const STORAGE_KEY = "spriteVaultProgressV4";
+const STORAGE_KEY = "spriteVaultProgressV2";
 
 const THEME_VISUALS = {
   "Básico": {
