@@ -1,4 +1,49 @@
-const STORAGE_KEY = "spriteVaultProgressV2";
+const STORAGE_KEY = "spriteVaultProgressV4";
+
+const THEME_VISUALS = {
+  "Básico": {
+    accent: "rgba(72, 217, 255, .72)",
+    overlay: "linear-gradient(165deg, rgba(12, 59, 87, .40), rgba(11, 18, 33, .68))",
+    overlayHover: "linear-gradient(165deg, rgba(12, 59, 87, .16), rgba(11, 18, 33, .22))",
+    border: "rgba(72, 217, 255, .24)",
+    shadow: "rgba(31, 128, 173, .26)"
+  },
+  "Dorado": {
+    accent: "rgba(255, 205, 90, .86)",
+    overlay: "linear-gradient(165deg, rgba(119, 83, 0, .48), rgba(38, 24, 4, .70))",
+    overlayHover: "linear-gradient(165deg, rgba(119, 83, 0, .12), rgba(38, 24, 4, .18))",
+    border: "rgba(255, 205, 90, .28)",
+    shadow: "rgba(166, 113, 0, .28)"
+  },
+  "Gomita": {
+    accent: "rgba(255, 118, 193, .82)",
+    overlay: "linear-gradient(165deg, rgba(147, 34, 92, .40), rgba(41, 11, 45, .68))",
+    overlayHover: "linear-gradient(165deg, rgba(147, 34, 92, .14), rgba(41, 11, 45, .20))",
+    border: "rgba(255, 118, 193, .25)",
+    shadow: "rgba(129, 35, 85, .28)"
+  },
+  "Galaxia": {
+    accent: "rgba(132, 116, 255, .88)",
+    overlay: "linear-gradient(165deg, rgba(62, 38, 143, .48), rgba(8, 14, 41, .74))",
+    overlayHover: "linear-gradient(165deg, rgba(62, 38, 143, .12), rgba(8, 14, 41, .20))",
+    border: "rgba(132, 116, 255, .28)",
+    shadow: "rgba(71, 52, 154, .28)"
+  },
+  "Gema": {
+    accent: "rgba(63, 230, 165, .84)",
+    overlay: "linear-gradient(165deg, rgba(8, 102, 70, .40), rgba(8, 27, 26, .70))",
+    overlayHover: "linear-gradient(165deg, rgba(8, 102, 70, .12), rgba(8, 27, 26, .20))",
+    border: "rgba(63, 230, 165, .25)",
+    shadow: "rgba(16, 113, 82, .28)"
+  },
+  "Holográfico": {
+    accent: "rgba(104, 236, 255, .86)",
+    overlay: "linear-gradient(165deg, rgba(90, 48, 189, .32), rgba(12, 40, 72, .62))",
+    overlayHover: "linear-gradient(165deg, rgba(90, 48, 189, .10), rgba(12, 40, 72, .18))",
+    border: "rgba(104, 236, 255, .26)",
+    shadow: "rgba(58, 145, 175, .30)"
+  }
+};
 
 const state = {
   search: "",
@@ -114,6 +159,19 @@ function groupSprites(sprites) {
   }, {});
 }
 
+function getThemeVisuals(theme) {
+  return THEME_VISUALS[theme] || THEME_VISUALS["Básico"];
+}
+
+function applyThemeVisuals(card, theme) {
+  const visuals = getThemeVisuals(theme);
+  card.style.setProperty("--theme-accent", visuals.accent);
+  card.style.setProperty("--theme-overlay", visuals.overlay);
+  card.style.setProperty("--theme-overlay-hover", visuals.overlayHover);
+  card.style.setProperty("--theme-border", visuals.border);
+  card.style.setProperty("--theme-shadow", visuals.shadow);
+}
+
 function render() {
   const sprites = filteredSprites();
   elements.container.innerHTML = "";
@@ -172,6 +230,7 @@ function createCard(sprite) {
 
   card.dataset.id = sprite.id;
   card.classList.toggle("is-owned", item.owned);
+  applyThemeVisuals(card, sprite.theme);
 
   const image = fragment.querySelector(".sprite-image");
   image.src = sprite.image;

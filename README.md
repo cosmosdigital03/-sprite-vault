@@ -1,34 +1,32 @@
-# Sprite Vault Tracker — Versión 2
+# Sprite Vault Tracker — Versión 3 (imágenes locales)
 
-Actualización del rastreador de Sprite Vault con los 66 Sprites publicados actualmente.
+Esta versión incluye los 66 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
-## Cambios incluidos
+## Qué incluye
 
-- 66 Sprites publicados.
-- Imagen correcta asociada al ID de cada Sprite.
-- Nombres traducidos al español.
-- Nombre original en inglés debajo del nombre español.
-- Búsqueda en español o inglés.
-- Temas y rarezas traducidos.
-- Diseño adaptable para computadora y teléfono.
-- Progreso de colección y dominio.
+- 66 imágenes PNG locales.
+- Nombres en español y nombres originales en inglés.
+- Búsqueda en ambos idiomas.
 - Filtros por estado y tema.
-- Favoritos.
-- Enlaces compartibles.
+- Progreso de colección y dominio.
+- Favoritos y enlaces compartibles.
 - Guardado automático en el navegador.
+- Diseño adaptable para computadora y teléfono.
 
-## Cómo actualizar tu página de GitHub
+## Archivos que debes subir a GitHub
 
-Sube y reemplaza estos cuatro archivos en la raíz del repositorio:
+Sube todo lo que aparece dentro de esta carpeta:
 
 - `index.html`
 - `styles.css`
 - `sprites.js`
 - `app.js`
+- `README.md`
+- La carpeta completa `images` con sus 66 archivos PNG
 
-También puedes reemplazar `README.md`, pero no es necesario para que la página funcione.
+No subas solamente el ZIP. Extrae el ZIP y arrastra todo su contenido a **Add file → Upload files** en GitHub. Son 71 archivos, por debajo del límite de 100 archivos de la subida web.
 
-Después de hacer **Commit changes**, GitHub Pages se actualizará automáticamente. Generalmente tarda uno o dos minutos.
+Después pulsa **Commit changes**. GitHub Pages se actualizará automáticamente.
 
 ## Cambiar el enlace del Discord
 
@@ -38,11 +36,13 @@ En `index.html`, reemplaza:
 href="https://discord.com/"
 ```
 
-por tu invitación de Sprite Vault.
+por la invitación oficial de Sprite Vault.
 
-## Agregar nuevos Sprites más adelante
+## Agregar nuevos Sprites
 
-En `sprites.js`, agrega otra entrada antes del cierre de la lista:
+1. Guarda la nueva imagen PNG dentro de `images/`.
+2. Abre `sprites.js`.
+3. Agrega una entrada con este formato:
 
 ```js
 {
@@ -51,12 +51,22 @@ En `sprites.js`, agrega otra entrada antes del cierre de la lista:
   "originalName": "English Name",
   "theme": "Tema",
   "rarity": "Rareza",
-  "image": "URL_DE_LA_IMAGEN"
+  "image": "images/id_del_sprite.png"
 }
 ```
 
-## Imágenes
+## Derechos y política de fans
 
-Esta versión muestra las imágenes desde las direcciones públicas del repositorio de referencia. No incluye copias locales de los archivos. Si el repositorio original cambia las direcciones o elimina una imagen, esa imagen dejará de mostrarse.
+Las imágenes de Fortnite siguen siendo propiedad de Epic Games. Guardarlas localmente evita que el sitio se rompa si otra persona cambia su repositorio, pero no transfiere la propiedad de las imágenes a Sprite Vault. El sitio debe seguir siendo gratuito y no comercial y cumplir la Política de contenido de fans de Epic.
 
-Fortnite y sus recursos visuales pertenecen a Epic Games. Sprite Vault es un proyecto comunitario no oficial.
+El sitio incluye el aviso exigido por Epic:
+
+> Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.
+
+
+## Actualización V4
+
+- Fondos temáticos en cada tarjeta de Sprite.
+- La imagen del fondo se revela más al pasar el mouse (hover).
+- Cada variante tiene un color de ambiente distinto, por ejemplo Dorado y Galaxia.
+- Se agregó `images/vault-card-bg.webp` como fondo local para las tarjetas.
