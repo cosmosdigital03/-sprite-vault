@@ -1,4 +1,4 @@
-const STORAGE_KEY = "spriteVaultProgressV1";
+const STORAGE_KEY = "spriteVaultProgressV2";
 
 const state = {
   search: "",
@@ -92,6 +92,7 @@ function filteredSprites() {
     const item = state.progress[sprite.id];
     const matchesText = !query ||
       sprite.name.toLocaleLowerCase("es").includes(query) ||
+      sprite.originalName.toLocaleLowerCase("en").includes(query) ||
       sprite.theme.toLocaleLowerCase("es").includes(query);
 
     const matchesTheme = state.theme === "all" || sprite.theme === state.theme;
@@ -105,6 +106,14 @@ function filteredSprites() {
   });
 }
 
+function groupSprites(sprites) {
+  return sprites.reduce((groups, sprite) => {
+    if (!groups[sprite.theme]) groups[sprite.theme] = [];
+    groups[sprite.theme].push(sprite);
+    return groups;
+  }, {});
+}
+
 function render() {
   const sprites = filteredSprites();
   elements.container.innerHTML = "";
@@ -113,18 +122,26 @@ function render() {
   elements.resultsTitle.textContent = headingText();
 
   if (state.grouped) {
-    const groups = Object.groupBy(sprites, sprite => sprite.theme);
+    const groups = groupSprites(sprites);
     Object.entries(groups)
       .sort(([a], [b]) => a.localeCompare(b, "es"))
-      .forEach(([theme, groupSprites]) => {
+      .forEach(([theme, groupSpritesList]) => {
         const section = document.createElement("section");
         section.className = "theme-section";
+
         const title = document.createElement("h3");
         title.className = "theme-header";
-        title.innerHTML = `${theme} <small>${groupSprites.length}</small>`;
+
+        const titleText = document.createElement("span");
+        titleText.textContent = theme;
+        const count = document.createElement("small");
+        count.textContent = groupSpritesList.length;
+        title.append(titleText, count);
+
         const grid = document.createElement("div");
         grid.className = "sprite-grid";
-        groupSprites.forEach(sprite => grid.append(createCard(sprite)));
+        groupSpritesList.forEach(sprite => grid.append(createCard(sprite)));
+
         section.append(title, grid);
         elements.container.append(section);
       });
@@ -152,15 +169,19 @@ function createCard(sprite) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".sprite-card");
   const item = state.progress[sprite.id];
+
   card.dataset.id = sprite.id;
-  card.style.setProperty("--sprite-accent", sprite.accent);
   card.classList.toggle("is-owned", item.owned);
 
-  fragment.querySelector(".sprite-glyph").textContent = sprite.glyph;
+  const image = fragment.querySelector(".sprite-image");
+  image.src = sprite.image;
+  image.alt = sprite.name;
+  image.addEventListener("error", () => image.classList.add("image-error"));
+
   fragment.querySelector(".sprite-rarity").textContent = sprite.rarity;
   fragment.querySelector(".sprite-theme").textContent = sprite.theme;
   fragment.querySelector(".sprite-name").textContent = sprite.name;
-  fragment.querySelector(".sprite-description").textContent = sprite.description;
+  fragment.querySelector(".sprite-original-name").textContent = sprite.originalName;
 
   const favorite = fragment.querySelector(".favorite-button");
   favorite.textContent = item.favorite ? "★" : "☆";
@@ -215,7 +236,9 @@ function createShareUrl() {
   const compact = {};
   for (const sprite of SPRITES) {
     const item = state.progress[sprite.id];
-    if (item.owned || item.mastered) compact[sprite.id] = { o: item.owned ? 1 : 0, m: item.mastered ? 1 : 0 };
+    if (item.owned || item.mastered) {
+      compact[sprite.id] = { o: item.owned ? 1 : 0, m: item.mastered ? 1 : 0 };
+    }
   }
   const url = new URL(window.location.href);
   url.search = "";
@@ -242,7 +265,9 @@ elements.status.addEventListener("click", event => {
   const button = event.target.closest("button[data-status]");
   if (!button) return;
   state.status = button.dataset.status;
-  elements.status.querySelectorAll("button").forEach(item => item.classList.toggle("active", item === button));
+  elements.status.querySelectorAll("button").forEach(item => {
+    item.classList.toggle("active", item === button);
+  });
   render();
 });
 

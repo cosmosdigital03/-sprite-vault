@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#090b16" />
-  <meta name="description" content="Rastreador comunitario de Sprites para Sprite Vault." />
+  <meta name="description" content="Rastreador comunitario en español de Sprites de Fortnite para Sprite Vault." />
   <title>Sprite Vault | Rastreador de Sprites</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,6 +38,11 @@
         <p>
           Marca los Sprites que tienes, registra cuáles dominaste y comparte tu progreso con la comunidad de Sprite Vault.
         </p>
+        <div class="hero-badges">
+          <span>66 Sprites actuales</span>
+          <span>En español</span>
+          <span>Progreso guardado</span>
+        </div>
       </div>
 
       <div class="vault-orb" aria-hidden="true">
@@ -51,7 +56,7 @@
       <article class="stat-card">
         <div class="stat-heading">
           <span>Colección</span>
-          <strong id="collectionText">0 / 0</strong>
+          <strong id="collectionText">0 / 66</strong>
         </div>
         <div class="progress-track">
           <div class="progress-fill" id="collectionBar"></div>
@@ -62,7 +67,7 @@
       <article class="stat-card">
         <div class="stat-heading">
           <span>Dominio</span>
-          <strong id="masteryText">0 / 0</strong>
+          <strong id="masteryText">0 / 66</strong>
         </div>
         <div class="progress-track">
           <div class="progress-fill mastery" id="masteryBar"></div>
@@ -74,7 +79,7 @@
         <span class="stat-icon">⌁</span>
         <div>
           <span>Te faltan</span>
-          <strong id="missingCount">0 Sprites</strong>
+          <strong id="missingCount">66 Sprites</strong>
           <small>para completar el Vault</small>
         </div>
       </article>
@@ -83,7 +88,7 @@
     <section class="control-panel">
       <div class="search-wrap">
         <span aria-hidden="true">⌕</span>
-        <input id="searchInput" type="search" placeholder="Buscar Sprite por nombre..." autocomplete="off" />
+        <input id="searchInput" type="search" placeholder="Buscar por nombre en español o inglés..." autocomplete="off" />
       </div>
 
       <div class="filters">
@@ -117,7 +122,7 @@
         <span class="eyebrow">ARCHIVO DEL VAULT</span>
         <h2 id="resultsTitle">Todos los Sprites</h2>
       </div>
-      <span class="result-count" id="resultCount">0 resultados</span>
+      <span class="result-count" id="resultCount">66 resultados</span>
     </section>
 
     <section id="spriteContainer" class="sprite-container"></section>
@@ -144,14 +149,18 @@
   </dialog>
 
   <footer>
-    <strong>SPRITE VAULT</strong>
-    <span>Hecho para la comunidad. No afiliado con Epic Games.</span>
+    <div>
+      <strong>SPRITE VAULT</strong>
+      <span>© 2026 Sprite Vault. Todos los derechos reservados.</span>
+    </div>
+    <span>Sitio comunitario no oficial. Fortnite y sus recursos pertenecen a Epic Games.</span>
   </footer>
 
   <template id="spriteCardTemplate">
     <article class="sprite-card">
       <div class="sprite-visual">
-        <span class="sprite-glyph"></span>
+        <img class="sprite-image" alt="" loading="lazy" decoding="async" />
+        <span class="image-fallback" aria-hidden="true">✦</span>
         <span class="sprite-rarity"></span>
       </div>
       <div class="sprite-info">
@@ -159,10 +168,10 @@
           <div>
             <span class="sprite-theme"></span>
             <h3 class="sprite-name"></h3>
+            <small class="sprite-original-name"></small>
           </div>
           <button class="favorite-button" title="Marcar como favorito" aria-label="Marcar como favorito">☆</button>
         </div>
-        <p class="sprite-description"></p>
         <div class="sprite-actions">
           <button class="collection-button"></button>
           <button class="mastery-button"></button>

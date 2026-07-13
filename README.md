@@ -1,69 +1,62 @@
-# Sprite Vault Tracker
+# Sprite Vault Tracker — Versión 2
 
-Rastreador en español para organizar una colección de Sprites.
+Actualización del rastreador de Sprite Vault con los 66 Sprites publicados actualmente.
 
-## Funciones incluidas
+## Cambios incluidos
 
-- Interfaz en español y diseño adaptable a teléfonos.
-- Búsqueda por nombre o tema.
-- Filtros: todos, tengo, me faltan y dominados.
-- Agrupación por tema.
-- Favoritos.
+- 66 Sprites publicados.
+- Imagen correcta asociada al ID de cada Sprite.
+- Nombres traducidos al español.
+- Nombre original en inglés debajo del nombre español.
+- Búsqueda en español o inglés.
+- Temas y rarezas traducidos.
+- Diseño adaptable para computadora y teléfono.
 - Progreso de colección y dominio.
-- Guardado automático en el navegador con `localStorage`.
-- Enlace compartible que codifica únicamente el progreso de la colección.
-- Botón para Discord.
-- Sin base de datos ni instalación complicada.
+- Filtros por estado y tema.
+- Favoritos.
+- Enlaces compartibles.
+- Guardado automático en el navegador.
 
-## Abrirlo en tu computadora
+## Cómo actualizar tu página de GitHub
 
-Solo abre `index.html` en un navegador. Para evitar restricciones del navegador, también puedes iniciar un servidor local:
+Sube y reemplaza estos cuatro archivos en la raíz del repositorio:
 
-```bash
-python -m http.server 8000
-```
+- `index.html`
+- `styles.css`
+- `sprites.js`
+- `app.js`
 
-Luego abre `http://localhost:8000`.
+También puedes reemplazar `README.md`, pero no es necesario para que la página funcione.
 
-## Publicarlo gratis en GitHub Pages
+Después de hacer **Commit changes**, GitHub Pages se actualizará automáticamente. Generalmente tarda uno o dos minutos.
 
-1. Crea un repositorio nuevo en GitHub, por ejemplo `sprite-vault`.
-2. Sube estos archivos a la raíz del repositorio.
-3. En GitHub abre **Settings → Pages**.
-4. En **Build and deployment**, selecciona **Deploy from a branch**.
-5. Selecciona la rama `main` y la carpeta `/root`.
-6. Guarda los cambios.
+## Cambiar el enlace del Discord
 
-GitHub mostrará la dirección pública del sitio.
-
-## Cambiar el enlace de Discord
-
-En `index.html`, busca:
+En `index.html`, reemplaza:
 
 ```html
 href="https://discord.com/"
 ```
 
-y reemplázalo por la invitación oficial de Sprite Vault.
+por tu invitación de Sprite Vault.
 
-## Agregar o editar Sprites
+## Agregar nuevos Sprites más adelante
 
-Abre `sprites.js`. Cada Sprite usa este formato:
+En `sprites.js`, agrega otra entrada antes del cierre de la lista:
 
 ```js
 {
-  id: "nombre-unico",
-  name: "Nombre visible",
-  theme: "Tema",
-  rarity: "Rareza",
-  glyph: "✨",
-  accent: "rgba(139,92,246,.55)",
-  description: "Descripción breve."
+  "id": "id_del_sprite",
+  "name": "Nombre en español",
+  "originalName": "English Name",
+  "theme": "Tema",
+  "rarity": "Rareza",
+  "image": "URL_DE_LA_IMAGEN"
 }
 ```
 
-El prototipo usa iconos temporales para evitar copiar imágenes o recursos de otro sitio. Puedes sustituirlos por imágenes propias o por recursos que tengas permiso de usar.
+## Imágenes
 
-## Importante
+Esta versión muestra las imágenes desde las direcciones públicas del repositorio de referencia. No incluye copias locales de los archivos. Si el repositorio original cambia las direcciones o elimina una imagen, esa imagen dejará de mostrarse.
 
-Este proyecto fue construido desde cero como una alternativa independiente inspirada únicamente en la idea general de un rastreador de colección. No copia el código, el diseño exacto ni los recursos visuales de otro proyecto.
+Fortnite y sus recursos visuales pertenecen a Epic Games. Sprite Vault es un proyecto comunitario no oficial.
