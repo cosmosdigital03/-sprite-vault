@@ -87,3 +87,9 @@ El sitio incluye el aviso exigido por Epic:
 - En teléfonos, el panel de búsqueda y filtros deja de seguir al usuario al desplazarse.
 - La introducción superior es más corta.
 - El contador de Sprites de la introducción se actualiza automáticamente al agregar nuevos elementos.
+
+
+## Actualización V7
+
+- El botón **Entrar al Discord** abre `https://discord.gg/7AAnVUPZc`.
+- El icono `SV` fue reemplazado por el Sprite dorado local en `images/sprite-vault-logo.png`.
