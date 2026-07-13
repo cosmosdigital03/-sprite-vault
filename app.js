@@ -74,7 +74,8 @@ const elements = {
   shareDialog: document.querySelector("#shareDialog"),
   shareUrl: document.querySelector("#shareUrl"),
   copyButton: document.querySelector("#copyShareButton"),
-  copyStatus: document.querySelector("#copyStatus")
+  copyStatus: document.querySelector("#copyStatus"),
+  heroSummary: document.querySelector("#heroSummary")
 };
 
 function defaultProgress() {
@@ -289,6 +290,7 @@ function updateStats() {
   elements.collectionPercent.textContent = `${collectionPct}% completado`;
   elements.masteryPercent.textContent = `${masteryPct}% dominado`;
   elements.missingCount.textContent = `${total - owned} ${total - owned === 1 ? "Sprite" : "Sprites"}`;
+  elements.heroSummary.textContent = `${total} Sprites · Español · Guardado automático`;
 }
 
 function createShareUrl() {

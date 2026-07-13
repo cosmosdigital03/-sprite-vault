@@ -78,3 +78,12 @@ El sitio incluye el aviso exigido por Epic:
 - En estado normal se ve con un tinte según la variante.
 - Al pasar el mouse, el fondo se aclara y hace un zoom suave.
 - Se conservó la clave de progreso anterior para evitar reiniciar las colecciones guardadas.
+
+
+## Actualización V6
+
+- El fondo de la habitación ahora pertenece a toda la página.
+- Las tarjetas ya no repiten la habitación; conservan únicamente el tinte de cada variante.
+- En teléfonos, el panel de búsqueda y filtros deja de seguir al usuario al desplazarse.
+- La introducción superior es más corta.
+- El contador de Sprites de la introducción se actualiza automáticamente al agregar nuevos elementos.

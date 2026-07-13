@@ -20,14 +20,38 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0; min-height: 100vh; color: var(--text);
   font-family: Inter, system-ui, sans-serif; overflow-x: hidden;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(139,92,246,.13), transparent 25%),
-    radial-gradient(circle at 90% 30%, rgba(53,215,255,.08), transparent 26%),
-    var(--bg);
+  background: var(--bg);
 }
 button, input, select { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-.ambient { position: fixed; width: 340px; height: 340px; border-radius: 50%; filter: blur(110px); opacity: .12; pointer-events: none; z-index: -1; }
+
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg, rgba(7,9,19,.56) 0%, rgba(7,9,19,.78) 42%, rgba(7,9,19,.94) 100%),
+    radial-gradient(circle at 18% 18%, rgba(139,92,246,.17), transparent 32%),
+    radial-gradient(circle at 84% 34%, rgba(53,215,255,.10), transparent 30%),
+    url('images/vault-card-bg.webp');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  filter: saturate(.92) contrast(1.03);
+}
+
+.site-header,
+.page-shell,
+footer {
+  position: relative;
+  z-index: 2;
+}
+
+.ambient {
+  position: fixed; width: 340px; height: 340px; border-radius: 50%;
+  filter: blur(110px); opacity: .12; pointer-events: none; z-index: 1;
+}
 .ambient-one { background: var(--purple); top: 15%; left: -180px; }
 .ambient-two { background: var(--cyan); right: -180px; top: 55%; }
 .site-header {
@@ -47,13 +71,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .button-primary { background: linear-gradient(135deg, var(--purple), #6853e8); }
 .button-ghost { background: rgba(255,255,255,.04); border-color: var(--line); }
 .page-shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
-.hero { min-height: 390px; display: flex; align-items: center; justify-content: space-between; gap: 60px; padding: 70px 4%; }
+.hero { min-height: 315px; display: flex; align-items: center; justify-content: space-between; gap: 60px; padding: 48px 4%; }
 .hero-copy { max-width: 720px; }
 .eyebrow { color: var(--cyan); font-weight: 800; letter-spacing: .14em; font-size: .72rem; text-transform: uppercase; }
-.hero h1 { font-size: clamp(2.7rem, 7vw, 5.5rem); line-height: .98; letter-spacing: -.065em; margin: 18px 0 22px; max-width: 800px; }
-.hero p { color: var(--muted); font-size: 1.08rem; line-height: 1.75; max-width: 630px; }
-.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
-.hero-badges span { border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--muted); border-radius: 999px; padding: 8px 12px; font-size: .78rem; font-weight: 700; }
+.hero h1 { font-size: clamp(2.6rem, 6.4vw, 5rem); line-height: .98; letter-spacing: -.065em; margin: 16px 0 15px; max-width: 760px; }
+.hero p { color: var(--muted); font-size: 1.02rem; line-height: 1.6; max-width: 560px; margin: 0; }
+.hero-summary {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  background: rgba(7,9,19,.44);
+  color: #d7ddf4;
+  border-radius: 999px;
+  padding: 9px 13px;
+  font-size: .78rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+}
 .vault-orb { position: relative; flex: 0 0 220px; height: 220px; display: grid; place-items: center; }
 .orb-core {
   width: 118px; height: 118px; border-radius: 36px; display: grid; place-items: center; font-size: 3.8rem;
@@ -135,46 +170,42 @@ select { min-width: 170px; height: 40px; color: white; background: var(--panel-l
   background: #0e1121;
 }
 
-/* The room image is stored locally at images/vault-card-bg.webp */
+/* The page uses the room image. Each Sprite card keeps only its own theme tint. */
 .sprite-visual::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -2;
-  background-image: url('images/vault-card-bg.webp');
-  background-size: cover;
-  background-position: center 48%;
-  opacity: .76;
-  transform: scale(1.025);
-  filter: saturate(1.05) brightness(.82) contrast(1.02);
-  transition: opacity .32s ease, transform .32s ease, filter .32s ease;
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--theme-accent) 66%, transparent) 0%, transparent 52%),
+    linear-gradient(150deg, color-mix(in srgb, var(--theme-accent) 26%, #151a31), #0e1121 72%);
+  opacity: .95;
+  transition: opacity .28s ease, transform .28s ease, filter .28s ease;
 }
 
-/* Each Sprite type adds its own Gold, Galaxy, Gummy, Gem, etc. color tint. */
 .sprite-visual::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--theme-accent) 58%, transparent) 0%, transparent 49%),
+    linear-gradient(125deg, rgba(255,255,255,.07), transparent 32%),
     var(--theme-overlay);
-  opacity: .92;
-  transition: opacity .32s ease, background .32s ease;
+  opacity: .72;
+  transition: opacity .28s ease, background .28s ease;
 }
 
-/* Hover reveals the room image more clearly and gently zooms it. */
 .sprite-card:hover .sprite-visual::before {
   opacity: 1;
-  transform: scale(1.10);
-  filter: saturate(1.18) brightness(1.02) contrast(1.04);
+  transform: scale(1.04);
+  filter: saturate(1.18) brightness(1.08);
 }
 
 .sprite-card:hover .sprite-visual::after {
   background:
-    radial-gradient(circle at 50% 36%, color-mix(in srgb, var(--theme-accent) 42%, transparent) 0%, transparent 52%),
+    linear-gradient(125deg, rgba(255,255,255,.12), transparent 34%),
     var(--theme-overlay-hover);
-  opacity: .54;
+  opacity: .48;
 }
 .sprite-image {
   width: 90%; height: 90%; object-fit: contain; position: relative; z-index: 1;
@@ -224,11 +255,23 @@ footer strong { color: white; letter-spacing: .08em; }
   .sprite-grid { grid-template-columns: repeat(2, 1fr); } .toggle { margin-left: 0; }
 }
 @media (max-width: 620px) {
+  .page-backdrop {
+    background-position: 53% top;
+    background-image:
+      linear-gradient(180deg, rgba(7,9,19,.58) 0%, rgba(7,9,19,.82) 40%, rgba(7,9,19,.96) 100%),
+      radial-gradient(circle at 20% 16%, rgba(139,92,246,.15), transparent 34%),
+      url('images/vault-card-bg.webp');
+  }
   .site-header { min-height: 76px; } .brand small { display: none; }
   .header-actions .button-ghost { display: none; } .header-actions .button-primary { padding: 10px 12px; font-size: .8rem; }
-  .hero { min-height: auto; padding: 55px 0 45px; } .hero h1 { font-size: 3rem; }
+  .hero { min-height: auto; padding: 40px 0 32px; } .hero h1 { font-size: 2.75rem; }
   .stats-grid { grid-template-columns: 1fr; } .stat-highlight { grid-column: auto; }
-  .control-panel { top: 6px; } .segmented { width: 100%; overflow-x: auto; }
+  .control-panel {
+    position: static;
+    top: auto;
+    z-index: auto;
+  }
+  .segmented { width: 100%; overflow-x: auto; }
   .segmented button { flex: 1 0 auto; } .filters, .filter-group { width: 100%; } select { width: 100%; }
   .sprite-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .sprite-visual { height: 180px; } .sprite-info { padding: 13px; }
