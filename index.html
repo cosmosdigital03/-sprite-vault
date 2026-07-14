@@ -26,7 +26,7 @@
     </a>
 
     <nav class="header-actions">
-      <button class="button button-ghost" id="shareButton">Compartir colección</button>
+      <button class="button button-ghost" id="shareButton">Perfil y compartir</button>
       <a class="button button-primary" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Entrar al Discord</a>
     </nav>
   </header>
@@ -47,37 +47,49 @@
       </div>
     </section>
 
-    <section class="stats-grid" aria-label="Progreso de colección">
-      <article class="stat-card">
-        <div class="stat-heading">
-          <span>Colección</span>
-          <strong id="collectionText">0 / 66</strong>
+    <section class="progress-overview" aria-label="Progreso de colección">
+      <article class="progress-circle-card">
+        <div class="progress-ring" id="progressRing" style="--progress:0">
+          <div class="progress-ring-inner">
+            <strong id="progressCircleValue">0%</strong>
+            <span>colección</span>
+          </div>
         </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="collectionBar"></div>
+        <div class="progress-circle-copy">
+          <span class="eyebrow">PROGRESO TOTAL</span>
+          <h2 id="progressHeadline">Comienza tu colección</h2>
+          <p id="progressSummary">0 de 66 Sprites agregados.</p>
         </div>
-        <small id="collectionPercent">0% completado</small>
       </article>
 
-      <article class="stat-card">
-        <div class="stat-heading">
-          <span>Dominio</span>
-          <strong id="masteryText">0 / 66</strong>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill mastery" id="masteryBar"></div>
-        </div>
-        <small id="masteryPercent">0% dominado</small>
-      </article>
+      <div class="stats-grid compact-stats">
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Colección</span>
+            <strong id="collectionText">0 / 66</strong>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="collectionBar"></div></div>
+          <small id="collectionPercent">0% completado</small>
+        </article>
 
-      <article class="stat-card stat-highlight">
-        <span class="stat-icon">⌁</span>
-        <div>
-          <span>Te faltan</span>
-          <strong id="missingCount">66 Sprites</strong>
-          <small>para completar el Vault</small>
-        </div>
-      </article>
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Dominio</span>
+            <strong id="masteryText">0 / 66</strong>
+          </div>
+          <div class="progress-track"><div class="progress-fill mastery" id="masteryBar"></div></div>
+          <small id="masteryPercent">0% dominado</small>
+        </article>
+
+        <article class="stat-card stat-highlight">
+          <span class="stat-icon">⌁</span>
+          <div>
+            <span>Te faltan</span>
+            <strong id="missingCount">66 Sprites</strong>
+            <small>para completar el Vault</small>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="control-panel">
@@ -90,10 +102,11 @@
         <div class="filter-group">
           <span class="filter-label">Estado</span>
           <div class="segmented" id="statusFilters">
-            <button class="active" data-status="all">Todos</button>
-            <button data-status="owned">Tengo</button>
-            <button data-status="missing">Me faltan</button>
-            <button data-status="mastered">Dominados</button>
+            <button class="active" data-status="all">Todos <span id="countAll">66</span></button>
+            <button data-status="owned">Tengo <span id="countOwned">0</span></button>
+            <button data-status="missing">Me faltan <span id="countMissing">66</span></button>
+            <button data-status="mastered">Dominados <span id="countMastered">0</span></button>
+            <button data-status="unmastered">Sin dominar <span id="countUnmastered">0</span></button>
           </div>
         </div>
 
@@ -109,6 +122,8 @@
           <span class="toggle-ui"></span>
           Agrupar por tema
         </label>
+
+        <button class="reset-filters" id="resetFilters" type="button">↻ Limpiar filtros</button>
       </div>
     </section>
 
@@ -129,18 +144,74 @@
     </section>
   </main>
 
-  <dialog id="shareDialog">
-    <form method="dialog" class="dialog-card">
+  <dialog id="shareDialog" class="share-dialog">
+    <form method="dialog" class="dialog-card share-dialog-card">
       <button class="dialog-close" aria-label="Cerrar">×</button>
-      <span class="eyebrow">COMPARTE TU VAULT</span>
-      <h2>Tu colección está lista</h2>
-      <p>Copia este enlace. Incluye tu progreso actual sin revelar información personal.</p>
+      <span class="eyebrow">TU PERFIL DEL VAULT</span>
+      <h2>Personaliza y comparte tu colección</h2>
+
+      <div class="profile-fields">
+        <label>
+          <span>Nombre del perfil</span>
+          <input id="profileName" maxlength="32" placeholder="Ej. Christian" />
+        </label>
+        <label>
+          <span>Usuario de Discord</span>
+          <input id="discordUsername" maxlength="40" placeholder="Ej. lykan" />
+        </label>
+      </div>
+
+      <section class="share-preview" id="sharePreview">
+        <div class="share-preview-brand">
+          <img src="images/sprite-vault-logo.png" alt="" />
+          <div><strong>SPRITE VAULT</strong><small>Perfil de colección</small></div>
+        </div>
+        <div class="share-preview-user">
+          <span id="previewName">Coleccionista del Vault</span>
+          <small id="previewDiscord">@usuario</small>
+        </div>
+        <div class="share-preview-stats">
+          <div><strong id="previewOwned">0</strong><span>Tengo</span></div>
+          <div><strong id="previewMastered">0</strong><span>Dominados</span></div>
+          <div><strong id="previewPercent">0%</strong><span>Completado</span></div>
+        </div>
+      </section>
+
+      <p class="share-help">El enlace incluye tu nombre, usuario y progreso. No incluye correo, contraseña ni datos privados.</p>
       <div class="share-box">
         <input id="shareUrl" readonly />
-        <button type="button" id="copyShareButton">Copiar</button>
+        <button type="button" id="copyShareButton">Copiar enlace</button>
       </div>
       <small id="copyStatus"></small>
     </form>
+  </dialog>
+
+  <dialog id="spriteDialog" class="sprite-dialog">
+    <div class="dialog-card sprite-detail-card">
+      <button class="dialog-close" id="closeSpriteDialog" aria-label="Cerrar">×</button>
+      <div class="sprite-detail-visual" id="detailVisual">
+        <img id="detailImage" alt="" />
+        <span id="detailNewBadge" class="new-badge detail-new">Nuevo</span>
+      </div>
+      <div class="sprite-detail-content">
+        <span class="eyebrow" id="detailTheme">TEMA</span>
+        <h2 id="detailName">Sprite</h2>
+        <p id="detailOriginalName"></p>
+
+        <div class="detail-stat-grid">
+          <div><span>Rareza</span><strong id="detailRarity">—</strong></div>
+          <div><span>Probabilidad estimada</span><strong id="detailFindRate">—</strong></div>
+        </div>
+
+        <div class="rarity-explanation" id="rarityExplanation"></div>
+        <small class="rarity-source">Dato comunitario consultado en Fortnite.GG. Puede cambiar con nuevas estadísticas.</small>
+
+        <div class="detail-actions">
+          <button id="detailOwnedButton" type="button"></button>
+          <button id="detailMasteryButton" type="button"></button>
+        </div>
+      </div>
+    </div>
   </dialog>
 
   <footer>
@@ -158,6 +229,8 @@
         <img class="sprite-image" alt="" loading="lazy" decoding="async" />
         <span class="image-fallback" aria-hidden="true">✦</span>
         <span class="sprite-rarity"></span>
+        <span class="new-badge">Nuevo</span>
+        <span class="view-detail-hint">Ver detalles</span>
       </div>
       <div class="sprite-info">
         <div class="sprite-title-row">

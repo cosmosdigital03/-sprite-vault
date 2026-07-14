@@ -5,7 +5,9 @@ const SPRITES = [
     "originalName": "Water",
     "theme": "Básico",
     "rarity": "Raro",
-    "image": "images/water_basic.png"
+    "image": "images/water_basic.png",
+    "findRate": "12.83%",
+    "isNew": false
   },
   {
     "id": "water_gold",
@@ -13,7 +15,9 @@ const SPRITES = [
     "originalName": "Gold Water",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/water_gold.png"
+    "image": "images/water_gold.png",
+    "findRate": "0.7%",
+    "isNew": false
   },
   {
     "id": "water_candy",
@@ -21,7 +25,9 @@ const SPRITES = [
     "originalName": "Gummy Water",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/water_candy.png"
+    "image": "images/water_candy.png",
+    "findRate": "0.28%",
+    "isNew": false
   },
   {
     "id": "water_galaxy",
@@ -29,7 +35,9 @@ const SPRITES = [
     "originalName": "Galaxy Water",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/water_galaxy.png"
+    "image": "images/water_galaxy.png",
+    "findRate": "0.28%",
+    "isNew": false
   },
   {
     "id": "water_holofoil",
@@ -37,7 +45,9 @@ const SPRITES = [
     "originalName": "Holofoil Water",
     "theme": "Holográfico",
     "rarity": "Especial",
-    "image": "images/water_holofoil.png"
+    "image": "images/water_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "earth_basic",
@@ -45,7 +55,9 @@ const SPRITES = [
     "originalName": "Earth",
     "theme": "Básico",
     "rarity": "Raro",
-    "image": "images/earth_basic.png"
+    "image": "images/earth_basic.png",
+    "findRate": "12.83%",
+    "isNew": false
   },
   {
     "id": "earth_gold",
@@ -53,7 +65,9 @@ const SPRITES = [
     "originalName": "Gold Earth",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/earth_gold.png"
+    "image": "images/earth_gold.png",
+    "findRate": "0.7%",
+    "isNew": false
   },
   {
     "id": "earth_candy",
@@ -61,7 +75,9 @@ const SPRITES = [
     "originalName": "Gummy Earth",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/earth_candy.png"
+    "image": "images/earth_candy.png",
+    "findRate": "0.28%",
+    "isNew": false
   },
   {
     "id": "earth_galaxy",
@@ -69,7 +85,9 @@ const SPRITES = [
     "originalName": "Galaxy Earth",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/earth_galaxy.png"
+    "image": "images/earth_galaxy.png",
+    "findRate": "0.28%",
+    "isNew": false
   },
   {
     "id": "fire_basic",
@@ -77,7 +95,9 @@ const SPRITES = [
     "originalName": "Fire",
     "theme": "Básico",
     "rarity": "Raro",
-    "image": "images/fire_basic.png"
+    "image": "images/fire_basic.png",
+    "findRate": "12.45%",
+    "isNew": false
   },
   {
     "id": "fire_gold",
@@ -85,7 +105,9 @@ const SPRITES = [
     "originalName": "Gold Fire",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/fire_gold.png"
+    "image": "images/fire_gold.png",
+    "findRate": "0.68%",
+    "isNew": false
   },
   {
     "id": "fire_candy",
@@ -93,7 +115,9 @@ const SPRITES = [
     "originalName": "Gummy Fire",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/fire_candy.png"
+    "image": "images/fire_candy.png",
+    "findRate": "0.68%",
+    "isNew": false
   },
   {
     "id": "fire_galaxy",
@@ -101,7 +125,9 @@ const SPRITES = [
     "originalName": "Galaxy Fire",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/fire_galaxy.png"
+    "image": "images/fire_galaxy.png",
+    "findRate": "0.27%",
+    "isNew": false
   },
   {
     "id": "fire_holofoil",
@@ -109,7 +135,9 @@ const SPRITES = [
     "originalName": "Holofoil Fire",
     "theme": "Holográfico",
     "rarity": "Especial",
-    "image": "images/fire_holofoil.png"
+    "image": "images/fire_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "duck_basic",
@@ -117,7 +145,9 @@ const SPRITES = [
     "originalName": "Duck",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/duck_basic.png"
+    "image": "images/duck_basic.png",
+    "findRate": "5.74%",
+    "isNew": false
   },
   {
     "id": "duck_gold",
@@ -125,7 +155,9 @@ const SPRITES = [
     "originalName": "Gold Duck",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/duck_gold.png"
+    "image": "images/duck_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "duck_candy",
@@ -133,7 +165,9 @@ const SPRITES = [
     "originalName": "Gummy Duck",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/duck_candy.png"
+    "image": "images/duck_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "duck_galaxy",
@@ -141,7 +175,9 @@ const SPRITES = [
     "originalName": "Galaxy Duck",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/duck_galaxy.png"
+    "image": "images/duck_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "ghost_basic",
@@ -149,7 +185,9 @@ const SPRITES = [
     "originalName": "Ghost",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/ghost_basic.png"
+    "image": "images/ghost_basic.png",
+    "findRate": "5.74%",
+    "isNew": false
   },
   {
     "id": "ghost_gold",
@@ -157,7 +195,9 @@ const SPRITES = [
     "originalName": "Gold Ghost",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/ghost_gold.png"
+    "image": "images/ghost_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "ghost_candy",
@@ -165,7 +205,9 @@ const SPRITES = [
     "originalName": "Gummy Ghost",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/ghost_candy.png"
+    "image": "images/ghost_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "ghost_galaxy",
@@ -173,7 +215,9 @@ const SPRITES = [
     "originalName": "Galaxy Ghost",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/ghost_galaxy.png"
+    "image": "images/ghost_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "ghost_holofoil",
@@ -181,7 +225,9 @@ const SPRITES = [
     "originalName": "Holofoil Ghost",
     "theme": "Holográfico",
     "rarity": "Especial",
-    "image": "images/ghost_holofoil.png"
+    "image": "images/ghost_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "dream_basic",
@@ -189,7 +235,9 @@ const SPRITES = [
     "originalName": "Dream",
     "theme": "Básico",
     "rarity": "Legendario",
-    "image": "images/dream_basic.png"
+    "image": "images/dream_basic.png",
+    "findRate": "2.63%",
+    "isNew": false
   },
   {
     "id": "dream_gold",
@@ -197,7 +245,9 @@ const SPRITES = [
     "originalName": "Gold Dream",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/dream_gold.png"
+    "image": "images/dream_gold.png",
+    "findRate": "0.03%",
+    "isNew": false
   },
   {
     "id": "dream_candy",
@@ -205,7 +255,9 @@ const SPRITES = [
     "originalName": "Gummy Dream",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/dream_candy.png"
+    "image": "images/dream_candy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "dream_galaxy",
@@ -213,7 +265,9 @@ const SPRITES = [
     "originalName": "Galaxy Dream",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/dream_galaxy.png"
+    "image": "images/dream_galaxy.png",
+    "findRate": "0.01%",
+    "isNew": false
   },
   {
     "id": "demon_basic",
@@ -221,7 +275,9 @@ const SPRITES = [
     "originalName": "Demon",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/demon_basic.png"
+    "image": "images/demon_basic.png",
+    "findRate": "5.76%",
+    "isNew": false
   },
   {
     "id": "demon_gold",
@@ -229,7 +285,9 @@ const SPRITES = [
     "originalName": "Gold Demon",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/demon_gold.png"
+    "image": "images/demon_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "demon_candy",
@@ -237,7 +295,9 @@ const SPRITES = [
     "originalName": "Gummy Demon",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/demon_candy.png"
+    "image": "images/demon_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "demon_galaxy",
@@ -245,7 +305,9 @@ const SPRITES = [
     "originalName": "Galaxy Demon",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/demon_galaxy.png"
+    "image": "images/demon_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "punk_basic",
@@ -253,7 +315,9 @@ const SPRITES = [
     "originalName": "Punk",
     "theme": "Básico",
     "rarity": "Legendario",
-    "image": "images/punk_basic.png"
+    "image": "images/punk_basic.png",
+    "findRate": "1.98%",
+    "isNew": false
   },
   {
     "id": "punk_gold",
@@ -261,7 +325,9 @@ const SPRITES = [
     "originalName": "Gold Punk",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/punk_gold.png"
+    "image": "images/punk_gold.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "punk_candy",
@@ -269,7 +335,9 @@ const SPRITES = [
     "originalName": "Gummy Punk",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/punk_candy.png"
+    "image": "images/punk_candy.png",
+    "findRate": "0.01%",
+    "isNew": false
   },
   {
     "id": "punk_galaxy",
@@ -277,7 +345,9 @@ const SPRITES = [
     "originalName": "Galaxy Punk",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/punk_galaxy.png"
+    "image": "images/punk_galaxy.png",
+    "findRate": "0.01%",
+    "isNew": false
   },
   {
     "id": "king_basic",
@@ -285,7 +355,9 @@ const SPRITES = [
     "originalName": "King",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/king_basic.png"
+    "image": "images/king_basic.png",
+    "findRate": "5.74%",
+    "isNew": false
   },
   {
     "id": "king_gold",
@@ -293,7 +365,9 @@ const SPRITES = [
     "originalName": "Gold King",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/king_gold.png"
+    "image": "images/king_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "king_candy",
@@ -301,7 +375,9 @@ const SPRITES = [
     "originalName": "Gummy King",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/king_candy.png"
+    "image": "images/king_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "king_galaxy",
@@ -309,7 +385,9 @@ const SPRITES = [
     "originalName": "Galaxy King",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/king_galaxy.png"
+    "image": "images/king_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "king_holofoil",
@@ -317,7 +395,9 @@ const SPRITES = [
     "originalName": "Holofoil King",
     "theme": "Holográfico",
     "rarity": "Especial",
-    "image": "images/king_holofoil.png"
+    "image": "images/king_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "zeropoint_basic",
@@ -325,7 +405,9 @@ const SPRITES = [
     "originalName": "Zero Point",
     "theme": "Básico",
     "rarity": "Mítico",
-    "image": "images/zeropoint_basic.png"
+    "image": "images/zeropoint_basic.png",
+    "findRate": "0.000098%",
+    "isNew": false
   },
   {
     "id": "zeropoint_gold",
@@ -333,7 +415,9 @@ const SPRITES = [
     "originalName": "Gold Zero Point",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/zeropoint_gold.png"
+    "image": "images/zeropoint_gold.png",
+    "findRate": "0.0000012%",
+    "isNew": false
   },
   {
     "id": "zeropoint_candy",
@@ -341,7 +425,9 @@ const SPRITES = [
     "originalName": "Gummy Zero Point",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/zeropoint_candy.png"
+    "image": "images/zeropoint_candy.png",
+    "findRate": "0.0000006%",
+    "isNew": false
   },
   {
     "id": "zeropoint_galaxy",
@@ -349,7 +435,9 @@ const SPRITES = [
     "originalName": "Galaxy Zero Point",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/zeropoint_galaxy.png"
+    "image": "images/zeropoint_galaxy.png",
+    "findRate": "0.0000004%",
+    "isNew": false
   },
   {
     "id": "theburntpeanut_basic",
@@ -357,7 +445,9 @@ const SPRITES = [
     "originalName": "Burnt Peanut",
     "theme": "Básico",
     "rarity": "Mítico",
-    "image": "images/theburntpeanut_basic.png"
+    "image": "images/theburntpeanut_basic.png",
+    "findRate": "1.01%",
+    "isNew": false
   },
   {
     "id": "fishy_basic",
@@ -365,7 +455,9 @@ const SPRITES = [
     "originalName": "Fishy",
     "theme": "Básico",
     "rarity": "Raro",
-    "image": "images/fishy_basic.png"
+    "image": "images/fishy_basic.png",
+    "findRate": "13.79%",
+    "isNew": false
   },
   {
     "id": "fishy_gold",
@@ -373,7 +465,9 @@ const SPRITES = [
     "originalName": "Gold Fishy",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/fishy_gold.png"
+    "image": "images/fishy_gold.png",
+    "findRate": "0.17%",
+    "isNew": false
   },
   {
     "id": "fishy_candy",
@@ -381,7 +475,9 @@ const SPRITES = [
     "originalName": "Gummy Fishy",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/fishy_candy.png"
+    "image": "images/fishy_candy.png",
+    "findRate": "0.08%",
+    "isNew": false
   },
   {
     "id": "fishy_galaxy",
@@ -389,7 +485,9 @@ const SPRITES = [
     "originalName": "Galaxy Fishy",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/fishy_galaxy.png"
+    "image": "images/fishy_galaxy.png",
+    "findRate": "0.06%",
+    "isNew": false
   },
   {
     "id": "striker_basic",
@@ -397,7 +495,9 @@ const SPRITES = [
     "originalName": "Striker",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/striker_basic.png"
+    "image": "images/striker_basic.png",
+    "findRate": "5.74%",
+    "isNew": false
   },
   {
     "id": "striker_gold",
@@ -405,7 +505,9 @@ const SPRITES = [
     "originalName": "Gold Striker",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/striker_gold.png"
+    "image": "images/striker_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "striker_candy",
@@ -413,7 +515,9 @@ const SPRITES = [
     "originalName": "Gummy Striker",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/striker_candy.png"
+    "image": "images/striker_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "striker_galaxy",
@@ -421,7 +525,9 @@ const SPRITES = [
     "originalName": "Galaxy Striker",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/striker_galaxy.png"
+    "image": "images/striker_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "striker_holofoil",
@@ -429,7 +535,9 @@ const SPRITES = [
     "originalName": "Holofoil Striker",
     "theme": "Holográfico",
     "rarity": "Especial",
-    "image": "images/striker_holofoil.png"
+    "image": "images/striker_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "aura_basic",
@@ -437,7 +545,9 @@ const SPRITES = [
     "originalName": "Aura",
     "theme": "Básico",
     "rarity": "Épico",
-    "image": "images/aura_basic.png"
+    "image": "images/aura_basic.png",
+    "findRate": "5.74%",
+    "isNew": false
   },
   {
     "id": "aura_gold",
@@ -445,7 +555,9 @@ const SPRITES = [
     "originalName": "Gold Aura",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/aura_gold.png"
+    "image": "images/aura_gold.png",
+    "findRate": "0.07%",
+    "isNew": false
   },
   {
     "id": "aura_candy",
@@ -453,7 +565,9 @@ const SPRITES = [
     "originalName": "Gummy Aura",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/aura_candy.png"
+    "image": "images/aura_candy.png",
+    "findRate": "0.04%",
+    "isNew": false
   },
   {
     "id": "aura_galaxy",
@@ -461,7 +575,9 @@ const SPRITES = [
     "originalName": "Galaxy Aura",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/aura_galaxy.png"
+    "image": "images/aura_galaxy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "boss_basic",
@@ -469,7 +585,9 @@ const SPRITES = [
     "originalName": "Boss",
     "theme": "Básico",
     "rarity": "Legendario",
-    "image": "images/boss_basic.png"
+    "image": "images/boss_basic.png",
+    "findRate": "2.63%",
+    "isNew": false
   },
   {
     "id": "boss_gold",
@@ -477,7 +595,9 @@ const SPRITES = [
     "originalName": "Gold Boss",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/boss_gold.png"
+    "image": "images/boss_gold.png",
+    "findRate": "0.03%",
+    "isNew": false
   },
   {
     "id": "boss_candy",
@@ -485,7 +605,9 @@ const SPRITES = [
     "originalName": "Gummy Boss",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/boss_candy.png"
+    "image": "images/boss_candy.png",
+    "findRate": "0.02%",
+    "isNew": false
   },
   {
     "id": "boss_galaxy",
@@ -493,7 +615,9 @@ const SPRITES = [
     "originalName": "Galaxy Boss",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/boss_galaxy.png"
+    "image": "images/boss_galaxy.png",
+    "findRate": "0.01%",
+    "isNew": false
   },
   {
     "id": "grim_basic",
@@ -501,7 +625,9 @@ const SPRITES = [
     "originalName": "Grim",
     "theme": "Básico",
     "rarity": "Mítico",
-    "image": "images/grim_basic.png"
+    "image": "images/grim_basic.png",
+    "findRate": "0.000098%",
+    "isNew": true
   },
   {
     "id": "grim_gold",
@@ -509,7 +635,9 @@ const SPRITES = [
     "originalName": "Gold Grim",
     "theme": "Dorado",
     "rarity": "Especial",
-    "image": "images/grim_gold.png"
+    "image": "images/grim_gold.png",
+    "findRate": "0.0000012%",
+    "isNew": true
   },
   {
     "id": "grim_candy",
@@ -517,7 +645,9 @@ const SPRITES = [
     "originalName": "Gummy Grim",
     "theme": "Gomita",
     "rarity": "Especial",
-    "image": "images/grim_candy.png"
+    "image": "images/grim_candy.png",
+    "findRate": "0.0000006%",
+    "isNew": true
   },
   {
     "id": "grim_galaxy",
@@ -525,6 +655,8 @@ const SPRITES = [
     "originalName": "Galaxy Grim",
     "theme": "Galaxia",
     "rarity": "Especial",
-    "image": "images/grim_galaxy.png"
+    "image": "images/grim_galaxy.png",
+    "findRate": "0.0000004%",
+    "isNew": true
   }
 ];

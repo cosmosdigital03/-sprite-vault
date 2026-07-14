@@ -93,3 +93,33 @@ El sitio incluye el aviso exigido por Epic:
 
 - El botón **Entrar al Discord** abre `https://discord.gg/7AAnVUPZc`.
 - El icono `SV` fue reemplazado por el Sprite dorado local en `images/sprite-vault-logo.png`.
+
+
+## Actualización V8
+
+- Nuevo filtro **Sin dominar**.
+- Este filtro muestra solamente los Sprites que el usuario tiene pero todavía no ha dominado.
+- Los botones de estado ahora muestran contadores automáticos:
+  - Todos
+  - Tengo
+  - Me faltan
+  - Dominados
+  - Sin dominar
+- El progreso guardado existente sigue siendo compatible.
+
+
+## Actualización V9
+
+- Círculo de progreso con porcentaje total.
+- Botón para limpiar búsqueda y filtros.
+- Barra de categorías reorganizada para teléfonos.
+- Ventana de detalles al pulsar una imagen.
+- Porcentajes comunitarios estimados de aparición consultados en Fortnite.GG el 14 de julio de 2026.
+- Explicación automática de qué tan raro es cada porcentaje.
+- Etiqueta **Nuevo** en los Sprites marcados como recientes.
+- Nombre de perfil y usuario de Discord guardados localmente.
+- Tarjeta personalizada de colección.
+- Enlace público compacto con el progreso codificado en la URL.
+- Las colecciones públicas se abren en modo de solo lectura.
+
+Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidades oficiales publicadas por Epic Games.
