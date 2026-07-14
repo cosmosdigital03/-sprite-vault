@@ -123,3 +123,11 @@ El sitio incluye el aviso exigido por Epic:
 - Las colecciones públicas se abren en modo de solo lectura.
 
 Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidades oficiales publicadas por Epic Games.
+
+
+## Actualización V9.1
+
+- Se eliminó de todos los detalles la línea:
+  `Dato comunitario consultado en Fortnite.GG. Puede cambiar con nuevas estadísticas.`
+- El botón **Perfil y compartir** ahora aparece también en teléfonos.
+- Los dos botones del encabezado se ajustan para pantallas móviles pequeñas.

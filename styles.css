@@ -279,7 +279,24 @@ footer strong { color: white; letter-spacing: .08em; }
       url('images/vault-card-bg.webp');
   }
   .site-header { min-height: 76px; } .brand small { display: none; }
-  .header-actions .button-ghost { display: none; } .header-actions .button-primary { padding: 10px 12px; font-size: .8rem; }
+  .header-actions {
+    gap: 6px;
+  }
+  .header-actions .button-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 10px;
+    font-size: .72rem;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .header-actions .button-primary {
+    padding: 9px 10px;
+    font-size: .72rem;
+    line-height: 1.1;
+    text-align: center;
+  }
   .hero { min-height: auto; padding: 40px 0 32px; } .hero h1 { font-size: 2.75rem; }
   .stats-grid { grid-template-columns: 1fr; } .stat-highlight { grid-column: auto; }
   .control-panel {
@@ -572,4 +589,46 @@ footer strong { color: white; letter-spacing: .08em; }
   .share-preview-stats { gap:5px; }
   .share-preview-stats div { padding:9px 7px; }
   .view-detail-hint { display:none; }
+}
+
+
+@media (max-width: 470px) {
+  .site-header {
+    gap: 8px;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand strong {
+    font-size: .78rem;
+  }
+
+  .header-actions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .header-actions .button {
+    max-width: 104px;
+    min-height: 38px;
+    padding: 7px 8px;
+    font-size: .66rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .brand strong {
+    display: none;
+  }
+
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .header-actions .button {
+    max-width: 112px;
+  }
 }
