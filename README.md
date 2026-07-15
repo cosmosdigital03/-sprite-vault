@@ -131,3 +131,11 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
   `Dato comunitario consultado en Fortnite.GG. Puede cambiar con nuevas estadísticas.`
 - El botón **Perfil y compartir** ahora aparece también en teléfonos.
 - Los dos botones del encabezado se ajustan para pantallas móviles pequeñas.
+
+
+## Actualización V9.2
+
+- El ejemplo de nombre del perfil ahora es `John`.
+- El ejemplo de usuario de Discord ahora es `vault034`.
+- La vista previa vacía muestra `John` y `@vault034`.
+- No se modificó ninguna otra función del Tracker.

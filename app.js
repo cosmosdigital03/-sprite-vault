@@ -343,9 +343,9 @@ function updateSharePreview() {
   const owned = SPRITES.filter(s=>state.progress[s.id].owned).length;
   const mastered = SPRITES.filter(s=>state.progress[s.id].mastered).length;
   const pct = Math.round(owned/total*100);
-  elements.previewName.textContent = state.profile.name.trim() || "Coleccionista del Vault";
+  elements.previewName.textContent = state.profile.name.trim() || "John";
   const discord = state.profile.discord.trim().replace(/^@/,"");
-  elements.previewDiscord.textContent = discord ? `@${discord}` : "@usuario";
+  elements.previewDiscord.textContent = discord ? `@${discord}` : "@vault034";
   elements.previewOwned.textContent = owned;
   elements.previewMastered.textContent = mastered;
   elements.previewPercent.textContent = `${pct}%`;
