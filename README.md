@@ -1,10 +1,10 @@
 # Sprite Vault Tracker — Versión 3 (imágenes locales)
 
-Esta versión incluye los 66 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
+Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
 ## Qué incluye
 
-- 66 imágenes PNG locales.
+- 83 imágenes locales (PNG y WebP).
 - Nombres en español y nombres originales en inglés.
 - Búsqueda en ambos idiomas.
 - Filtros por estado y tema.
@@ -22,7 +22,7 @@ Sube todo lo que aparece dentro de esta carpeta:
 - `sprites.js`
 - `app.js`
 - `README.md`
-- La carpeta completa `images` con sus 66 archivos PNG
+- La carpeta completa `images` con sus 83 imágenes
 
 No subas solamente el ZIP. Extrae el ZIP y arrastra todo su contenido a **Add file → Upload files** en GitHub. Son 71 archivos, por debajo del límite de 100 archivos de la subida web.
 
@@ -139,3 +139,16 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 - El ejemplo de usuario de Discord ahora es `vault034`.
 - La vista previa vacía muestra `John` y `@vault034`.
 - No se modificó ninguna otra función del Tracker.
+
+
+## Actualización V9.3
+
+- Total actualizado de 66 a **83 Sprites publicados**.
+- Se agregaron 17 Sprites nuevos con imágenes locales:
+  - Batman, Batman Dorado, Batman Gomita, Batman Galáctico y Batman Holográfico.
+  - Pollo.
+  - Vini Jr.
+  - Aire, Aire Dorado, Aire Gomita, Aire Galáctico y Aire Holográfico.
+  - Siete, Siete Dorado, Siete Gomita, Siete Galáctico y Siete Holográfico.
+- Los 17 nuevos aparecen con la etiqueta **Nuevo**.
+- Los IDs y el orden de los 66 Sprites anteriores se conservaron para proteger el progreso guardado y la compatibilidad de enlaces compartidos anteriores.

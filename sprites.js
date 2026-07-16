@@ -47,7 +47,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/water_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "earth_basic",
@@ -137,7 +137,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/fire_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "duck_basic",
@@ -227,7 +227,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/ghost_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "dream_basic",
@@ -397,7 +397,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/king_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "zeropoint_basic",
@@ -537,7 +537,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/striker_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "aura_basic",
@@ -627,7 +627,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/grim_basic.png",
     "findRate": "0.000098%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "grim_gold",
@@ -637,7 +637,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/grim_gold.png",
     "findRate": "0.0000012%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "grim_candy",
@@ -647,7 +647,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/grim_candy.png",
     "findRate": "0.0000006%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "grim_galaxy",
@@ -657,6 +657,176 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/grim_galaxy.png",
     "findRate": "0.0000004%",
+    "isNew": false
+  },
+  {
+    "id": "batman_basic",
+    "name": "Batman",
+    "originalName": "Batman",
+    "theme": "Básico",
+    "rarity": "Mítico",
+    "image": "images/batman_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "batman_gold",
+    "name": "Batman Dorado",
+    "originalName": "Gold Batman",
+    "theme": "Dorado",
+    "rarity": "Especial",
+    "image": "images/batman_gold.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "batman_candy",
+    "name": "Batman Gomita",
+    "originalName": "Gummy Batman",
+    "theme": "Gomita",
+    "rarity": "Especial",
+    "image": "images/batman_candy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "batman_galaxy",
+    "name": "Batman Galáctico",
+    "originalName": "Galaxy Batman",
+    "theme": "Galaxia",
+    "rarity": "Especial",
+    "image": "images/batman_galaxy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "batman_holofoil",
+    "name": "Batman Holográfico",
+    "originalName": "Holofoil Batman",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/batman_holofoil.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "pollo_basic",
+    "name": "Pollo",
+    "originalName": "Pollo",
+    "theme": "Básico",
+    "rarity": "Mítico",
+    "image": "images/pollo_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "vini_jr_basic",
+    "name": "Vini Jr.",
+    "originalName": "Vini Jr.",
+    "theme": "Básico",
+    "rarity": "Mítico",
+    "image": "images/vini_jr_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "air_basic",
+    "name": "Aire",
+    "originalName": "Air",
+    "theme": "Básico",
+    "rarity": "Raro",
+    "image": "images/air_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "air_gold",
+    "name": "Aire Dorado",
+    "originalName": "Gold Air",
+    "theme": "Dorado",
+    "rarity": "Especial",
+    "image": "images/air_gold.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "air_candy",
+    "name": "Aire Gomita",
+    "originalName": "Gummy Air",
+    "theme": "Gomita",
+    "rarity": "Especial",
+    "image": "images/air_candy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "air_galaxy",
+    "name": "Aire Galáctico",
+    "originalName": "Galaxy Air",
+    "theme": "Galaxia",
+    "rarity": "Especial",
+    "image": "images/air_galaxy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "air_holofoil",
+    "name": "Aire Holográfico",
+    "originalName": "Holofoil Air",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/air_holofoil.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "seven_basic",
+    "name": "Siete",
+    "originalName": "Seven",
+    "theme": "Básico",
+    "rarity": "Legendario",
+    "image": "images/seven_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "seven_gold",
+    "name": "Siete Dorado",
+    "originalName": "Gold Seven",
+    "theme": "Dorado",
+    "rarity": "Especial",
+    "image": "images/seven_gold.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "seven_candy",
+    "name": "Siete Gomita",
+    "originalName": "Gummy Seven",
+    "theme": "Gomita",
+    "rarity": "Especial",
+    "image": "images/seven_candy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "seven_galaxy",
+    "name": "Siete Galáctico",
+    "originalName": "Galaxy Seven",
+    "theme": "Galaxia",
+    "rarity": "Especial",
+    "image": "images/seven_galaxy.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "seven_holofoil",
+    "name": "Siete Holográfico",
+    "originalName": "Holofoil Seven",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/seven_holofoil.webp",
+    "findRate": "0%",
     "isNew": true
   }
 ];
