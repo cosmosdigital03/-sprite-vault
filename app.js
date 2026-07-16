@@ -1,5 +1,4 @@
 const STORAGE_KEY = "spriteVaultProgressV4";
-const PROFILE_KEY = "spriteVaultProfileV1";
 
 const THEME_VISUALS = {
   "Básico": { accent:"rgba(72,217,255,.72)", overlay:"linear-gradient(165deg,rgba(12,59,87,.40),rgba(11,18,33,.68))", overlayHover:"linear-gradient(165deg,rgba(12,59,87,.16),rgba(11,18,33,.22))", border:"rgba(72,217,255,.24)", shadow:"rgba(31,128,173,.26)" },
@@ -16,19 +15,19 @@ const state = {
   theme: "all",
   grouped: true,
   progress: loadProgress(),
-  profile: loadProfile(),
   selectedSpriteId: null,
-  publicProfile: null
+  publicProfile: null,
+  captureView: "all"
 };
 
 const elements = Object.fromEntries([
   "spriteContainer","spriteCardTemplate","searchInput","themeSelect","groupToggle","statusFilters",
   "emptyState","resultCount","resultsTitle","collectionText","masteryText","collectionBar","masteryBar",
-  "collectionPercent","masteryPercent","missingCount","shareButton","shareDialog","shareUrl",
-  "copyShareButton","copyStatus","heroSummary","countAll","countOwned","countMissing","countMastered",
-  "countUnmastered","progressRing","progressCircleValue","progressHeadline","progressSummary","resetFilters",
-  "profileName","discordUsername","previewName","previewDiscord","previewOwned","previewMastered",
-  "previewPercent","spriteDialog","closeSpriteDialog","detailVisual","detailImage","detailNewBadge",
+  "collectionPercent","masteryPercent","missingCount","shareButton","heroSummary","countAll","countNew",
+  "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
+  "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
+  "captureGrid","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
+  "captureResultCount","spriteDialog","closeSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
   "detailOwnedButton","detailMasteryButton"
 ].map(id => [id, document.querySelector(`#${id}`)]));
@@ -40,42 +39,40 @@ elements.theme = elements.themeSelect;
 elements.group = elements.groupToggle;
 elements.status = elements.statusFilters;
 elements.empty = elements.emptyState;
-elements.copyButton = elements.copyShareButton;
 
 function defaultProgress() {
-  return Object.fromEntries(SPRITES.map(sprite => [sprite.id, { owned:false, mastered:false, favorite:false }]));
+  return Object.fromEntries(
+    SPRITES.map(sprite => [sprite.id, { owned:false, mastered:false, favorite:false }])
+  );
 }
 
 function loadProgress() {
   const defaults = defaultProgress();
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-    return Object.fromEntries(Object.entries(defaults).map(([id,value]) => [id,{...value,...(saved[id]||{})}]));
-  } catch { return defaults; }
-}
-
-function loadProfile() {
-  try { return { name:"", discord:"", ...(JSON.parse(localStorage.getItem(PROFILE_KEY)) || {}) }; }
-  catch { return { name:"", discord:"" }; }
+    return Object.fromEntries(
+      Object.entries(defaults).map(([id,value]) => [id,{...value,...(saved[id]||{})}])
+    );
+  } catch {
+    return defaults;
+  }
 }
 
 function saveProgress() {
-  if (!state.publicProfile) localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress));
+  if (!state.publicProfile) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progress));
+  }
 }
 
-function saveProfile() {
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(state.profile));
-}
-
-function bitsToHex(predicate) {
-  let bits = SPRITES.map(sprite => predicate(state.progress[sprite.id]) ? "1" : "0").join("");
-  bits = bits.padEnd(Math.ceil(bits.length / 4) * 4, "0");
-  return Array.from({length:bits.length/4}, (_,i) => parseInt(bits.slice(i*4,i*4+4),2).toString(16)).join("");
-}
-
+/* Keeps older public collection links working, even though new sharing uses screenshots. */
 function hexToIds(hex) {
-  const bits = [...hex].map(char => parseInt(char,16).toString(2).padStart(4,"0")).join("");
-  return new Set(SPRITES.filter((_,i) => bits[i] === "1").map(sprite => sprite.id));
+  const bits = [...hex]
+    .map(char => parseInt(char,16).toString(2).padStart(4,"0"))
+    .join("");
+
+  return new Set(
+    SPRITES.filter((_,index) => bits[index] === "1").map(sprite => sprite.id)
+  );
 }
 
 function initializePublicProfile() {
@@ -86,11 +83,12 @@ function initializePublicProfile() {
   const masteredHex = params.get("m") || "";
   const ownedIds = hexToIds(ownedHex);
   const masteredIds = hexToIds(masteredHex);
+
   state.publicProfile = {
     name: params.get("p") || "Coleccionista del Vault",
     discord: params.get("d") || ""
   };
-  state.profile = {...state.publicProfile};
+
   state.progress = defaultProgress();
 
   for (const sprite of SPRITES) {
@@ -103,93 +101,192 @@ function initializePublicProfile() {
 }
 
 function populateThemes() {
-  [...new Set(SPRITES.map(sprite => sprite.theme))].sort((a,b)=>a.localeCompare(b,"es")).forEach(theme => {
-    const option = document.createElement("option");
-    option.value = theme;
-    option.textContent = theme;
-    elements.theme.append(option);
-  });
+  [...new Set(SPRITES.map(sprite => sprite.theme))]
+    .sort((a,b) => a.localeCompare(b,"es"))
+    .forEach(theme => {
+      const option = document.createElement("option");
+      option.value = theme;
+      option.textContent = theme;
+      elements.theme.append(option);
+    });
 }
 
 function filteredSprites() {
   const query = state.search.trim().toLocaleLowerCase("es");
+
   return SPRITES.filter(sprite => {
     const item = state.progress[sprite.id];
+
     const matchesText = !query ||
       sprite.name.toLocaleLowerCase("es").includes(query) ||
       sprite.originalName.toLocaleLowerCase("en").includes(query) ||
       sprite.theme.toLocaleLowerCase("es").includes(query);
+
     const matchesTheme = state.theme === "all" || sprite.theme === state.theme;
+
     const matchesStatus =
       state.status === "all" ||
+      (state.status === "new" && sprite.isNew) ||
       (state.status === "owned" && item.owned) ||
       (state.status === "missing" && !item.owned) ||
       (state.status === "mastered" && item.mastered) ||
       (state.status === "unmastered" && item.owned && !item.mastered);
+
     return matchesText && matchesTheme && matchesStatus;
   });
 }
 
 function groupSprites(sprites) {
-  return sprites.reduce((groups,sprite) => ((groups[sprite.theme] ||= []).push(sprite), groups), {});
+  return sprites.reduce((groups,sprite) => {
+    (groups[sprite.theme] ||= []).push(sprite);
+    return groups;
+  }, {});
 }
 
 function applyThemeVisuals(card, theme) {
   const visuals = THEME_VISUALS[theme] || THEME_VISUALS["Básico"];
-  for (const [key,value] of Object.entries({
-    "--theme-accent":visuals.accent, "--theme-overlay":visuals.overlay,
-    "--theme-overlay-hover":visuals.overlayHover, "--theme-border":visuals.border,
-    "--theme-shadow":visuals.shadow
-  })) card.style.setProperty(key,value);
+
+  const properties = {
+    "--theme-accent": visuals.accent,
+    "--theme-overlay": visuals.overlay,
+    "--theme-overlay-hover": visuals.overlayHover,
+    "--theme-border": visuals.border,
+    "--theme-shadow": visuals.shadow
+  };
+
+  for (const [key,value] of Object.entries(properties)) {
+    card.style.setProperty(key,value);
+  }
 }
 
 function render() {
-  const sprites = filteredSprites();
+  let sprites = filteredSprites();
+
+  if (state.status === "new") {
+    sprites = [...sprites].sort((a,b) => {
+      const aMissing = !state.progress[a.id].owned;
+      const bMissing = !state.progress[b.id].owned;
+      if (aMissing !== bMissing) return aMissing ? -1 : 1;
+      return a.name.localeCompare(b.name,"es");
+    });
+  }
+
   elements.container.innerHTML = "";
   elements.empty.hidden = sprites.length !== 0;
-  elements.resultCount.textContent = `${sprites.length} ${sprites.length === 1 ? "resultado" : "resultados"}`;
+  elements.resultCount.textContent =
+    `${sprites.length} ${sprites.length === 1 ? "resultado" : "resultados"}`;
   elements.resultsTitle.textContent = headingText();
 
-  if (state.grouped) {
-    Object.entries(groupSprites(sprites)).sort(([a],[b])=>a.localeCompare(b,"es")).forEach(([theme,list]) => {
-      const section = document.createElement("section");
-      section.className = "theme-section";
-      const title = document.createElement("h3");
-      title.className = "theme-header";
-      const text = document.createElement("span"); text.textContent = theme;
-      const count = document.createElement("small"); count.textContent = list.length;
-      title.append(text,count);
-      const grid = document.createElement("div"); grid.className = "sprite-grid";
-      list.forEach(sprite => grid.append(createCard(sprite)));
-      section.append(title,grid); elements.container.append(section);
-    });
+  if (state.status === "new") {
+    renderNewGroup(sprites);
+  } else if (state.grouped) {
+    Object.entries(groupSprites(sprites))
+      .sort(([a],[b]) => a.localeCompare(b,"es"))
+      .forEach(([theme,list]) => {
+        const section = document.createElement("section");
+        section.className = "theme-section";
+
+        const title = document.createElement("h3");
+        title.className = "theme-header";
+
+        const text = document.createElement("span");
+        text.textContent = theme;
+
+        const count = document.createElement("small");
+        count.textContent = list.length;
+
+        title.append(text,count);
+
+        const grid = document.createElement("div");
+        grid.className = "sprite-grid";
+        list.forEach(sprite => grid.append(createCard(sprite)));
+
+        section.append(title,grid);
+        elements.container.append(section);
+      });
   } else {
-    const grid = document.createElement("div"); grid.className = "sprite-grid";
+    const grid = document.createElement("div");
+    grid.className = "sprite-grid";
     sprites.forEach(sprite => grid.append(createCard(sprite)));
     elements.container.append(grid);
   }
+
   updateStats();
+}
+
+function renderNewGroup(sprites) {
+  const newTotal = SPRITES.filter(sprite => sprite.isNew).length;
+  const newMissing = SPRITES.filter(
+    sprite => sprite.isNew && !state.progress[sprite.id].owned
+  ).length;
+
+  const section = document.createElement("section");
+  section.className = "theme-section new-sprites-section";
+
+  const summary = document.createElement("div");
+  summary.className = "new-group-summary";
+  summary.innerHTML = `
+    <div>
+      <span class="eyebrow">SPRITES RECIENTES</span>
+      <h3>Nuevos</h3>
+      <p>Los que te faltan aparecen primero y están marcados en rojo.</p>
+    </div>
+    <div class="new-group-count">
+      <strong>${newMissing}</strong>
+      <span>te faltan de ${newTotal}</span>
+    </div>
+  `;
+
+  const grid = document.createElement("div");
+  grid.className = "sprite-grid new-sprite-grid";
+  sprites.forEach(sprite => grid.append(createCard(sprite)));
+
+  section.append(summary,grid);
+  elements.container.append(section);
 }
 
 function headingText() {
   const labels = {
-    all:"Todos los Sprites", owned:"Sprites que tengo", missing:"Sprites que me faltan",
-    mastered:"Sprites dominados", unmastered:"Sprites sin dominar"
+    all: "Todos los Sprites",
+    owned: "Sprites que tengo",
+    missing: "Sprites que me faltan",
+    mastered: "Sprites dominados",
+    unmastered: "Sprites sin dominar"
   };
-  return state.theme === "all" ? labels[state.status] : `${labels[state.status]} · ${state.theme}`;
+
+  if (state.status === "new") {
+    const newTotal = SPRITES.filter(sprite => sprite.isNew).length;
+    const newMissing = SPRITES.filter(
+      sprite => sprite.isNew && !state.progress[sprite.id].owned
+    ).length;
+    return `Nuevos · te faltan ${newMissing} de ${newTotal}`;
+  }
+
+  return state.theme === "all"
+    ? labels[state.status]
+    : `${labels[state.status]} · ${state.theme}`;
 }
 
 function createCard(sprite) {
   const fragment = elements.template.content.cloneNode(true);
   const card = fragment.querySelector(".sprite-card");
   const item = state.progress[sprite.id];
+
   card.dataset.id = sprite.id;
-  card.classList.toggle("is-owned", item.owned);
+  card.classList.toggle("is-owned",item.owned);
+  card.classList.toggle("is-missing",!item.owned);
+
+  if (state.status === "new") {
+    card.classList.add("new-filter-card");
+    card.classList.toggle("new-missing-highlight",!item.owned);
+  }
+
   applyThemeVisuals(card,sprite.theme);
 
   const image = fragment.querySelector(".sprite-image");
-  image.src = sprite.image; image.alt = sprite.name;
-  image.addEventListener("error",()=>image.classList.add("image-error"));
+  image.src = sprite.image;
+  image.alt = sprite.name;
+  image.addEventListener("error",() => image.classList.add("image-error"));
 
   fragment.querySelector(".sprite-rarity").textContent = sprite.rarity;
   fragment.querySelector(".sprite-theme").textContent = sprite.theme;
@@ -197,58 +294,93 @@ function createCard(sprite) {
   fragment.querySelector(".sprite-original-name").textContent = sprite.originalName;
   fragment.querySelector(".new-badge").hidden = !sprite.isNew;
 
+  const newStatusLabel = fragment.querySelector(".new-status-label");
+  newStatusLabel.hidden = state.status !== "new";
+  newStatusLabel.textContent = item.owned ? "LO TIENES" : "TE FALTA";
+  newStatusLabel.classList.toggle("owned",item.owned);
+  newStatusLabel.classList.toggle("missing",!item.owned);
+
   const visual = fragment.querySelector(".sprite-visual");
   visual.tabIndex = 0;
   visual.setAttribute("role","button");
   visual.setAttribute("aria-label",`Ver detalles de ${sprite.name}`);
-  visual.addEventListener("click",()=>openSpriteDetail(sprite.id));
+  visual.addEventListener("click",() => openSpriteDetail(sprite.id));
   visual.addEventListener("keydown",event => {
-    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openSpriteDetail(sprite.id); }
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openSpriteDetail(sprite.id);
+    }
   });
 
   const favorite = fragment.querySelector(".favorite-button");
   favorite.textContent = item.favorite ? "★" : "☆";
   favorite.classList.toggle("active",item.favorite);
   favorite.addEventListener("click",event => {
-    event.stopPropagation(); item.favorite = !item.favorite; saveProgress(); render();
+    event.stopPropagation();
+    item.favorite = !item.favorite;
+    saveProgress();
+    render();
   });
 
   const collection = fragment.querySelector(".collection-button");
   collection.textContent = item.owned ? "✓ Lo tengo" : "+ Agregar";
   collection.classList.toggle("active",item.owned);
   collection.disabled = Boolean(state.publicProfile);
-  collection.addEventListener("click",()=>toggleOwned(sprite.id));
+  collection.addEventListener("click",() => toggleOwned(sprite.id));
 
   const mastery = fragment.querySelector(".mastery-button");
   mastery.textContent = item.mastered ? "★ Dominado" : "Dominar";
   mastery.classList.toggle("active",item.mastered);
   mastery.disabled = !item.owned || Boolean(state.publicProfile);
-  mastery.addEventListener("click",()=>toggleMastered(sprite.id));
+  mastery.addEventListener("click",() => toggleMastered(sprite.id));
+
   return fragment;
 }
 
 function toggleOwned(id) {
   if (state.publicProfile) return;
+
   const item = state.progress[id];
   item.owned = !item.owned;
-  if (!item.owned) item.mastered = false;
-  saveProgress(); render(); refreshDetail();
+
+  if (!item.owned) {
+    item.mastered = false;
+  }
+
+  saveProgress();
+  render();
+  refreshDetail();
+
+  if (!elements.capturePage.hidden) {
+    renderCaptureView();
+  }
 }
 
 function toggleMastered(id) {
   if (state.publicProfile) return;
+
   const item = state.progress[id];
   if (!item.owned) return;
+
   item.mastered = !item.mastered;
-  saveProgress(); render(); refreshDetail();
+  saveProgress();
+  render();
+  refreshDetail();
+
+  if (!elements.capturePage.hidden) {
+    renderCaptureView();
+  }
 }
 
 function updateStats() {
   const total = SPRITES.length;
-  const owned = SPRITES.filter(s=>state.progress[s.id].owned).length;
-  const mastered = SPRITES.filter(s=>state.progress[s.id].mastered).length;
-  const unmastered = SPRITES.filter(s=>state.progress[s.id].owned && !state.progress[s.id].mastered).length;
+  const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
+  const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
+  const unmastered = SPRITES.filter(
+    sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered
+  ).length;
   const missing = total-owned;
+  const newTotal = SPRITES.filter(sprite => sprite.isNew).length;
   const collectionPct = total ? Math.round(owned/total*100) : 0;
   const masteryPct = total ? Math.round(mastered/total*100) : 0;
 
@@ -258,36 +390,61 @@ function updateStats() {
   elements.masteryBar.style.width = `${masteryPct}%`;
   elements.collectionPercent.textContent = `${collectionPct}% completado`;
   elements.masteryPercent.textContent = `${masteryPct}% dominado`;
-  elements.missingCount.textContent = `${missing} ${missing===1?"Sprite":"Sprites"}`;
+  elements.missingCount.textContent =
+    `${missing} ${missing===1 ? "Sprite" : "Sprites"}`;
 
-  if (!state.publicProfile) elements.heroSummary.textContent = `${total} Sprites · Español · Guardado automático`;
+  if (!state.publicProfile) {
+    elements.heroSummary.textContent =
+      `${total} Sprites · Español · Guardado automático`;
+  }
+
   elements.countAll.textContent = total;
+  elements.countNew.textContent = newTotal;
   elements.countOwned.textContent = owned;
   elements.countMissing.textContent = missing;
   elements.countMastered.textContent = mastered;
   elements.countUnmastered.textContent = unmastered;
 
-  elements.progressRing.style.setProperty("--progress", collectionPct);
+  elements.progressRing.style.setProperty("--progress",collectionPct);
   elements.progressCircleValue.textContent = `${collectionPct}%`;
+
   elements.progressHeadline.textContent =
     collectionPct === 100 ? "¡Vault completado!" :
     collectionPct >= 75 ? "Ya casi completas el Vault" :
     collectionPct >= 40 ? "Tu colección está creciendo" :
-    owned > 0 ? "Buen comienzo" : "Comienza tu colección";
-  elements.progressSummary.textContent = `${owned} de ${total} Sprites agregados.`;
+    owned > 0 ? "Buen comienzo" :
+    "Comienza tu colección";
 
-  updateSharePreview();
+  elements.progressSummary.textContent =
+    `${owned} de ${total} Sprites agregados.`;
 }
 
 function rarityMessage(value) {
-  if (!value || value === "No disponible") return "Todavía no hay una estimación pública disponible.";
+  if (!value || value === "No disponible") {
+    return "Todavía no hay una estimación pública disponible.";
+  }
+
   const number = Number(value.replace("%",""));
-  if (number === 0) return "La fuente muestra 0%, normalmente porque no hay suficientes registros o la variante es extremadamente reciente.";
-  if (number < .00001) return "Extremadamente raro: la estimación es menor a una posibilidad entre millones.";
-  if (number < .001) return "Ultra raro: aparece en una fracción diminuta de los registros.";
-  if (number < .05) return "Muy raro: se encuentra en menos de 1 de cada 2,000 registros.";
-  if (number < .5) return "Raro: aparece en menos de 1 de cada 200 registros.";
-  if (number < 3) return "Poco común dentro del conjunto de Sprites.";
+
+  if (number === 0) {
+    return "La estadística actual muestra 0%, normalmente porque todavía hay muy pocos registros.";
+  }
+  if (number < .00001) {
+    return "Extremadamente raro: la estimación es menor a una posibilidad entre millones.";
+  }
+  if (number < .001) {
+    return "Ultra raro: aparece en una fracción diminuta de los registros.";
+  }
+  if (number < .05) {
+    return "Muy raro: se encuentra en menos de 1 de cada 2,000 registros.";
+  }
+  if (number < .5) {
+    return "Raro: aparece en menos de 1 de cada 200 registros.";
+  }
+  if (number < 3) {
+    return "Poco común dentro del conjunto de Sprites.";
+  }
+
   return "Comparativamente más frecuente que las variantes especiales.";
 }
 
@@ -299,9 +456,12 @@ function openSpriteDetail(id) {
 
 function refreshDetail() {
   if (!state.selectedSpriteId) return;
-  const sprite = SPRITES.find(s=>s.id===state.selectedSpriteId);
+
+  const sprite = SPRITES.find(item => item.id === state.selectedSpriteId);
   if (!sprite) return;
+
   const item = state.progress[sprite.id];
+
   applyThemeVisuals(elements.detailVisual,sprite.theme);
   elements.detailImage.src = sprite.image;
   elements.detailImage.alt = sprite.name;
@@ -312,80 +472,183 @@ function refreshDetail() {
   elements.detailRarity.textContent = sprite.rarity;
   elements.detailFindRate.textContent = sprite.findRate;
   elements.rarityExplanation.textContent = rarityMessage(sprite.findRate);
-  elements.detailOwnedButton.textContent = item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
+
+  elements.detailOwnedButton.textContent =
+    item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
   elements.detailOwnedButton.classList.toggle("active",item.owned);
   elements.detailOwnedButton.disabled = Boolean(state.publicProfile);
-  elements.detailMasteryButton.textContent = item.mastered ? "★ Dominado" : "Marcar como dominado";
+
+  elements.detailMasteryButton.textContent =
+    item.mastered ? "★ Dominado" : "Marcar como dominado";
   elements.detailMasteryButton.classList.toggle("active",item.mastered);
-  elements.detailMasteryButton.disabled = !item.owned || Boolean(state.publicProfile);
+  elements.detailMasteryButton.disabled =
+    !item.owned || Boolean(state.publicProfile);
 }
 
 function resetFilters() {
-  state.search = ""; state.status = "all"; state.theme = "all"; state.grouped = true;
-  elements.search.value = ""; elements.theme.value = "all"; elements.group.checked = true;
-  elements.status.querySelectorAll("button").forEach(btn=>btn.classList.toggle("active",btn.dataset.status==="all"));
-  render();
-}
+  state.search = "";
+  state.status = "all";
+  state.theme = "all";
+  state.grouped = true;
 
-function createShareUrl() {
-  const url = new URL(location.href);
-  url.search = "";
-  url.hash = "";
-  url.searchParams.set("o",bitsToHex(item=>item.owned));
-  url.searchParams.set("m",bitsToHex(item=>item.mastered));
-  if (state.profile.name.trim()) url.searchParams.set("p",state.profile.name.trim());
-  if (state.profile.discord.trim()) url.searchParams.set("d",state.profile.discord.trim().replace(/^@/,""));
-  return url.toString();
-}
+  elements.search.value = "";
+  elements.theme.value = "all";
+  elements.group.checked = true;
 
-function updateSharePreview() {
-  const total = SPRITES.length;
-  const owned = SPRITES.filter(s=>state.progress[s.id].owned).length;
-  const mastered = SPRITES.filter(s=>state.progress[s.id].mastered).length;
-  const pct = Math.round(owned/total*100);
-  elements.previewName.textContent = state.profile.name.trim() || "John";
-  const discord = state.profile.discord.trim().replace(/^@/,"");
-  elements.previewDiscord.textContent = discord ? `@${discord}` : "@vault034";
-  elements.previewOwned.textContent = owned;
-  elements.previewMastered.textContent = mastered;
-  elements.previewPercent.textContent = `${pct}%`;
-  elements.shareUrl.value = createShareUrl();
-}
-
-elements.search.addEventListener("input",e=>{state.search=e.target.value;render();});
-elements.theme.addEventListener("change",e=>{state.theme=e.target.value;render();});
-elements.group.addEventListener("change",e=>{state.grouped=e.target.checked;render();});
-elements.status.addEventListener("click",e=>{
-  const button=e.target.closest("button[data-status]"); if(!button)return;
-  state.status=button.dataset.status;
-  elements.status.querySelectorAll("button").forEach(item=>item.classList.toggle("active",item===button));
-  render();
-});
-elements.resetFilters.addEventListener("click",resetFilters);
-
-elements.shareButton.addEventListener("click",()=>{
-  elements.profileName.value=state.profile.name;
-  elements.discordUsername.value=state.profile.discord;
-  elements.copyStatus.textContent="";
-  updateSharePreview();
-  elements.shareDialog.showModal();
-});
-for (const input of [elements.profileName,elements.discordUsername]) {
-  input.addEventListener("input",()=>{
-    state.profile.name=elements.profileName.value;
-    state.profile.discord=elements.discordUsername.value;
-    saveProfile(); updateSharePreview();
+  elements.status.querySelectorAll("button").forEach(button => {
+    button.classList.toggle("active",button.dataset.status === "all");
   });
+
+  render();
 }
-elements.copyButton.addEventListener("click",async()=>{
-  try { await navigator.clipboard.writeText(elements.shareUrl.value); }
-  catch { elements.shareUrl.select(); document.execCommand("copy"); }
-  elements.copyStatus.textContent="Enlace público copiado.";
+
+function openCaptureView() {
+  state.captureView = "all";
+  elements.capturePage.hidden = false;
+  document.body.classList.add("capture-mode");
+
+  elements.captureViewButtons.querySelectorAll("button").forEach(button => {
+    button.classList.toggle("active",button.dataset.captureView === "all");
+  });
+
+  renderCaptureView();
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+function closeCaptureView() {
+  document.body.classList.remove("capture-mode");
+  elements.capturePage.hidden = true;
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+function renderCaptureView() {
+  const total = SPRITES.length;
+  const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
+  const missing = total-owned;
+  const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
+  const pct = total ? Math.round(owned/total*100) : 0;
+
+  let sprites = state.captureView === "missing"
+    ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
+    : [...SPRITES];
+
+  elements.captureOwned.textContent = owned;
+  elements.captureMissing.textContent = missing;
+  elements.captureMastered.textContent = mastered;
+  elements.capturePercent.textContent = `${pct}%`;
+  elements.captureTitle.textContent =
+    state.captureView === "missing" ? "Los que me faltan" : "Todos juntos";
+  elements.captureResultCount.textContent =
+    `${sprites.length} ${sprites.length === 1 ? "Sprite" : "Sprites"}`;
+
+  elements.captureGrid.innerHTML = "";
+
+  for (const sprite of sprites) {
+    elements.captureGrid.append(createCaptureSprite(sprite));
+  }
+}
+
+function createCaptureSprite(sprite) {
+  const item = state.progress[sprite.id];
+  const tile = document.createElement("article");
+
+  tile.className = [
+    "capture-sprite",
+    item.owned ? "is-owned" : "is-missing",
+    item.mastered ? "is-mastered" : "",
+    sprite.isNew ? "is-new" : ""
+  ].filter(Boolean).join(" ");
+
+  applyThemeVisuals(tile,sprite.theme);
+
+  const imageWrap = document.createElement("div");
+  imageWrap.className = "capture-sprite-image";
+
+  const image = document.createElement("img");
+  image.src = sprite.image;
+  image.alt = sprite.name;
+  image.loading = "eager";
+
+  imageWrap.append(image);
+
+  if (sprite.isNew) {
+    const newBadge = document.createElement("span");
+    newBadge.className = "capture-new-badge";
+    newBadge.textContent = "Nuevo";
+    imageWrap.append(newBadge);
+  }
+
+  if (item.mastered) {
+    const masteredBadge = document.createElement("span");
+    masteredBadge.className = "capture-mastered-badge";
+    masteredBadge.textContent = "★";
+    imageWrap.append(masteredBadge);
+  }
+
+  const name = document.createElement("strong");
+  name.textContent = sprite.name;
+  name.title = sprite.name;
+
+  tile.append(imageWrap,name);
+  return tile;
+}
+
+elements.search.addEventListener("input",event => {
+  state.search = event.target.value;
+  render();
 });
 
-elements.closeSpriteDialog.addEventListener("click",()=>elements.spriteDialog.close());
-elements.detailOwnedButton.addEventListener("click",()=>toggleOwned(state.selectedSpriteId));
-elements.detailMasteryButton.addEventListener("click",()=>toggleMastered(state.selectedSpriteId));
+elements.theme.addEventListener("change",event => {
+  state.theme = event.target.value;
+  render();
+});
+
+elements.group.addEventListener("change",event => {
+  state.grouped = event.target.checked;
+  render();
+});
+
+elements.status.addEventListener("click",event => {
+  const button = event.target.closest("button[data-status]");
+  if (!button) return;
+
+  state.status = button.dataset.status;
+
+  elements.status.querySelectorAll("button").forEach(item => {
+    item.classList.toggle("active",item === button);
+  });
+
+  render();
+});
+
+elements.resetFilters.addEventListener("click",resetFilters);
+elements.shareButton.addEventListener("click",openCaptureView);
+elements.closeCapture.addEventListener("click",closeCaptureView);
+
+elements.captureViewButtons.addEventListener("click",event => {
+  const button = event.target.closest("button[data-capture-view]");
+  if (!button) return;
+
+  state.captureView = button.dataset.captureView;
+
+  elements.captureViewButtons.querySelectorAll("button").forEach(item => {
+    item.classList.toggle("active",item === button);
+  });
+
+  renderCaptureView();
+});
+
+elements.closeSpriteDialog.addEventListener("click",() => {
+  elements.spriteDialog.close();
+});
+
+elements.detailOwnedButton.addEventListener("click",() => {
+  toggleOwned(state.selectedSpriteId);
+});
+
+elements.detailMasteryButton.addEventListener("click",() => {
+  toggleMastered(state.selectedSpriteId);
+});
 
 populateThemes();
 initializePublicProfile();

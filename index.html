@@ -26,7 +26,7 @@
     </a>
 
     <nav class="header-actions">
-      <button class="button button-ghost" id="shareButton">Perfil y compartir</button>
+      <button class="button button-ghost" id="shareButton">Compartir lista</button>
       <a class="button button-primary" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Entrar al Discord</a>
     </nav>
   </header>
@@ -103,6 +103,7 @@
           <span class="filter-label">Estado</span>
           <div class="segmented" id="statusFilters">
             <button class="active" data-status="all">Todos <span id="countAll">83</span></button>
+            <button class="new-filter-button" data-status="new">Nuevos <span id="countNew">17</span></button>
             <button data-status="owned">Tengo <span id="countOwned">0</span></button>
             <button data-status="missing">Me faltan <span id="countMissing">83</span></button>
             <button data-status="mastered">Dominados <span id="countMastered">0</span></button>
@@ -144,47 +145,69 @@
     </section>
   </main>
 
-  <dialog id="shareDialog" class="share-dialog">
-    <form method="dialog" class="dialog-card share-dialog-card">
-      <button class="dialog-close" aria-label="Cerrar">×</button>
-      <span class="eyebrow">TU PERFIL DEL VAULT</span>
-      <h2>Personaliza y comparte tu colección</h2>
+  
 
-      <div class="profile-fields">
-        <label>
-          <span>Nombre del perfil</span>
-          <input id="profileName" maxlength="32" placeholder="Ej. John" />
-        </label>
-        <label>
-          <span>Usuario de Discord</span>
-          <input id="discordUsername" maxlength="40" placeholder="Ej. vault034" />
-        </label>
+  
+  <section id="capturePage" class="capture-page" hidden>
+    <div class="capture-toolbar">
+      <button id="closeCapture" class="capture-back" type="button">← Volver</button>
+
+      <div class="capture-toolbar-copy">
+        <strong>Lista para compartir</strong>
+        <span>Los Sprites en rojo son los que te faltan.</span>
       </div>
 
-      <section class="share-preview" id="sharePreview">
-        <div class="share-preview-brand">
+      <div class="capture-view-buttons" id="captureViewButtons">
+        <button class="active" type="button" data-capture-view="all">Todos juntos</button>
+        <button type="button" data-capture-view="missing">Solo me faltan</button>
+      </div>
+    </div>
+
+    <article id="captureSheet" class="capture-sheet">
+      <header class="capture-sheet-header">
+        <div class="capture-sheet-brand">
           <img src="images/sprite-vault-logo.png" alt="" />
-          <div><strong>SPRITE VAULT</strong><small>Perfil de colección</small></div>
+          <div>
+            <strong>SPRITE VAULT</strong>
+            <span>Mi colección de Sprites</span>
+          </div>
         </div>
-        <div class="share-preview-user">
-          <span id="previewName">John</span>
-          <small id="previewDiscord">@vault034</small>
-        </div>
-        <div class="share-preview-stats">
-          <div><strong id="previewOwned">0</strong><span>Tengo</span></div>
-          <div><strong id="previewMastered">0</strong><span>Dominados</span></div>
-          <div><strong id="previewPercent">0%</strong><span>Completado</span></div>
-        </div>
-      </section>
 
-      <p class="share-help">El enlace incluye tu nombre, usuario y progreso. No incluye correo, contraseña ni datos privados.</p>
-      <div class="share-box">
-        <input id="shareUrl" readonly />
-        <button type="button" id="copyShareButton">Copiar enlace</button>
+        <div class="capture-sheet-summary">
+          <div><strong id="captureOwned">0</strong><span>Tengo</span></div>
+          <div><strong id="captureMissing">83</strong><span>Me faltan</span></div>
+          <div><strong id="captureMastered">0</strong><span>Dominados</span></div>
+          <div><strong id="capturePercent">0%</strong><span>Completado</span></div>
+        </div>
+      </header>
+
+      <div class="capture-legend">
+        <span><i class="legend-owned">✓</i> Lo tengo</span>
+        <span><i class="legend-missing">!</i> Me falta</span>
+        <span><i class="legend-mastered">★</i> Dominado</span>
+        <span><i class="legend-new">N</i> Nuevo</span>
       </div>
-      <small id="copyStatus"></small>
-    </form>
-  </dialog>
+
+      <div class="capture-section-heading">
+        <div>
+          <span class="eyebrow">LISTA DE SPRITES</span>
+          <h1 id="captureTitle">Todos juntos</h1>
+        </div>
+        <span id="captureResultCount">83 Sprites</span>
+      </div>
+
+      <div id="captureGrid" class="capture-grid"></div>
+
+      <footer class="capture-sheet-footer">
+        <span>Sprite Vault</span>
+        <span>discord.gg/7AAnVUPZc</span>
+      </footer>
+    </article>
+
+    <p class="capture-tip">
+      En teléfono, usa una captura con desplazamiento para guardar la lista completa.
+    </p>
+  </section>
 
   <dialog id="spriteDialog" class="sprite-dialog">
     <div class="dialog-card sprite-detail-card">
@@ -230,6 +253,7 @@
         <span class="image-fallback" aria-hidden="true">✦</span>
         <span class="sprite-rarity"></span>
         <span class="new-badge">Nuevo</span>
+        <span class="new-status-label" hidden></span>
         <span class="view-detail-hint">Ver detalles</span>
       </div>
       <div class="sprite-info">

@@ -152,3 +152,18 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
   - Siete, Siete Dorado, Siete Gomita, Siete Galáctico y Siete Holográfico.
 - Los 17 nuevos aparecen con la etiqueta **Nuevo**.
 - Los IDs y el orden de los 66 Sprites anteriores se conservaron para proteger el progreso guardado y la compatibilidad de enlaces compartidos anteriores.
+
+
+## Actualización V9.4
+
+- `Perfil y compartir` fue reemplazado por **Compartir lista**.
+- La nueva vista reúne todos los Sprites en una cuadrícula compacta para hacer capturas.
+- Los Sprites que faltan aparecen oscuros, en escala de grises y con borde rojo.
+- Los Sprites que el usuario tiene muestran una marca verde.
+- Los dominados muestran una estrella dorada.
+- Se puede alternar entre:
+  - Todos juntos
+  - Solo me faltan
+- Se agregó la categoría **Nuevos**.
+- En Nuevos, los Sprites faltantes aparecen primero y están claramente marcados.
+- El progreso guardado continúa usando la misma clave y no se reinicia.
