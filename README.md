@@ -167,3 +167,18 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 - Se agregó la categoría **Nuevos**.
 - En Nuevos, los Sprites faltantes aparecen primero y están claramente marcados.
 - El progreso guardado continúa usando la misma clave y no se reinicia.
+
+
+## Actualización V9.5
+
+- Los Sprites que faltan permanecen completamente a color en la lista para capturas.
+- El borde rojo y el símbolo `!` identifican los faltantes sin oscurecer sus imágenes.
+- El ícono azul del inicio fue reemplazado por una vitrina 3D de Sprites.
+- La vitrina:
+  - selecciona un Sprite aleatorio;
+  - cambia cada 5 a 10 segundos;
+  - gira suavemente;
+  - utiliza el color de su rareza como iluminación;
+  - muestra su nombre, tema y rareza;
+  - continúa visible en teléfonos.
+- El progreso guardado conserva la misma clave y no se reinicia.

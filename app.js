@@ -7,7 +7,39 @@ const THEME_VISUALS = {
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
   "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" }
+
 };
+
+const RARITY_VISUALS = {
+  "Raro": {
+    color: "#46b8ff",
+    soft: "rgba(70,184,255,.34)",
+    label: "◆ Raro"
+  },
+  "Épico": {
+    color: "#b06cff",
+    soft: "rgba(176,108,255,.36)",
+    label: "✦ Épico"
+  },
+  "Legendario": {
+    color: "#ff9b45",
+    soft: "rgba(255,155,69,.38)",
+    label: "◆ Legendario"
+  },
+  "Mítico": {
+    color: "#ffd45a",
+    soft: "rgba(255,212,90,.4)",
+    label: "✦ Mítico"
+  },
+  "Especial": {
+    color: "#50ead0",
+    soft: "rgba(80,234,208,.34)",
+    label: "✧ Especial"
+  }
+};
+
+let showcaseIndex = -1;
+let showcaseTimer = null;
 
 const state = {
   search: "",
@@ -29,7 +61,8 @@ const elements = Object.fromEntries([
   "captureGrid","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
-  "detailOwnedButton","detailMasteryButton"
+  "detailOwnedButton","detailMasteryButton","spriteShowcase","showcaseImage","showcaseTheme",
+  "showcaseName","showcaseRarity"
 ].map(id => [id, document.querySelector(`#${id}`)]));
 
 elements.container = elements.spriteContainer;
@@ -98,6 +131,92 @@ function initializePublicProfile() {
 
   document.body.classList.add("public-view");
   elements.heroSummary.textContent = `Colección pública de ${state.publicProfile.name}`;
+}
+
+
+function rarityVisual(rarity) {
+  return RARITY_VISUALS[rarity] || RARITY_VISUALS["Especial"];
+}
+
+function randomShowcaseIndex() {
+  if (SPRITES.length <= 1) return 0;
+
+  let nextIndex = showcaseIndex;
+  while (nextIndex === showcaseIndex) {
+    nextIndex = Math.floor(Math.random() * SPRITES.length);
+  }
+
+  return nextIndex;
+}
+
+function setShowcaseSprite(sprite, immediate = false) {
+  if (!sprite || !elements.spriteShowcase) return;
+
+  const visual = rarityVisual(sprite.rarity);
+
+  const applySprite = () => {
+    elements.showcaseImage.src = sprite.image;
+    elements.showcaseImage.alt = sprite.name;
+    elements.showcaseTheme.textContent = sprite.theme;
+    elements.showcaseName.textContent = sprite.name;
+    elements.showcaseRarity.textContent = visual.label;
+
+    elements.spriteShowcase.style.setProperty("--showcase-color", visual.color);
+    elements.spriteShowcase.style.setProperty("--showcase-soft", visual.soft);
+
+    requestAnimationFrame(() => {
+      elements.spriteShowcase.classList.remove("is-switching");
+    });
+  };
+
+  if (immediate) {
+    applySprite();
+    return;
+  }
+
+  elements.spriteShowcase.classList.add("is-switching");
+
+  const preload = new Image();
+  preload.src = sprite.image;
+
+  const finishTransition = () => {
+    window.setTimeout(applySprite, 260);
+  };
+
+  if (preload.complete) {
+    finishTransition();
+  } else {
+    preload.addEventListener("load", finishTransition, { once: true });
+    preload.addEventListener("error", finishTransition, { once: true });
+  }
+}
+
+function scheduleNextShowcase() {
+  window.clearTimeout(showcaseTimer);
+
+  const delay = 5000 + Math.floor(Math.random() * 5001);
+
+  showcaseTimer = window.setTimeout(() => {
+    showcaseIndex = randomShowcaseIndex();
+    setShowcaseSprite(SPRITES[showcaseIndex]);
+    scheduleNextShowcase();
+  }, delay);
+}
+
+function initializeShowcase() {
+  if (!elements.spriteShowcase || SPRITES.length === 0) return;
+
+  showcaseIndex = randomShowcaseIndex();
+  setShowcaseSprite(SPRITES[showcaseIndex], true);
+  scheduleNextShowcase();
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      window.clearTimeout(showcaseTimer);
+    } else {
+      scheduleNextShowcase();
+    }
+  });
 }
 
 function populateThemes() {
@@ -653,3 +772,4 @@ elements.detailMasteryButton.addEventListener("click",() => {
 populateThemes();
 initializePublicProfile();
 render();
+initializeShowcase();
