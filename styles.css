@@ -657,11 +657,8 @@ footer strong { color: white; letter-spacing: .08em; }
 }
 
 .sprite-card.new-missing-highlight .sprite-image {
-  filter:
-    grayscale(.72)
-    saturate(.45)
-    brightness(.68)
-    drop-shadow(0 16px 18px rgba(0,0,0,.45));
+  opacity: 1;
+  filter: drop-shadow(0 16px 18px rgba(0,0,0,.45));
 }
 
 /* Full-page view made for mobile screenshots. */
@@ -1528,5 +1525,70 @@ body.capture-mode > dialog {
   .showcase-ring,
   .showcase-particle {
     animation: none !important;
+  }
+}
+
+
+/* ===== V9.6: full-color missing Sprites and cache-safe showcase ===== */
+
+/* Missing Sprites remain completely visible everywhere. */
+.capture-sprite.is-missing {
+  background:
+    radial-gradient(circle at 50% 28%,
+      color-mix(in srgb,var(--theme-accent) 28%,transparent),
+      transparent 55%),
+    rgba(15,18,34,.9) !important;
+  border: 3px solid #ff4f72 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.06),
+    0 0 17px rgba(255,79,114,.2) !important;
+}
+
+.capture-sprite.is-missing .capture-sprite-image img,
+.sprite-card.new-missing-highlight .sprite-image {
+  opacity: 1 !important;
+  filter: drop-shadow(0 8px 9px rgba(0,0,0,.38)) !important;
+}
+
+.capture-sprite.is-missing > strong {
+  color: #ffffff !important;
+}
+
+.capture-sprite.is-missing::after {
+  content: "!";
+  background: #ff4f72;
+  color: white;
+  box-shadow: 0 0 10px rgba(255,79,114,.42);
+}
+
+/* Keep the showcase polished while its next image is loading. */
+.showcase-model img {
+  opacity: 1;
+}
+
+.sprite-showcase.is-switching .showcase-model {
+  opacity: .18;
+  scale: .82;
+  filter: blur(3px);
+}
+
+/* Clear visual card behind the animated Sprite. */
+.sprite-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 22px 4px 3px;
+  z-index: -2;
+  border: 1px solid color-mix(in srgb,var(--showcase-color) 24%,rgba(255,255,255,.07));
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 38%,var(--showcase-soft),transparent 49%),
+    rgba(7,9,19,.3);
+  backdrop-filter: blur(8px);
+  transition: border-color .6s ease, background .6s ease;
+}
+
+@media (max-width: 620px) {
+  .sprite-showcase::before {
+    inset: 12px 8px 2px;
   }
 }

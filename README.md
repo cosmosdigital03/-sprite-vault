@@ -182,3 +182,18 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
   - muestra su nombre, tema y rareza;
   - continúa visible en teléfonos.
 - El progreso guardado conserva la misma clave y no se reinicia.
+
+
+## Actualización V9.6
+
+- Se corrigió la vitrina 3D que podía quedarse mostrando `Cargando Sprite`.
+- La página ahora fuerza la carga de los archivos V9.6 mediante versionado:
+  - `styles.css?v=9.6`
+  - `sprites.js?v=9.6`
+  - `app.js?v=9.6`
+- La vitrina muestra `Fuego` inmediatamente como respaldo y luego comienza la rotación aleatoria.
+- Se añadió un sistema de respaldo para que ninguna transición se quede bloqueada.
+- Todos los Sprites faltantes permanecen completamente a color.
+- Los faltantes se distinguen únicamente mediante borde rojo y símbolo rojo.
+- También se eliminó el efecto oscuro de los Sprites faltantes en la categoría Nuevos.
+- La clave de progreso sigue siendo `spriteVaultProgressV4`.

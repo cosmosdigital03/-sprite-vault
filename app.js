@@ -177,18 +177,24 @@ function setShowcaseSprite(sprite, immediate = false) {
   elements.spriteShowcase.classList.add("is-switching");
 
   const preload = new Image();
-  preload.src = sprite.image;
+  let transitionFinished = false;
 
   const finishTransition = () => {
-    window.setTimeout(applySprite, 260);
+    if (transitionFinished) return;
+    transitionFinished = true;
+    window.setTimeout(applySprite, 220);
   };
+
+  preload.addEventListener("load", finishTransition, { once: true });
+  preload.addEventListener("error", finishTransition, { once: true });
+  preload.src = sprite.image;
 
   if (preload.complete) {
     finishTransition();
-  } else {
-    preload.addEventListener("load", finishTransition, { once: true });
-    preload.addEventListener("error", finishTransition, { once: true });
   }
+
+  /* Fallback: never leave the showcase stuck if a browser delays image events. */
+  window.setTimeout(finishTransition, 900);
 }
 
 function scheduleNextShowcase() {
