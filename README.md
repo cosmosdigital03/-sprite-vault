@@ -1,4 +1,4 @@
-# Sprite Vault Tracker — Versión 3 (imágenes locales)
+# Sprite Vault Tracker — V9.8
 
 Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
@@ -201,6 +201,8 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 
 ## Actualización V9.7 — Banner y roles por colección
 
+> Nota: la configuración de cinco roles descrita en esta sección fue reemplazada por el sistema V9.8 al final de este archivo. Usa `DISCORD_ROLE_RULES`, no `DISCORD_COLLECTION_ROLES`.
+
 - Se agregó un banner público en español: **¿Te falta un Sprite?**
 - El banner invita a entrar a Sprite Vault para hacer intercambios, prestar o recibir Sprites.
 - El tracker continúa gratis y público; Discord no es obligatorio.
@@ -245,3 +247,40 @@ Los siguientes valores son privados y nunca deben aparecer en `discord-config.js
 - Cualquier archivo `.env`
 
 La Publishable/Anon key de Supabase sí se usa en el navegador; protege los datos con autenticación y Row Level Security.
+
+
+## Actualización V9.8 — Colección, Dominio y Especiales
+
+- El sincronizador ahora administra tres grupos independientes de roles:
+  - **Colección:** mantiene solamente el nivel más alto alcanzado.
+  - **Dominio:** mantiene solamente el nivel más alto alcanzado.
+  - **Especiales:** permite tener varios al mismo tiempo.
+- Se configuraron los diez niveles de Colección desde 10 hasta 100+ Sprites.
+- Se configuraron los siete niveles de Dominio desde 5 hasta 75+ Sprites dominados.
+- Se prepararon roles Especiales para Galaxia, Gummy, Dorados, Holofoil y Cubos.
+- Los roles `🧩 Colección`, `🏆 Dominio` y `✨ Especiales` son separadores visuales; el bot nunca los asigna.
+- El tracker actual contiene 83 Sprites. Por ahora, el nivel máximo alcanzable de Colección es `🐉 Coleccionista Legendario` con 80 Sprites.
+- `🪄 Coleccionista Mítico` y `👑✨ Coleccionista Absoluto` comenzarán a funcionar automáticamente cuando el tracker alcance 90 y 100 Sprites.
+- La clave local sigue siendo `spriteVaultProgressV4`; la actualización no borra selecciones guardadas.
+
+### Roles Especiales que debes tener creados
+
+Además de los tres que ya creaste, crea estos dos si deseas sincronizarlos:
+
+- `🌈 Sprites Holofoil`
+- `🧊 Sprites Cubos`
+
+El rol de Cubos quedará preparado, pero no se entregará hasta que los Sprites Cubo estén añadidos a `sprites.js` con tema `Cubo` o un ID que comience con `cube_`.
+
+### Secretos de Supabase para V9.8
+
+Usa estos secretos en la Edge Function:
+
+- `DISCORD_BOT_TOKEN`
+- `DISCORD_GUILD_ID`
+- `ALLOWED_ORIGIN`
+- `DISCORD_ROLE_RULES`
+
+Para `DISCORD_ROLE_RULES`, abre `supabase/ROLE-RULES-ONE-LINE.txt`, reemplaza cada texto `ROLE_ID_...` por el ID real del rol correspondiente y pega la línea completa como valor del secreto.
+
+No agregues los tres roles separadores al JSON. El bot solo debe administrar los 10 roles de Colección, 7 de Dominio y 5 Especiales.

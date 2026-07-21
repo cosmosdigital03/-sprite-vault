@@ -7,8 +7,11 @@
     panel: byId("discordRolePanel"),
     avatar: byId("discordUserAvatar"),
     userName: byId("discordUserName"),
-    eligibleRole: byId("discordEligibleRole"),
+    collectionRole: byId("discordEligibleCollectionRole"),
+    masteryRole: byId("discordEligibleMasteryRole"),
+    specialRoles: byId("discordEligibleSpecialRoles"),
     ownedCount: byId("discordOwnedCount"),
+    masteredCount: byId("discordMasteredCount"),
     totalCount: byId("discordTotalCount"),
     status: byId("discordSyncStatus"),
     statusText: byId("discordStatusText"),
@@ -35,11 +38,18 @@
     return window.SpriteVaultCollection.getSnapshot();
   }
 
-  function eligibleRole(count, total) {
-    const thresholds = Array.isArray(config.roleThresholds) ? config.roleThresholds : [];
-    const exactCompletion = thresholds.find(item => item.max === null && count >= total && total > 0);
-    if (exactCompletion) return exactCompletion;
-    return thresholds.find(item => item.max !== null && count >= item.min && count <= item.max) || null;
+  function roleForCount(thresholds, count) {
+    if (!Array.isArray(thresholds)) return null;
+    return thresholds.find(item => (
+      count >= Number(item.min) &&
+      (item.max === null || count <= Number(item.max))
+    )) || null;
+  }
+
+  function specialRolesFor(keys) {
+    const ownedKeys = new Set(Array.isArray(keys) ? keys : []);
+    return (Array.isArray(config.specialRoles) ? config.specialRoles : [])
+      .filter(item => ownedKeys.has(item.key));
   }
 
   function setStatus(text, mode = "") {
@@ -54,22 +64,30 @@
 
   function renderCollection() {
     const data = snapshot();
-    const role = eligibleRole(data.owned, data.total);
+    const collectionRole = roleForCount(config.collectionRoleThresholds, data.owned);
+    const masteryRole = roleForCount(config.masteryRoleThresholds, data.mastered);
+    const specials = specialRolesFor(data.ownedSpecialKeys);
+
     ui.ownedCount.textContent = data.owned;
+    ui.masteredCount.textContent = data.mastered;
     ui.totalCount.textContent = data.total;
-    ui.eligibleRole.textContent = role?.name || "Marca al menos 1 Sprite";
+    ui.collectionRole.textContent = collectionRole?.name || "Disponible al llegar a 10";
+    ui.masteryRole.textContent = masteryRole?.name || "Disponible al dominar 5";
+    ui.specialRoles.textContent = specials.length
+      ? specials.map(item => item.name).join(" · ")
+      : "Ninguno todavía";
 
     if (data.isPublicView) {
       ui.panel.hidden = true;
       return;
     }
 
-    if (session && data.owned === 0) {
+    if (session && data.owned === 0 && data.mastered === 0) {
       ui.sync.disabled = true;
-      setMessage("Marca al menos un Sprite antes de sincronizar un rol.");
+      setMessage("Marca tus Sprites antes de sincronizar tus roles.");
     } else if (session && !syncing) {
       ui.sync.disabled = false;
-      setMessage("La sincronización reemplaza solamente tus roles de colección anteriores.");
+      setMessage("Se actualiza tu nivel de Colección, tu nivel de Dominio y tus roles Especiales.");
     }
   }
 
@@ -110,7 +128,7 @@
 
     ui.connect.hidden = true;
     ui.disconnect.hidden = false;
-    ui.sync.disabled = snapshot().owned === 0;
+    ui.sync.disabled = snapshot().owned === 0 && snapshot().mastered === 0;
     setStatus("Discord conectado · listo para sincronizar", "ready");
     renderCollection();
   }
@@ -118,7 +136,7 @@
   async function connectDiscord() {
     if (!configured) {
       setStatus("Falta conectar el proyecto de Supabase", "warning");
-      setMessage("La interfaz está lista. Completa discord-config.js y los pasos del README para activarla.");
+      setMessage("Completa discord-config.js y los pasos del README para activar la integración.");
       return;
     }
 
@@ -158,13 +176,13 @@
   async function syncDiscordRole() {
     if (!supabase || !session || syncing) return;
     const data = snapshot();
-    if (data.owned === 0) return;
+    if (data.owned === 0 && data.mastered === 0) return;
 
     syncing = true;
     ui.sync.disabled = true;
     ui.sync.textContent = "Sincronizando…";
     ui.join.hidden = true;
-    setStatus("Actualizando tu rol en Sprite Vault…", "warning");
+    setStatus("Actualizando tus roles en Sprite Vault…", "warning");
 
     try {
       const { data: result, error } = await supabase.functions.invoke(
@@ -173,6 +191,7 @@
           body: {
             ownedSpriteIds: data.ownedSpriteIds,
             masteredSpriteIds: data.masteredSpriteIds,
+            ownedSpecialKeys: data.ownedSpecialKeys,
             totalSprites: data.total
           }
         }
@@ -182,25 +201,29 @@
 
       if (result?.code === "not_member") {
         setStatus("Tu Discord no está dentro de Sprite Vault", "warning");
-        setMessage("Entra al servidor y vuelve a pulsar Sincronizar rol.");
+        setMessage("Entra al servidor y vuelve a pulsar Sincronizar roles.");
         ui.join.hidden = false;
         return;
       }
 
       if (!result?.ok) {
-        throw new Error(result?.message || "No se pudo sincronizar el rol.");
+        throw new Error(result?.message || "No se pudieron sincronizar los roles.");
       }
 
-      setStatus("Rol sincronizado correctamente", "ready");
-      setMessage(`Recibiste ${result.roleName}. Sincronizado con ${result.ownedCount} Sprites.`);
+      const names = Array.isArray(result.roleNames) && result.roleNames.length
+        ? result.roleNames.join(" · ")
+        : "ningún rol todavía";
+      setStatus("Roles sincronizados correctamente", "ready");
+      setMessage(`Roles actuales: ${names}. Colección: ${result.ownedCount}; Dominados: ${result.masteredCount}.`);
     } catch (error) {
       console.error("Discord role sync failed", error);
-      setStatus("No se pudo sincronizar el rol", "error");
+      setStatus("No se pudieron sincronizar los roles", "error");
       setMessage(error?.message || "Revisa la configuración del bot y vuelve a intentarlo.");
     } finally {
       syncing = false;
-      ui.sync.textContent = "Sincronizar rol";
-      ui.sync.disabled = !session || snapshot().owned === 0;
+      ui.sync.textContent = "Sincronizar roles";
+      const current = snapshot();
+      ui.sync.disabled = !session || (current.owned === 0 && current.mastered === 0);
     }
   }
 
@@ -212,7 +235,7 @@
       ui.connect.disabled = false;
       ui.sync.disabled = true;
       setStatus("Integración preparada · falta conectar Supabase", "warning");
-      setMessage("El tracker ya está listo para visitantes. La activación de roles requiere tus claves públicas e IDs privados.");
+      setMessage("El tracker funciona para visitantes. La activación de roles requiere tus claves públicas e IDs privados.");
       return;
     }
 

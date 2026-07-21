@@ -1,6 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DISCORD_API = "https://discord.com/api/v10";
+const SPECIAL_KEYS = new Set(["galaxy", "gummy", "gold", "holofoil", "cubes"]);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": Deno.env.get("ALLOWED_ORIGIN") || "*",
@@ -8,11 +9,23 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-type RoleRule = {
+type ThresholdRole = {
   min: number;
   max: number | null;
   roleId: string;
   name: string;
+};
+
+type SpecialRole = {
+  key: string;
+  roleId: string;
+  name: string;
+};
+
+type RoleRules = {
+  collection: ThresholdRole[];
+  mastery: ThresholdRole[];
+  specials: SpecialRole[];
 };
 
 function json(body: unknown, status = 200) {
@@ -22,20 +35,53 @@ function json(body: unknown, status = 200) {
   });
 }
 
-function readRoleRules(): RoleRule[] {
-  const raw = Deno.env.get("DISCORD_COLLECTION_ROLES");
-  if (!raw) throw new Error("DISCORD_COLLECTION_ROLES is missing.");
-  const rules = JSON.parse(raw) as RoleRule[];
-  if (!Array.isArray(rules) || rules.some(rule => !rule.roleId || !rule.name)) {
-    throw new Error("DISCORD_COLLECTION_ROLES is invalid.");
-  }
-  return rules.sort((a, b) => a.min - b.min);
+function isDiscordRoleId(value: unknown): value is string {
+  return typeof value === "string" && /^\d{16,22}$/.test(value);
 }
 
-function chooseRole(rules: RoleRule[], count: number, total: number) {
-  const completion = rules.find(rule => rule.max === null && count >= total && total > 0);
-  if (completion) return completion;
-  return rules.find(rule => rule.max !== null && count >= rule.min && count <= rule.max) || null;
+function validateThresholdRules(value: unknown, label: string): ThresholdRole[] {
+  if (!Array.isArray(value)) throw new Error(`${label} role rules are invalid.`);
+  const rules = value as ThresholdRole[];
+  if (rules.some(rule => (
+    !Number.isInteger(rule.min) ||
+    rule.min < 0 ||
+    (rule.max !== null && (!Number.isInteger(rule.max) || rule.max < rule.min)) ||
+    !isDiscordRoleId(rule.roleId) ||
+    typeof rule.name !== "string" ||
+    !rule.name.trim()
+  ))) {
+    throw new Error(`${label} role rules are invalid.`);
+  }
+  return [...rules].sort((a, b) => a.min - b.min);
+}
+
+function validateSpecialRules(value: unknown): SpecialRole[] {
+  if (!Array.isArray(value)) throw new Error("Special role rules are invalid.");
+  const rules = value as SpecialRole[];
+  if (rules.some(rule => (
+    !SPECIAL_KEYS.has(rule.key) ||
+    !isDiscordRoleId(rule.roleId) ||
+    typeof rule.name !== "string" ||
+    !rule.name.trim()
+  ))) {
+    throw new Error("Special role rules are invalid.");
+  }
+  return rules;
+}
+
+function readRoleRules(): RoleRules {
+  const raw = Deno.env.get("DISCORD_ROLE_RULES");
+  if (!raw) throw new Error("DISCORD_ROLE_RULES is missing.");
+  const parsed = JSON.parse(raw) as Partial<RoleRules>;
+  return {
+    collection: validateThresholdRules(parsed.collection, "Collection"),
+    mastery: validateThresholdRules(parsed.mastery, "Mastery"),
+    specials: validateSpecialRules(parsed.specials),
+  };
+}
+
+function chooseThresholdRole(rules: ThresholdRole[], count: number) {
+  return rules.find(rule => count >= rule.min && (rule.max === null || count <= rule.max)) || null;
 }
 
 async function discordRequest(path: string, init: RequestInit = {}) {
@@ -47,10 +93,34 @@ async function discordRequest(path: string, init: RequestInit = {}) {
     headers: {
       Authorization: `Bot ${token}`,
       "Content-Type": "application/json",
-      "X-Audit-Log-Reason": encodeURIComponent("Sprite Vault collection role sync"),
+      "X-Audit-Log-Reason": encodeURIComponent("Sprite Vault role sync"),
       ...(init.headers || {}),
     },
   });
+}
+
+async function removeRole(guildId: string, userId: string, roleId: string) {
+  const response = await discordRequest(
+    `/guilds/${guildId}/members/${userId}/roles/${roleId}`,
+    { method: "DELETE" },
+  );
+  if (!response.ok && response.status !== 404) {
+    console.error("Could not remove role", roleId, response.status, await response.text());
+  }
+}
+
+async function addRole(guildId: string, userId: string, roleId: string) {
+  const response = await discordRequest(
+    `/guilds/${guildId}/members/${userId}/roles/${roleId}`,
+    { method: "PUT" },
+  );
+  if (response.status === 403) {
+    throw new Error("Coloca el rol del bot por encima de todos los roles administrados y activa Manage Roles.");
+  }
+  if (!response.ok) {
+    console.error("Could not add role", roleId, response.status, await response.text());
+    throw new Error("Discord rechazó la actualización de uno de los roles.");
+  }
 }
 
 Deno.serve(async req => {
@@ -91,13 +161,22 @@ Deno.serve(async req => {
     const ownedSpriteIds = Array.isArray(payload.ownedSpriteIds)
       ? [...new Set(payload.ownedSpriteIds.filter((id: unknown) => typeof id === "string"))]
       : [];
+    const masteredSpriteIds = Array.isArray(payload.masteredSpriteIds)
+      ? [...new Set(payload.masteredSpriteIds.filter((id: unknown) => typeof id === "string"))]
+      : [];
+    const ownedSpecialKeys = Array.isArray(payload.ownedSpecialKeys)
+      ? [...new Set(payload.ownedSpecialKeys.filter((key: unknown) => typeof key === "string" && SPECIAL_KEYS.has(key)))]
+      : [];
     const totalSprites = Number(payload.totalSprites);
 
     if (!Number.isInteger(totalSprites) || totalSprites < 1 || totalSprites > 500) {
       return json({ ok: false, message: "Invalid Sprite total." }, 400);
     }
-    if (ownedSpriteIds.length > totalSprites) {
+    if (ownedSpriteIds.length > totalSprites || masteredSpriteIds.length > totalSprites) {
       return json({ ok: false, message: "Invalid collection count." }, 400);
+    }
+    if (masteredSpriteIds.some(id => !ownedSpriteIds.includes(id))) {
+      return json({ ok: false, message: "A mastered Sprite must also be marked as owned." }, 400);
     }
 
     const memberResponse = await discordRequest(`/guilds/${guildId}/members/${discordUserId}`);
@@ -111,50 +190,40 @@ Deno.serve(async req => {
     }
 
     const rules = readRoleRules();
-    const selectedRole = chooseRole(rules, ownedSpriteIds.length, totalSprites);
-    const allRoleIds = [...new Set(rules.map(rule => rule.roleId))];
+    const collectionRole = chooseThresholdRole(rules.collection, ownedSpriteIds.length);
+    const masteryRole = chooseThresholdRole(rules.mastery, masteredSpriteIds.length);
+    const specialKeySet = new Set(ownedSpecialKeys);
+    const selectedSpecialRoles = rules.specials.filter(rule => specialKeySet.has(rule.key));
 
-    for (const roleId of allRoleIds) {
-      if (selectedRole?.roleId === roleId) continue;
-      const response = await discordRequest(
-        `/guilds/${guildId}/members/${discordUserId}/roles/${roleId}`,
-        { method: "DELETE" },
-      );
-      if (!response.ok && response.status !== 404) {
-        console.error("Could not remove role", roleId, response.status, await response.text());
+    for (const role of rules.collection) {
+      if (collectionRole?.roleId !== role.roleId) await removeRole(guildId, discordUserId, role.roleId);
+    }
+    for (const role of rules.mastery) {
+      if (masteryRole?.roleId !== role.roleId) await removeRole(guildId, discordUserId, role.roleId);
+    }
+    for (const role of rules.specials) {
+      if (!selectedSpecialRoles.some(selected => selected.roleId === role.roleId)) {
+        await removeRole(guildId, discordUserId, role.roleId);
       }
     }
 
-    if (!selectedRole) {
-      return json({
-        ok: true,
-        roleName: "Sin rol de colección",
-        ownedCount: ownedSpriteIds.length,
-      });
-    }
+    const rolesToAdd = [
+      collectionRole,
+      masteryRole,
+      ...selectedSpecialRoles,
+    ].filter((role): role is ThresholdRole | SpecialRole => Boolean(role));
 
-    const addResponse = await discordRequest(
-      `/guilds/${guildId}/members/${discordUserId}/roles/${selectedRole.roleId}`,
-      { method: "PUT" },
-    );
-
-    if (addResponse.status === 403) {
-      return json({
-        ok: false,
-        message: "Place the bot role above every collection role and give it Manage Roles.",
-      }, 500);
-    }
-    if (!addResponse.ok) {
-      console.error("Could not add role", addResponse.status, await addResponse.text());
-      return json({ ok: false, message: "Discord rejected the role update." }, 502);
+    for (const role of rolesToAdd) {
+      await addRole(guildId, discordUserId, role.roleId);
     }
 
     return json({
       ok: true,
-      roleName: selectedRole.name,
-      roleId: selectedRole.roleId,
+      roleNames: rolesToAdd.map(role => role.name),
       ownedCount: ownedSpriteIds.length,
+      masteredCount: masteredSpriteIds.length,
       totalSprites,
+      specialKeys: ownedSpecialKeys,
     });
   } catch (error) {
     console.error(error);

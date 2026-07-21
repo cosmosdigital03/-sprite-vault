@@ -789,9 +789,24 @@ window.SpriteVaultCollection = {
       .filter(sprite => state.progress[sprite.id].mastered)
       .map(sprite => sprite.id);
 
+    const ownedSpecialKeys = [...new Set(
+      SPRITES
+        .filter(sprite => state.progress[sprite.id].owned)
+        .flatMap(sprite => {
+          const keys = [];
+          if (sprite.theme === "Galaxia") keys.push("galaxy");
+          if (sprite.theme === "Gomita") keys.push("gummy");
+          if (sprite.theme === "Dorado") keys.push("gold");
+          if (sprite.theme === "Holográfico") keys.push("holofoil");
+          if (sprite.theme === "Cubo" || /^cube_/i.test(sprite.id) || /_cube(?:_|$)/i.test(sprite.id)) keys.push("cubes");
+          return keys;
+        })
+    )];
+
     return {
       ownedSpriteIds,
       masteredSpriteIds,
+      ownedSpecialKeys,
       owned: ownedSpriteIds.length,
       mastered: masteredSpriteIds.length,
       total: SPRITES.length,

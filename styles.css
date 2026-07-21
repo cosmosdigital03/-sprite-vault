@@ -1768,7 +1768,7 @@ body.capture-mode > dialog {
 }
 .discord-role-preview {
   display: grid;
-  grid-template-columns: 1.35fr .65fr;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin: 16px 0 12px;
 }
@@ -1780,6 +1780,8 @@ body.capture-mode > dialog {
 }
 .discord-role-preview span { display: block; color: #8e98b7; font-size: .64rem; margin-bottom: 5px; }
 .discord-role-preview strong { font-size: .9rem; }
+.discord-special-role-preview { grid-column: 1 / -1; }
+.discord-special-role-preview strong { line-height: 1.45; }
 .discord-sync-status {
   display: flex;
   align-items: center;

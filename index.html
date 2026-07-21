@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9.7" />
+  <link rel="stylesheet" href="styles.css?v=9.8" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -129,8 +129,8 @@
     <section class="discord-role-panel" id="discordRolePanel" aria-labelledby="discordRoleTitle">
       <div class="discord-role-intro">
         <span class="eyebrow">RECOMPENSAS DE DISCORD</span>
-        <h2 id="discordRoleTitle">Tu colección también puede darte un rol.</h2>
-        <p>Conecta Discord y sincroniza el rol que corresponde a la cantidad de Sprites que marcaste. Usar el rastreador no requiere Discord.</p>
+        <h2 id="discordRoleTitle">Tu colección puede desbloquear varios roles.</h2>
+        <p>Conecta Discord para sincronizar tu nivel de Colección, tu nivel de Dominio y los roles Especiales de las variantes que posees. Usar el rastreador no requiere Discord.</p>
 
         <div class="discord-role-steps" aria-label="Cómo funciona">
           <span><b>1</b> Marca tus Sprites</span>
@@ -151,12 +151,20 @@
 
         <div class="discord-role-preview">
           <div>
-            <span>Rol disponible</span>
-            <strong id="discordEligibleRole">Empieza tu colección</strong>
+            <span>🧩 Rol de Colección</span>
+            <strong id="discordEligibleCollectionRole">Disponible al llegar a 10</strong>
           </div>
           <div>
-            <span>Sprites marcados</span>
-            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">83</span></strong>
+            <span>🏆 Rol de Dominio</span>
+            <strong id="discordEligibleMasteryRole">Disponible al dominar 5</strong>
+          </div>
+          <div class="discord-special-role-preview">
+            <span>✨ Roles Especiales</span>
+            <strong id="discordEligibleSpecialRoles">Ninguno todavía</strong>
+          </div>
+          <div>
+            <span>Progreso registrado</span>
+            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">83</span> · <span id="discordMasteredCount">0</span> dominados</strong>
           </div>
         </div>
 
@@ -167,7 +175,7 @@
 
         <div class="discord-role-actions">
           <button class="button button-primary" id="connectDiscordButton" type="button">Conectar Discord</button>
-          <button class="button discord-sync-button" id="syncDiscordRoleButton" type="button" disabled>Sincronizar rol</button>
+          <button class="button discord-sync-button" id="syncDiscordRoleButton" type="button" disabled>Sincronizar roles</button>
           <a class="button discord-join-button" id="joinDiscordRoleButton" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" hidden>Entrar al servidor</a>
         </div>
 
@@ -357,9 +365,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=9.7"></script>
-  <script src="sprites.js?v=9.7"></script>
-  <script src="app.js?v=9.7"></script>
-  <script src="discord-integration.js?v=9.7"></script>
+  <script src="discord-config.js?v=9.8"></script>
+  <script src="sprites.js?v=9.8"></script>
+  <script src="app.js?v=9.8"></script>
+  <script src="discord-integration.js?v=9.8"></script>
 </body>
 </html>
