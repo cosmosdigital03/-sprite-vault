@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9.6" />
+  <link rel="stylesheet" href="styles.css?v=9.7" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -30,6 +30,24 @@
       <a class="button button-primary" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Entrar al Discord</a>
     </nav>
   </header>
+
+  <section class="discord-cta-banner" aria-label="Únete a Sprite Vault">
+    <div class="discord-cta-icon" aria-hidden="true">🎁</div>
+    <div class="discord-cta-copy">
+      <span class="discord-cta-kicker">COMPLETA TU COLECCIÓN</span>
+      <strong>¿Te falta un Sprite?</strong>
+      <p>Únete a <b>Sprite Vault</b> para hacer intercambios, prestar o recibir Sprites y completar tu colección con la comunidad.</p>
+      <small>El rastreador sigue siendo gratis y público para todos.</small>
+    </div>
+    <div class="discord-cta-actions">
+      <div class="discord-cta-benefits" aria-label="Beneficios">
+        <span>🤝 Intercambios</span>
+        <span>🎁 Regalos</span>
+        <span>🏆 Roles</span>
+      </div>
+      <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
+    </div>
+  </section>
 
   <main class="page-shell">
     <section class="hero">
@@ -105,6 +123,55 @@
             <small>para completar el Vault</small>
           </div>
         </article>
+      </div>
+    </section>
+
+    <section class="discord-role-panel" id="discordRolePanel" aria-labelledby="discordRoleTitle">
+      <div class="discord-role-intro">
+        <span class="eyebrow">RECOMPENSAS DE DISCORD</span>
+        <h2 id="discordRoleTitle">Tu colección también puede darte un rol.</h2>
+        <p>Conecta Discord y sincroniza el rol que corresponde a la cantidad de Sprites que marcaste. Usar el rastreador no requiere Discord.</p>
+
+        <div class="discord-role-steps" aria-label="Cómo funciona">
+          <span><b>1</b> Marca tus Sprites</span>
+          <span><b>2</b> Conecta Discord</span>
+          <span><b>3</b> Sincroniza tu rol</span>
+        </div>
+      </div>
+
+      <div class="discord-role-card">
+        <div class="discord-account-row">
+          <div class="discord-avatar" id="discordUserAvatar" aria-hidden="true">D</div>
+          <div>
+            <span class="discord-account-label">CUENTA DE DISCORD</span>
+            <strong id="discordUserName">No conectada</strong>
+          </div>
+          <button class="discord-text-button" id="disconnectDiscordButton" type="button" hidden>Salir</button>
+        </div>
+
+        <div class="discord-role-preview">
+          <div>
+            <span>Rol disponible</span>
+            <strong id="discordEligibleRole">Empieza tu colección</strong>
+          </div>
+          <div>
+            <span>Sprites marcados</span>
+            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">83</span></strong>
+          </div>
+        </div>
+
+        <div class="discord-sync-status" id="discordSyncStatus" role="status" aria-live="polite">
+          <i id="discordStatusDot"></i>
+          <span id="discordStatusText">Preparando la conexión…</span>
+        </div>
+
+        <div class="discord-role-actions">
+          <button class="button button-primary" id="connectDiscordButton" type="button">Conectar Discord</button>
+          <button class="button discord-sync-button" id="syncDiscordRoleButton" type="button" disabled>Sincronizar rol</button>
+          <a class="button discord-join-button" id="joinDiscordRoleButton" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" hidden>Entrar al servidor</a>
+        </div>
+
+        <p class="discord-role-message" id="discordRoleMessage">Tu colección permanece guardada en este navegador.</p>
       </div>
     </section>
 
@@ -289,7 +356,10 @@
     </article>
   </template>
 
-  <script src="sprites.js?v=9.6"></script>
-  <script src="app.js?v=9.6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+  <script src="discord-config.js?v=9.7"></script>
+  <script src="sprites.js?v=9.7"></script>
+  <script src="app.js?v=9.7"></script>
+  <script src="discord-integration.js?v=9.7"></script>
 </body>
 </html>

@@ -197,3 +197,51 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 - Los faltantes se distinguen únicamente mediante borde rojo y símbolo rojo.
 - También se eliminó el efecto oscuro de los Sprites faltantes en la categoría Nuevos.
 - La clave de progreso sigue siendo `spriteVaultProgressV4`.
+
+
+## Actualización V9.7 — Banner y roles por colección
+
+- Se agregó un banner público en español: **¿Te falta un Sprite?**
+- El banner invita a entrar a Sprite Vault para hacer intercambios, prestar o recibir Sprites.
+- El tracker continúa gratis y público; Discord no es obligatorio.
+- Se agregó una tarjeta de **Recompensas de Discord** que calcula el rol disponible según la colección.
+- Se preparó el inicio de sesión con Discord usando Supabase Auth.
+- Se agregó el botón **Sincronizar rol** y una Supabase Edge Function segura.
+- El token del bot y los IDs de roles nunca se colocan en el navegador.
+- La clave de progreso continúa siendo `spriteVaultProgressV4`, por lo que esta actualización no borra selecciones guardadas.
+
+### Activar la conexión de Discord
+
+1. En Supabase, abre **Authentication → Providers → Discord** y activa el proveedor.
+2. En Discord Developer Portal, crea o usa la aplicación del bot y agrega la Redirect URL que Supabase muestra para Discord.
+3. En Supabase **URL Configuration**, agrega la dirección exacta de tu GitHub Pages como Redirect URL permitida.
+4. Abre `discord-config.js` y pega únicamente:
+   - `supabaseUrl`
+   - `supabasePublishableKey`
+5. Crea estos cinco roles en Discord y copia sus IDs:
+   - 🧩 Sprite Collector — 1 a 9
+   - 🔹 Vault Collector — 10 a 24
+   - 💠 Sprite Archivist — 25 a 49
+   - 🔮 Master Collector — 50 a 82
+   - 👑 Vault Completionist — 83
+6. El bot necesita **Manage Roles** y su rol debe estar por encima de los cinco roles de colección.
+7. En Supabase Edge Function Secrets agrega:
+   - `DISCORD_BOT_TOKEN`
+   - `DISCORD_GUILD_ID`
+   - `DISCORD_COLLECTION_ROLES` usando el contenido de `supabase/ROLE-RULES-EXAMPLE.json` con los IDs reales.
+   - `ALLOWED_ORIGIN` con la URL de tu GitHub Pages.
+8. Despliega la función:
+
+```bash
+supabase functions deploy sync-discord-role
+```
+
+### Seguridad importante
+
+Los siguientes valores son privados y nunca deben aparecer en `discord-config.js`, `index.html` ni GitHub:
+
+- Discord bot token
+- Supabase secret key o service role key
+- Cualquier archivo `.env`
+
+La Publishable/Anon key de Supabase sí se usa en el navegador; protege los datos con autenticación y Row Level Security.

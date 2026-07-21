@@ -542,6 +542,10 @@ function updateStats() {
 
   elements.progressSummary.textContent =
     `${owned} de ${total} Sprites agregados.`;
+
+  window.dispatchEvent(new CustomEvent("spritevault:collectionchange", {
+    detail: { owned, mastered, missing, total, collectionPct }
+  }));
 }
 
 function rarityMessage(value) {
@@ -774,6 +778,27 @@ elements.detailOwnedButton.addEventListener("click",() => {
 elements.detailMasteryButton.addEventListener("click",() => {
   toggleMastered(state.selectedSpriteId);
 });
+
+
+window.SpriteVaultCollection = {
+  getSnapshot() {
+    const ownedSpriteIds = SPRITES
+      .filter(sprite => state.progress[sprite.id].owned)
+      .map(sprite => sprite.id);
+    const masteredSpriteIds = SPRITES
+      .filter(sprite => state.progress[sprite.id].mastered)
+      .map(sprite => sprite.id);
+
+    return {
+      ownedSpriteIds,
+      masteredSpriteIds,
+      owned: ownedSpriteIds.length,
+      mastered: masteredSpriteIds.length,
+      total: SPRITES.length,
+      isPublicView: Boolean(state.publicProfile)
+    };
+  }
+};
 
 populateThemes();
 initializePublicProfile();
