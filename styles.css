@@ -226,9 +226,25 @@ select { min-width: 170px; height: 40px; color: white; background: var(--panel-l
 }
 .sprite-info { padding: 17px; }
 .sprite-title-row { display: flex; justify-content: space-between; gap: 10px; min-height: 82px; }
+.sprite-title-row > div { flex: 1; min-width: 0; }
 .sprite-theme { color: color-mix(in srgb, var(--theme-accent) 70%, white 35%); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; }
 .sprite-name { margin: 6px 0 3px; font-size: 1.07rem; line-height: 1.2; }
-.sprite-original-name { color: #727b99; font-size: .7rem; }
+.sprite-secondary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+.sprite-original-name,
+.sprite-find-rate {
+  color: #727b99;
+  font-size: .7rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.sprite-original-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sprite-find-rate { flex: 0 0 auto; text-align: right; }
 .favorite-button { border: 0; background: transparent; color: #78809e; font-size: 1.6rem; cursor: pointer; align-self: start; }
 .favorite-button.active { color: var(--gold); }
 .sprite-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
@@ -244,7 +260,24 @@ dialog::backdrop { background: rgba(2,3,9,.78); backdrop-filter: blur(8px); }
 .dialog-card { position: relative; background: #13172b; border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
 .dialog-card h2 { margin-bottom: 8px; }
 .dialog-card p { color: var(--muted); line-height: 1.6; }
-.dialog-close { position: absolute; right: 14px; top: 12px; border: 0; background: transparent; color: var(--muted); font-size: 1.8rem; cursor: pointer; }
+.dialog-close {
+  position: absolute;
+  z-index: 40;
+  right: 14px;
+  top: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 50%;
+  background: rgba(7,9,19,.72);
+  color: white;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
 .share-box { display: flex; gap: 8px; margin-top: 18px; }
 .share-box input { min-width: 0; flex: 1; border: 1px solid var(--line); border-radius: 10px; background: #0b0e1c; color: var(--muted); padding: 11px; }
 .share-box button { border: 0; border-radius: 10px; background: var(--purple); color: white; padding: 0 16px; font-weight: 800; cursor: pointer; }
@@ -440,16 +473,40 @@ footer strong { color: white; letter-spacing: .08em; }
 .detail-new { top: 18px; right: 18px; }
 .sprite-detail-content { padding: 40px 34px 32px; }
 .sprite-detail-content h2 { font-size: 2rem; margin: 8px 0 5px; letter-spacing: -.045em; }
-#detailOriginalName { color: var(--muted); margin: 0 0 26px; }
-.detail-stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.detail-stat-grid div {
+.detail-secondary-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0 0 24px;
+}
+#detailOriginalName,
+.detail-find-rate > strong {
+  color: var(--muted);
+  font-size: .86rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.detail-find-rate {
+  display: grid;
+  justify-items: end;
+  gap: 3px;
+  max-width: 190px;
+  text-align: right;
+}
+.detail-find-rate small {
+  color: #7f88a4;
+  font-size: .61rem;
+  line-height: 1.25;
+}
+.detail-rarity-card {
   padding: 15px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: rgba(255,255,255,.035);
 }
-.detail-stat-grid span { display:block; color:var(--muted); font-size:.72rem; margin-bottom:6px; }
-.detail-stat-grid strong { font-size:1.04rem; }
+.detail-rarity-card span { display:block; color:var(--muted); font-size:.72rem; margin-bottom:6px; }
+.detail-rarity-card strong { font-size:1.04rem; }
 .rarity-explanation {
   margin-top: 14px;
   padding: 14px;
@@ -516,7 +573,7 @@ footer strong { color: white; letter-spacing: .08em; }
   .progress-ring-inner strong { font-size:1.3rem; }
   .progress-circle-copy h2 { font-size:1.15rem; }
   .compact-stats { grid-template-columns:1fr; }
-  .detail-stat-grid,.detail-actions { grid-template-columns:1fr; }
+  .detail-actions { grid-template-columns:1fr; }
   .view-detail-hint { display:none; }
 }
 
@@ -1670,13 +1727,33 @@ body.capture-mode > dialog {
   font-size: .65rem;
   font-weight: 700;
 }
-.discord-cta-button {
-  min-width: 185px;
+.discord-cta-button-row {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 8px;
+  width: min(390px,100%);
+}
+.discord-cta-button,
+.discord-share-button {
+  min-width: 0;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 9px 12px;
   text-align: center;
+  font-size: .76rem;
+  line-height: 1.15;
+}
+.discord-share-button {
+  border-color: rgba(255,255,255,.13);
+  background: rgba(255,255,255,.055);
+}
+.discord-cta-button {
   background: linear-gradient(135deg,#7c5cff,#5865f2);
   box-shadow: 0 10px 28px rgba(88,101,242,.24);
 }
-.discord-cta-button:hover { transform: translateY(-1px); }
+.discord-cta-button:hover,
+.discord-share-button:hover { transform: translateY(-1px); }
 
 .discord-role-panel {
   display: grid;
@@ -1808,7 +1885,6 @@ body.capture-mode > dialog {
 .discord-role-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 11px; }
 .discord-role-actions .button { display: grid; place-items: center; min-height: 42px; padding: 9px 11px; font-size: .76rem; }
 .discord-sync-button { border-color: rgba(53,215,255,.22); background: rgba(53,215,255,.1); }
-.discord-join-button { grid-column: 1 / -1; background: #5865f2; }
 .discord-role-actions button:disabled { opacity: .42; cursor: not-allowed; }
 .discord-role-message { min-height: 17px; margin: 10px 2px 0; color: #858fac; font-size: .66rem; line-height: 1.45; }
 .public-view .discord-role-panel { display: none; }
@@ -1825,11 +1901,80 @@ body.capture-mode > dialog {
   .discord-cta-copy small { display: none; }
   .discord-cta-actions { display: grid; justify-items: stretch; }
   .discord-cta-benefits { justify-content: flex-start; }
-  .discord-cta-button { width: 100%; min-width: 0; }
+  .discord-cta-button-row { width: 100%; }
   .discord-role-panel { padding: 19px; border-radius: 20px; }
   .discord-role-preview { grid-template-columns: 1fr; }
 }
 @media (max-width: 390px) {
   .discord-role-actions { grid-template-columns: 1fr; }
-  .discord-join-button { grid-column: auto; }
+}
+
+
+/* ===== V9.9: mobile detail navigation and simplified CTA ===== */
+.mobile-dialog-back { display: none; }
+body.sprite-dialog-open { overflow: hidden; }
+
+@media (max-width: 700px) {
+  dialog.sprite-dialog {
+    inset: 0;
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .sprite-detail-card {
+    min-height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .mobile-dialog-back {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    width: 100%;
+    padding: calc(10px + env(safe-area-inset-top)) 18px 10px;
+    border: 0;
+    border-bottom: 1px solid rgba(255,255,255,.09);
+    background: rgba(10,13,28,.94);
+    color: white;
+    font: inherit;
+    font-size: .82rem;
+    font-weight: 850;
+    text-align: left;
+    backdrop-filter: blur(18px);
+    cursor: pointer;
+  }
+
+  .sprite-detail-card > .dialog-close { display: none; }
+  .sprite-detail-visual { min-height: 42dvh; }
+  .detail-secondary-row { gap: 12px; }
+  .detail-find-rate { max-width: 155px; }
+}
+
+@media (max-width: 600px) {
+  .discord-cta-button-row {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .discord-cta-button,
+  .discord-share-button {
+    min-height: 44px;
+    padding-inline: 8px;
+    font-size: .7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .discord-cta-button,
+  .discord-share-button { font-size: .64rem; }
 }

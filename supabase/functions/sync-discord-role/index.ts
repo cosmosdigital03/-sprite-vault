@@ -2,6 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const DISCORD_API = "https://discord.com/api/v10";
 const SPECIAL_KEYS = new Set(["galaxy", "gummy", "gold", "holofoil", "cubes"]);
+const MAX_DISCORD_RETRIES = 5;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": Deno.env.get("ALLOWED_ORIGIN") || "*",
@@ -28,11 +29,19 @@ type RoleRules = {
   specials: SpecialRole[];
 };
 
+type DiscordMember = {
+  roles?: string[];
+};
+
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function isDiscordRoleId(value: unknown): value is string {
@@ -88,15 +97,41 @@ async function discordRequest(path: string, init: RequestInit = {}) {
   const token = Deno.env.get("DISCORD_BOT_TOKEN");
   if (!token) throw new Error("DISCORD_BOT_TOKEN is missing.");
 
-  return fetch(`${DISCORD_API}${path}`, {
-    ...init,
-    headers: {
-      Authorization: `Bot ${token}`,
-      "Content-Type": "application/json",
-      "X-Audit-Log-Reason": encodeURIComponent("Sprite Vault role sync"),
-      ...(init.headers || {}),
-    },
-  });
+  for (let attempt = 0; attempt <= MAX_DISCORD_RETRIES; attempt += 1) {
+    const response = await fetch(`${DISCORD_API}${path}`, {
+      ...init,
+      headers: {
+        Authorization: `Bot ${token}`,
+        "Content-Type": "application/json",
+        "X-Audit-Log-Reason": encodeURIComponent("Sprite Vault role sync"),
+        ...(init.headers || {}),
+      },
+    });
+
+    if (response.status !== 429) return response;
+
+    const rateLimit = await response.json().catch(() => ({})) as {
+      retry_after?: number;
+      global?: boolean;
+    };
+    const retryAfterSeconds = Number(rateLimit.retry_after);
+
+    if (attempt === MAX_DISCORD_RETRIES || !Number.isFinite(retryAfterSeconds)) {
+      return new Response(JSON.stringify(rateLimit), {
+        status: 429,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const waitMs = Math.max(1000, Math.ceil(retryAfterSeconds * 1000) + 300);
+    console.warn(
+      `Discord rate limit reached. Waiting ${waitMs}ms before retry ${attempt + 1}.`,
+      { path, global: Boolean(rateLimit.global) },
+    );
+    await sleep(waitMs);
+  }
+
+  throw new Error("Discord request retry loop ended unexpectedly.");
 }
 
 async function removeRole(guildId: string, userId: string, roleId: string) {
@@ -104,8 +139,14 @@ async function removeRole(guildId: string, userId: string, roleId: string) {
     `/guilds/${guildId}/members/${userId}/roles/${roleId}`,
     { method: "DELETE" },
   );
+
+  if (response.status === 403) {
+    throw new Error("Move the bot role above every managed role and enable Manage Roles.");
+  }
   if (!response.ok && response.status !== 404) {
-    console.error("Could not remove role", roleId, response.status, await response.text());
+    const detail = await response.text();
+    console.error("Could not remove role", roleId, response.status, detail);
+    throw new Error("Discord rejected a role removal.");
   }
 }
 
@@ -114,12 +155,14 @@ async function addRole(guildId: string, userId: string, roleId: string) {
     `/guilds/${guildId}/members/${userId}/roles/${roleId}`,
     { method: "PUT" },
   );
+
   if (response.status === 403) {
-    throw new Error("Coloca el rol del bot por encima de todos los roles administrados y activa Manage Roles.");
+    throw new Error("Move the bot role above every managed role and enable Manage Roles.");
   }
   if (!response.ok) {
-    console.error("Could not add role", roleId, response.status, await response.text());
-    throw new Error("Discord rechazó la actualización de uno de los roles.");
+    const detail = await response.text();
+    console.error("Could not add role", roleId, response.status, detail);
+    throw new Error("Discord rejected a role addition.");
   }
 }
 
@@ -189,44 +232,63 @@ Deno.serve(async req => {
       return json({ ok: false, message: "The bot could not verify your server membership." }, 502);
     }
 
+    const member = await memberResponse.json() as DiscordMember;
+    const currentRoleIds = new Set(
+      Array.isArray(member.roles) ? member.roles.filter(isDiscordRoleId) : [],
+    );
+
     const rules = readRoleRules();
     const collectionRole = chooseThresholdRole(rules.collection, ownedSpriteIds.length);
     const masteryRole = chooseThresholdRole(rules.mastery, masteredSpriteIds.length);
     const specialKeySet = new Set(ownedSpecialKeys);
     const selectedSpecialRoles = rules.specials.filter(rule => specialKeySet.has(rule.key));
 
-    for (const role of rules.collection) {
-      if (collectionRole?.roleId !== role.roleId) await removeRole(guildId, discordUserId, role.roleId);
-    }
-    for (const role of rules.mastery) {
-      if (masteryRole?.roleId !== role.roleId) await removeRole(guildId, discordUserId, role.roleId);
-    }
-    for (const role of rules.specials) {
-      if (!selectedSpecialRoles.some(selected => selected.roleId === role.roleId)) {
-        await removeRole(guildId, discordUserId, role.roleId);
-      }
-    }
-
-    const rolesToAdd = [
+    const desiredRoles = [
       collectionRole,
       masteryRole,
       ...selectedSpecialRoles,
     ].filter((role): role is ThresholdRole | SpecialRole => Boolean(role));
 
-    for (const role of rolesToAdd) {
-      await addRole(guildId, discordUserId, role.roleId);
+    const desiredRoleIds = new Set(desiredRoles.map(role => role.roleId));
+    const managedRoleIds = new Set([
+      ...rules.collection.map(role => role.roleId),
+      ...rules.mastery.map(role => role.roleId),
+      ...rules.specials.map(role => role.roleId),
+    ]);
+
+    // Only change roles that actually need changing. The old function sent up to
+    // 22 Discord requests on every click, which caused Discord HTTP 429 rate limits.
+    const roleIdsToRemove = [...currentRoleIds].filter(
+      roleId => managedRoleIds.has(roleId) && !desiredRoleIds.has(roleId),
+    );
+    const roleIdsToAdd = [...desiredRoleIds].filter(
+      roleId => !currentRoleIds.has(roleId),
+    );
+
+    for (const roleId of roleIdsToRemove) {
+      await removeRole(guildId, discordUserId, roleId);
+    }
+    for (const roleId of roleIdsToAdd) {
+      await addRole(guildId, discordUserId, roleId);
     }
 
     return json({
       ok: true,
-      roleNames: rolesToAdd.map(role => role.name),
+      roleNames: desiredRoles.map(role => role.name),
       ownedCount: ownedSpriteIds.length,
       masteredCount: masteredSpriteIds.length,
       totalSprites,
       specialKeys: ownedSpecialKeys,
+      changes: {
+        added: roleIdsToAdd.length,
+        removed: roleIdsToRemove.length,
+      },
     });
   } catch (error) {
     console.error(error);
-    return json({ ok: false, message: error instanceof Error ? error.message : "Unexpected error." }, 500);
+    return json({
+      ok: false,
+      message: error instanceof Error ? error.message : "Unexpected error.",
+    }, 500);
   }
 });

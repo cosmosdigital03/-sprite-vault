@@ -18,7 +18,6 @@
     message: byId("discordRoleMessage"),
     connect: byId("connectDiscordButton"),
     sync: byId("syncDiscordRoleButton"),
-    join: byId("joinDiscordRoleButton"),
     disconnect: byId("disconnectDiscordButton")
   };
 
@@ -107,7 +106,6 @@
       ui.connect.hidden = false;
       ui.disconnect.hidden = true;
       ui.sync.disabled = true;
-      ui.join.hidden = true;
       if (configured) setStatus("Conecta Discord para activar tus roles", "warning");
       renderCollection();
       return;
@@ -181,7 +179,6 @@
     syncing = true;
     ui.sync.disabled = true;
     ui.sync.textContent = "Sincronizando…";
-    ui.join.hidden = true;
     setStatus("Actualizando tus roles en Sprite Vault…", "warning");
 
     try {
@@ -201,8 +198,7 @@
 
       if (result?.code === "not_member") {
         setStatus("Tu Discord no está dentro de Sprite Vault", "warning");
-        setMessage("Entra al servidor y vuelve a pulsar Sincronizar roles.");
-        ui.join.hidden = false;
+        setMessage("Usa el botón “Únete a Sprite Vault” de arriba y después vuelve a sincronizar.");
         return;
       }
 
@@ -229,8 +225,6 @@
 
   async function initialize() {
     renderCollection();
-    ui.join.href = config.discordInvite || "https://discord.gg/7AAnVUPZc";
-
     if (!configured) {
       ui.connect.disabled = false;
       ui.sync.disabled = true;

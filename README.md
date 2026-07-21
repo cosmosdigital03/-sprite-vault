@@ -1,4 +1,4 @@
-# Sprite Vault Tracker — V9.8
+# Sprite Vault Tracker — V9.9
 
 Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
@@ -91,7 +91,7 @@ El sitio incluye el aviso exigido por Epic:
 
 ## Actualización V7
 
-- El botón **Entrar al Discord** abre `https://discord.gg/7AAnVUPZc`.
+- El botón **Únete a Sprite Vault** abre `https://discord.gg/7AAnVUPZc`.
 - El icono `SV` fue reemplazado por el Sprite dorado local en `images/sprite-vault-logo.png`.
 
 
@@ -201,7 +201,7 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 
 ## Actualización V9.7 — Banner y roles por colección
 
-> Nota: la configuración de cinco roles descrita en esta sección fue reemplazada por el sistema V9.8 al final de este archivo. Usa `DISCORD_ROLE_RULES`, no `DISCORD_COLLECTION_ROLES`.
+> Nota: la configuración de cinco roles descrita en esta sección fue reemplazada por el sistema V9.9 al final de este archivo. Usa `DISCORD_ROLE_RULES`, no `DISCORD_COLLECTION_ROLES`.
 
 - Se agregó un banner público en español: **¿Te falta un Sprite?**
 - El banner invita a entrar a Sprite Vault para hacer intercambios, prestar o recibir Sprites.
@@ -249,7 +249,7 @@ Los siguientes valores son privados y nunca deben aparecer en `discord-config.js
 La Publishable/Anon key de Supabase sí se usa en el navegador; protege los datos con autenticación y Row Level Security.
 
 
-## Actualización V9.8 — Colección, Dominio y Especiales
+## Actualización V9.9 — Colección, Dominio y Especiales
 
 - El sincronizador ahora administra tres grupos independientes de roles:
   - **Colección:** mantiene solamente el nivel más alto alcanzado.
@@ -272,7 +272,7 @@ Además de los tres que ya creaste, crea estos dos si deseas sincronizarlos:
 
 El rol de Cubos quedará preparado, pero no se entregará hasta que los Sprites Cubo estén añadidos a `sprites.js` con tema `Cubo` o un ID que comience con `cube_`.
 
-### Secretos de Supabase para V9.8
+### Secretos de Supabase para V9.9
 
 Usa estos secretos en la Edge Function:
 
@@ -284,3 +284,14 @@ Usa estos secretos en la Edge Function:
 Para `DISCORD_ROLE_RULES`, abre `supabase/ROLE-RULES-ONE-LINE.txt`, reemplaza cada texto `ROLE_ID_...` por el ID real del rol correspondiente y pega la línea completa como valor del secreto.
 
 No agregues los tres roles separadores al JSON. El bot solo debe administrar los 10 roles de Colección, 7 de Dominio y 5 Especiales.
+
+
+## Cambios V9.9
+
+- Botón móvil visible “Volver a la lista” dentro de los detalles de cada Sprite.
+- El botón Atrás del teléfono también cierra los detalles.
+- Nombre inglés y porcentaje aparecen juntos en cada tarjeta.
+- En detalles, el porcentaje aparece junto al nombre inglés con la etiqueta “Probabilidad estimada de encontrarlo”.
+- “Compartir lista” está junto a “Únete a Sprite Vault”.
+- Se eliminaron los botones repetidos “Entrar al Discord / Entrar al servidor”.
+- Incluye la Edge Function corregida para respetar los límites de Discord.

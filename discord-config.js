@@ -1,7 +1,7 @@
 /*
-  Sprite Vault Discord integration — configuración pública del navegador.
-  Pega aquí solamente la URL del proyecto Supabase y la Publishable/Anon key.
-  NUNCA coloques aquí el token del bot, claves secretas de Supabase ni IDs de roles.
+  Sprite Vault Discord integration — public browser configuration.
+  Only the Supabase Project URL and Publishable key belong here.
+  NEVER place the Discord bot token, Supabase secret key, or Discord role IDs in this file.
 */
 window.SPRITE_VAULT_CONFIG = {
   supabaseUrl: "https://vaxwnrhspjjbsdxgzeqr.supabase.co",
@@ -33,10 +33,10 @@ window.SPRITE_VAULT_CONFIG = {
   ],
 
   specialRoles: [
-    { key: "galaxy",  name: "🌌 Sprites Galaxia" },
-    { key: "gummy",   name: "🍬 Sprites Gummy" },
-    { key: "gold",    name: "🟡 Sprites Dorados" },
+    { key: "galaxy",   name: "🌌 Sprites Galaxia" },
+    { key: "gummy",    name: "🍬 Sprites Gummy" },
+    { key: "gold",     name: "🟡 Sprites Dorados" },
     { key: "holofoil", name: "🌈 Sprites Holofoil" },
-    { key: "cubes",   name: "🧊 Sprites Cubos" }
+    { key: "cubes",    name: "🧊 Sprites Cubos" }
   ]
 };

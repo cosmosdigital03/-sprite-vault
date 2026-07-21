@@ -59,7 +59,7 @@ const elements = Object.fromEntries([
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
   "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
   "captureGrid","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
-  "captureResultCount","spriteDialog","closeSpriteDialog","detailVisual","detailImage","detailNewBadge",
+  "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
   "detailOwnedButton","detailMasteryButton","spriteShowcase","showcaseImage","showcaseTheme",
   "showcaseName","showcaseRarity"
@@ -417,6 +417,7 @@ function createCard(sprite) {
   fragment.querySelector(".sprite-theme").textContent = sprite.theme;
   fragment.querySelector(".sprite-name").textContent = sprite.name;
   fragment.querySelector(".sprite-original-name").textContent = sprite.originalName;
+  fragment.querySelector(".sprite-find-rate").textContent = sprite.findRate;
   fragment.querySelector(".new-badge").hidden = !sprite.isNew;
 
   const newStatusLabel = fragment.querySelector(".new-status-label");
@@ -577,10 +578,37 @@ function rarityMessage(value) {
   return "Comparativamente más frecuente que las variantes especiales.";
 }
 
+let spriteDialogHistoryActive = false;
+
 function openSpriteDetail(id) {
   state.selectedSpriteId = id;
   refreshDetail();
-  elements.spriteDialog.showModal();
+
+  if (!elements.spriteDialog.open) {
+    elements.spriteDialog.showModal();
+    document.body.classList.add("sprite-dialog-open");
+
+    history.pushState(
+      { ...(history.state || {}), spriteVaultDialog: true },
+      "",
+      location.href
+    );
+    spriteDialogHistoryActive = true;
+  }
+}
+
+function closeSpriteDetail({ fromHistory = false } = {}) {
+  if (elements.spriteDialog.open) elements.spriteDialog.close();
+  document.body.classList.remove("sprite-dialog-open");
+  state.selectedSpriteId = null;
+
+  if (!fromHistory && spriteDialogHistoryActive && history.state?.spriteVaultDialog) {
+    spriteDialogHistoryActive = false;
+    history.back();
+    return;
+  }
+
+  spriteDialogHistoryActive = false;
 }
 
 function refreshDetail() {
@@ -767,8 +795,20 @@ elements.captureViewButtons.addEventListener("click",event => {
   renderCaptureView();
 });
 
-elements.closeSpriteDialog.addEventListener("click",() => {
-  elements.spriteDialog.close();
+elements.closeSpriteDialog.addEventListener("click",() => closeSpriteDetail());
+elements.mobileCloseSpriteDialog.addEventListener("click",() => closeSpriteDetail());
+
+elements.spriteDialog.addEventListener("cancel",event => {
+  event.preventDefault();
+  closeSpriteDetail();
+});
+
+elements.spriteDialog.addEventListener("click",event => {
+  if (event.target === elements.spriteDialog) closeSpriteDetail();
+});
+
+window.addEventListener("popstate",() => {
+  if (elements.spriteDialog.open) closeSpriteDetail({ fromHistory: true });
 });
 
 elements.detailOwnedButton.addEventListener("click",() => {
