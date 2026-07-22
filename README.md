@@ -1,4 +1,4 @@
-# Sprite Vault Tracker — V10.3
+# Sprite Vault Tracker — V10.4
 
 Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
@@ -312,7 +312,7 @@ No agregues los tres roles separadores al JSON. El bot solo debe administrar los
 - The existing `spriteVaultProgressV4` storage key and Discord integration are unchanged.
 
 
-## Cambios V10.3
+## Cambios V10.4
 
 - Se corrigió el botón **Únete a Sprite Vault** en móvil para que nunca se salga de su caja; en pantallas pequeñas usa la etiqueta compacta **Únete al Vault**.
 - En la vista **Screenshot**, el nombre de cada tipo y su contador ahora tienen más espacio y el contador aparece como una pequeña etiqueta separada.

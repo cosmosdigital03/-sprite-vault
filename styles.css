@@ -3219,3 +3219,179 @@ body.sprite-dialog-open { overflow: hidden; }
     font-size: .39rem;
   }
 }
+
+
+/* ===== V10.4: tighter mobile screenshot grid, less wasted space ===== */
+@media (max-width: 700px) {
+  .capture-sheet.is-screenshot .capture-sheet-header {
+    padding: 3px 4px 2px;
+    gap: 3px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary {
+    gap: 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary div {
+    padding: 2px 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading {
+    min-height: auto;
+    padding: 2px 4px 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading h1 {
+    font-size: .66rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot #captureResultCount {
+    font-size: .41rem;
+  }
+
+  .capture-grid.is-matrix {
+    padding: 0 2px 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix {
+    gap: 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-header {
+    margin-bottom: 0;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-row {
+    height: 40px;
+    grid-template-columns: 52px repeat(var(--capture-variant-count), minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-heading,
+  .capture-sheet.is-screenshot .capture-variant-heading {
+    min-height: 20px;
+    height: 20px;
+    padding: 1px 2px;
+    border-radius: 6px;
+    font-size: .35rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-heading {
+    padding-left: 4px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label,
+  .capture-sheet.is-screenshot .capture-matrix-cell,
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label {
+    padding: 3px 4px;
+    gap: 3px;
+    border-radius: 7px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label strong {
+    font-size: .56rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label span {
+    min-height: 12px;
+    padding: 1px 4px;
+    font-size: .38rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    border-radius: 7px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite img {
+    width: 90%;
+    height: 90%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.32));
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite.is-owned::before,
+  .capture-sheet.is-screenshot .capture-matrix-sprite.is-missing::before {
+    top: 2px;
+    left: 2px;
+    width: 11px;
+    min-width: 11px;
+    height: 11px;
+    border-radius: 4px;
+    font-size: .39rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-mastered,
+  .capture-sheet.is-screenshot .capture-matrix-new {
+    width: 11px;
+    min-width: 11px;
+    height: 11px;
+    border-radius: 4px;
+    font-size: .39rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-mastered {
+    right: 2px;
+    bottom: 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-new {
+    top: 2px;
+    right: 2px;
+    padding-inline: 0;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    font-size: .78rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-footer {
+    min-height: 10px;
+    padding: 1px 4px;
+    font-size: .29rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .capture-sheet.is-screenshot .capture-matrix-row {
+    height: 38px;
+    grid-template-columns: 50px repeat(var(--capture-variant-count), minmax(0, 1fr));
+  }
+
+  .capture-sheet.is-screenshot .capture-type-heading,
+  .capture-sheet.is-screenshot .capture-variant-heading {
+    min-height: 18px;
+    height: 18px;
+    font-size: .33rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label,
+  .capture-sheet.is-screenshot .capture-matrix-cell,
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    height: 38px;
+    min-height: 38px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label strong {
+    font-size: .53rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label span {
+    font-size: .36rem;
+  }
+}

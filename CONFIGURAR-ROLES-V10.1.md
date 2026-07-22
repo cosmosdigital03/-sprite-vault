@@ -1,4 +1,4 @@
-# Configuración de roles de Sprite Vault V10.3
+# Configuración de roles de Sprite Vault V10.4
 
 ## No se asignan estos separadores
 
