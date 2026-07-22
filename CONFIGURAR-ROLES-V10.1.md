@@ -1,4 +1,4 @@
-# Configuración de roles de Sprite Vault V10.5
+# Configuración de roles de Sprite Vault V10.6
 
 ## No se asignan estos separadores
 
