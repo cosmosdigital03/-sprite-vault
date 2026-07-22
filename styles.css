@@ -2998,7 +2998,7 @@ body.sprite-dialog-open { overflow: hidden; }
   }
 }
 
-/* ===== V10.2: mobile CTA containment + clearer screenshot labels ===== */
+/* ===== V10.2: mobile CTA containment ===== */
 .discord-cta-label-mobile {
   display: none;
 }
@@ -3030,368 +3030,166 @@ body.sprite-dialog-open { overflow: hidden; }
   }
 }
 
-@media (max-width: 700px) {
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 28px;
-    grid-template-columns: 56px repeat(var(--capture-variant-count), minmax(0, 1fr));
-  }
 
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 28px;
-    min-height: 28px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label {
-    display: grid;
-    grid-template-rows: auto auto;
-    align-content: center;
-    justify-items: start;
-    gap: 3px;
-    padding: 3px 4px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label strong {
-    width: 100%;
-    font-size: .41rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label span {
-    display: inline-flex;
-    align-items: center;
-    min-height: 8px;
-    padding: 1px 3px;
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 999px;
-    background: rgba(255,255,255,.055);
-    color: #98a5c5;
-    font-size: .28rem;
-    line-height: 1;
-  }
-}
-
-@media (max-width: 390px) {
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 27px;
-    grid-template-columns: 54px repeat(var(--capture-variant-count), minmax(0, 1fr));
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 27px;
-    min-height: 27px;
-  }
-}
-
-
-
-/* ===== V10.3: restore visible screenshot sprites + crown corner badge ===== */
+/* ===== V10.1.5 Screenshot section copied exactly ===== */
 .capture-mastered-badge,
 .capture-matrix-mastered {
   left: auto;
+  right: 5px;
   top: auto;
+  bottom: 5px;
   transform: none;
 }
 
-.capture-mastered-badge {
-  right: 5px;
-  bottom: 5px;
-}
-
 .capture-matrix-mastered {
-  right: 3px;
-  bottom: 3px;
+  right: 2px;
+  bottom: 2px;
 }
 
 @media (max-width: 700px) {
-  .capture-sheet.is-screenshot .capture-matrix {
-    gap: 3px;
+  .capture-page.is-screenshot-mode .capture-toolbar {
+    grid-template-columns: auto 1fr;
+    margin-bottom: 4px;
+    padding: 4px;
   }
 
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 44px;
-    grid-template-columns: 60px repeat(var(--capture-variant-count), minmax(0, 1fr));
-    gap: 3px;
+  .capture-page.is-screenshot-mode .capture-back {
+    min-height: 28px;
+    padding: 4px 7px;
   }
 
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 44px;
-    min-height: 44px;
+  .capture-page.is-screenshot-mode .capture-view-buttons button {
+    min-height: 28px;
   }
 
-  .capture-sheet.is-screenshot .capture-type-label {
-    padding: 4px 6px;
-    gap: 4px;
-    border-radius: 8px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label strong {
-    font-size: .61rem;
-    line-height: 1.05;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label span {
-    min-height: 14px;
-    padding: 2px 5px;
-    border-radius: 999px;
-    font-size: .42rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    border-radius: 8px;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-sprite img {
-    width: 88%;
-    height: 88%;
-    object-fit: contain;
-    object-position: center bottom;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,.34));
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-sprite.is-owned::before,
-  .capture-sheet.is-screenshot .capture-matrix-sprite.is-missing::before {
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    min-width: 12px;
-    height: 12px;
-    border-radius: 4px;
-    font-size: .42rem;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-mastered,
-  .capture-sheet.is-screenshot .capture-matrix-new {
-    width: 12px;
-    min-width: 12px;
-    height: 12px;
-    border-radius: 4px;
-    font-size: .42rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-mastered {
-    right: 2px;
-    bottom: 2px;
-    opacity: .96;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-new {
-    top: 2px;
-    right: 2px;
-    padding-inline: 1px;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    font-size: .92rem;
-  }
-}
-
-@media (max-width: 390px) {
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 40px;
-    grid-template-columns: 58px repeat(var(--capture-variant-count), minmax(0, 1fr));
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 40px;
-    min-height: 40px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label strong {
-    font-size: .56rem;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label span {
-    font-size: .39rem;
-  }
-}
-
-
-/* ===== V10.4: tighter mobile screenshot grid, less wasted space ===== */
-@media (max-width: 700px) {
   .capture-sheet.is-screenshot .capture-sheet-header {
-    padding: 3px 4px 2px;
-    gap: 3px;
-  }
-
-  .capture-sheet.is-screenshot .capture-sheet-summary {
-    gap: 1px;
-  }
-
-  .capture-sheet.is-screenshot .capture-sheet-summary div {
-    padding: 2px 1px;
+    grid-template-columns: minmax(0,.72fr) minmax(190px,1.55fr);
+    padding: 4px 5px;
   }
 
   .capture-sheet.is-screenshot .capture-section-heading {
-    min-height: auto;
-    padding: 2px 4px 1px;
+    min-height: 20px;
+    padding: 2px 5px 1px;
   }
 
   .capture-sheet.is-screenshot .capture-section-heading h1 {
     font-size: .66rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot #captureResultCount {
-    font-size: .41rem;
   }
 
   .capture-grid.is-matrix {
-    padding: 0 2px 2px;
+    padding: 1px 3px 4px;
   }
 
-  .capture-sheet.is-screenshot .capture-matrix {
-    gap: 2px;
+  .capture-matrix {
+    gap: 1px;
   }
 
-  .capture-sheet.is-screenshot .capture-matrix-header {
-    margin-bottom: 0;
+  .capture-matrix-row {
+    height: 29px;
+    grid-template-columns: 43px repeat(var(--capture-variant-count), minmax(0,1fr));
+    gap: 1px;
   }
 
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 40px;
-    grid-template-columns: 52px repeat(var(--capture-variant-count), minmax(0, 1fr));
-    gap: 2px;
+  .capture-matrix-header {
+    height: 18px;
+    margin-bottom: 1px;
   }
 
-  .capture-sheet.is-screenshot .capture-type-heading,
-  .capture-sheet.is-screenshot .capture-variant-heading {
-    min-height: 20px;
-    height: 20px;
+  .capture-type-heading,
+  .capture-variant-heading {
+    min-height: 18px;
+    height: 18px;
+    font-size: .32rem;
+  }
+
+  .capture-type-label,
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 29px;
+    min-height: 29px;
+  }
+
+  .capture-type-label {
+    padding: 2px 3px;
+  }
+
+  .capture-type-label strong {
+    font-size: .4rem;
+  }
+
+  .capture-type-label span {
+    font-size: .29rem;
+  }
+
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    aspect-ratio: auto !important;
+    border-radius: 4px;
+  }
+
+  .capture-matrix-sprite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 1px 2px;
-    border-radius: 6px;
-    font-size: .35rem;
-    line-height: 1;
   }
 
-  .capture-sheet.is-screenshot .capture-type-heading {
-    padding-left: 4px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 40px;
-    min-height: 40px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label {
-    padding: 3px 4px;
-    gap: 3px;
-    border-radius: 7px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label strong {
-    font-size: .56rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label span {
-    min-height: 12px;
-    padding: 1px 4px;
-    font-size: .38rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    border-radius: 7px;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-sprite img {
-    width: 90%;
-    height: 90%;
-    max-width: 100%;
-    max-height: 100%;
+  .capture-matrix-sprite img {
+    display: block;
+    width: auto;
+    height: 27px;
+    max-width: 88%;
+    max-height: 27px;
     object-fit: contain;
-    object-position: center center;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,.32));
+    object-position: center;
+    transform: none !important;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.38));
   }
 
-  .capture-sheet.is-screenshot .capture-matrix-sprite.is-owned::before,
-  .capture-sheet.is-screenshot .capture-matrix-sprite.is-missing::before {
-    top: 2px;
-    left: 2px;
-    width: 11px;
-    min-width: 11px;
-    height: 11px;
-    border-radius: 4px;
-    font-size: .39rem;
+  .capture-matrix-sprite.is-owned::before,
+  .capture-matrix-sprite.is-missing::before,
+  .capture-matrix-mastered,
+  .capture-matrix-new {
+    width: 8px;
+    min-width: 8px;
+    height: 8px;
+    font-size: .27rem;
   }
 
-  .capture-sheet.is-screenshot .capture-matrix-mastered,
-  .capture-sheet.is-screenshot .capture-matrix-new {
-    width: 11px;
-    min-width: 11px;
-    height: 11px;
-    border-radius: 4px;
-    font-size: .39rem;
-    line-height: 1;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-mastered {
-    right: 2px;
-    bottom: 2px;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-new {
-    top: 2px;
-    right: 2px;
-    padding-inline: 0;
-  }
-
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    font-size: .78rem;
+  .capture-matrix-mastered {
+    right: 1px;
+    bottom: 1px;
+    width: 9px;
+    min-width: 9px;
+    height: 9px;
+    font-size: .31rem;
+    opacity: .96;
   }
 
   .capture-sheet.is-screenshot .capture-sheet-footer {
     min-height: 10px;
-    padding: 1px 4px;
-    font-size: .29rem;
+    padding: 1px 4px 2px;
   }
 }
 
 @media (max-width: 390px) {
-  .capture-sheet.is-screenshot .capture-matrix-row {
-    height: 38px;
-    grid-template-columns: 50px repeat(var(--capture-variant-count), minmax(0, 1fr));
+  .capture-matrix-row,
+  .capture-type-label,
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 28px;
+    min-height: 28px;
   }
 
-  .capture-sheet.is-screenshot .capture-type-heading,
-  .capture-sheet.is-screenshot .capture-variant-heading {
-    min-height: 18px;
-    height: 18px;
-    font-size: .33rem;
+  .capture-matrix-sprite img {
+    height: 26px;
+    max-height: 26px;
   }
+}
 
-  .capture-sheet.is-screenshot .capture-type-label,
-  .capture-sheet.is-screenshot .capture-matrix-cell,
-  .capture-sheet.is-screenshot .capture-matrix-sprite,
-  .capture-sheet.is-screenshot .capture-matrix-empty {
-    height: 38px;
-    min-height: 38px;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label strong {
-    font-size: .53rem;
-  }
-
-  .capture-sheet.is-screenshot .capture-type-label span {
-    font-size: .36rem;
-  }
+.capture-sheet-footer {
+  width: 100%;
+  margin: 0;
 }
