@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b16" />
+  <meta name="description" content="Rastreador comunitario en español de Sprites de Fortnite para Sprite Vault." />
+  <title>Sprite Vault | Rastreador de Sprites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=10.2" />
+</head>
+<body>
+  <div class="page-backdrop" aria-hidden="true"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Sprite Vault">
+      <span class="brand-mark"><img src="images/sprite-vault-logo.png" alt="" /></span>
+      <span>
+        <strong>SPRITE VAULT</strong>
+        <small>Índice comunitario</small>
+      </span>
+    </a>
+
+  </header>
+
+  <section class="discord-cta-banner" aria-label="Únete a Sprite Vault">
+    <div class="discord-cta-icon" aria-hidden="true">🎁</div>
+    <div class="discord-cta-copy">
+      <span class="discord-cta-kicker">COMPLETA TU COLECCIÓN</span>
+      <strong>¿Te falta un Sprite?</strong>
+      <p>Únete a <b>Sprite Vault</b> para hacer intercambios, prestar o recibir Sprites y completar tu colección con la comunidad.</p>
+      <small>El rastreador sigue siendo gratis y público para todos.</small>
+    </div>
+    <div class="discord-cta-actions">
+      <div class="discord-cta-benefits" aria-label="Beneficios">
+        <span>🤝 Intercambios</span>
+        <span>🎁 Regalos</span>
+        <span>🏆 Roles</span>
+      </div>
+      <div class="discord-cta-button-row">
+        <button class="button discord-share-button" id="shareButton" type="button">Compartir lista</button>
+        <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer"><span class="discord-cta-label-desktop">Únete a Sprite Vault</span><span class="discord-cta-label-mobile">Únete al Vault</span></a>
+      </div>
+    </div>
+  </section>
+
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">RASTREADOR DE SPRITES</span>
+        <h1>Tu colección, en un solo lugar.</h1>
+        <p>Marca los que tienes y los que ya dominaste.</p>
+        <div class="hero-summary" id="heroSummary">83 Sprites · Español · Guardado automático</div>
+      </div>
+
+      <aside class="sprite-showcase" id="spriteShowcase" aria-label="Sprite destacado">
+        <div class="showcase-stage">
+          <div class="showcase-glow"></div>
+          <div class="showcase-ring showcase-ring-one"></div>
+          <div class="showcase-ring showcase-ring-two"></div>
+
+          <div class="showcase-model">
+            <img id="showcaseImage" src="images/fire_basic.png" alt="Fuego" />
+          </div>
+
+          <span class="showcase-particle particle-one"></span>
+          <span class="showcase-particle particle-two"></span>
+          <span class="showcase-particle particle-three"></span>
+        </div>
+
+        <div class="showcase-meta">
+          <span class="showcase-kicker" id="showcaseTheme">Básico</span>
+          <strong id="showcaseName">Fuego</strong>
+          <span class="showcase-rarity" id="showcaseRarity">◆ Raro</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="progress-overview" aria-label="Progreso de colección">
+      <article class="progress-circle-card">
+        <div class="progress-ring" id="progressRing" style="--progress:0">
+          <div class="progress-ring-inner">
+            <strong id="progressCircleValue">0%</strong>
+            <span>colección</span>
+          </div>
+        </div>
+        <div class="progress-circle-copy">
+          <span class="eyebrow">PROGRESO TOTAL</span>
+          <h2 id="progressHeadline">Comienza tu colección</h2>
+          <p id="progressSummary">0 de 83 Sprites agregados.</p>
+        </div>
+      </article>
+
+      <div class="stats-grid compact-stats">
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Colección</span>
+            <strong id="collectionText">0 / 83</strong>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="collectionBar"></div></div>
+          <small id="collectionPercent">0% completado</small>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <span>Dominio</span>
+            <strong id="masteryText">0 / 83</strong>
+          </div>
+          <div class="progress-track"><div class="progress-fill mastery" id="masteryBar"></div></div>
+          <small id="masteryPercent">0% dominado</small>
+        </article>
+
+        <article class="stat-card stat-highlight">
+          <span class="stat-icon">⌁</span>
+          <div>
+            <span>Te faltan</span>
+            <strong id="missingCount">83 Sprites</strong>
+            <small>para completar el Vault</small>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="discord-role-panel" id="discordRolePanel" aria-labelledby="discordRoleTitle">
+      <div class="discord-role-intro">
+        <span class="eyebrow">RECOMPENSAS DE DISCORD</span>
+        <h2 id="discordRoleTitle">Tu colección puede desbloquear varios roles.</h2>
+        <p>Conecta Discord para sincronizar tu nivel de Colección, tu nivel de Dominio y los roles Especiales de las variantes que posees. Usar el rastreador no requiere Discord.</p>
+
+        <div class="discord-role-steps" aria-label="Cómo funciona">
+          <span><b>1</b> Marca tus Sprites</span>
+          <span><b>2</b> Conecta Discord</span>
+          <span><b>3</b> Sincroniza tu rol</span>
+        </div>
+      </div>
+
+      <div class="discord-role-card">
+        <div class="discord-account-row">
+          <div class="discord-avatar" id="discordUserAvatar" aria-hidden="true">D</div>
+          <div>
+            <span class="discord-account-label">CUENTA DE DISCORD</span>
+            <strong id="discordUserName">No conectada</strong>
+          </div>
+          <button class="discord-text-button" id="disconnectDiscordButton" type="button" hidden>Salir</button>
+        </div>
+
+        <div class="discord-role-preview">
+          <div>
+            <span>🧩 Rol de Colección</span>
+            <strong id="discordEligibleCollectionRole">Disponible al llegar a 10</strong>
+          </div>
+          <div>
+            <span>🏆 Rol de Dominio</span>
+            <strong id="discordEligibleMasteryRole">Disponible al dominar 5</strong>
+          </div>
+          <div class="discord-special-role-preview">
+            <span>✨ Roles Especiales</span>
+            <strong id="discordEligibleSpecialRoles">Ninguno todavía</strong>
+          </div>
+          <div>
+            <span>Progreso registrado</span>
+            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">83</span> · <span id="discordMasteredCount">0</span> dominados</strong>
+          </div>
+        </div>
+
+        <div class="discord-sync-status" id="discordSyncStatus" role="status" aria-live="polite">
+          <i id="discordStatusDot"></i>
+          <span id="discordStatusText">Preparando la conexión…</span>
+        </div>
+
+        <div class="discord-role-actions">
+          <button class="button button-primary" id="connectDiscordButton" type="button">Conectar Discord</button>
+          <button class="button discord-sync-button" id="syncDiscordRoleButton" type="button" disabled>Sincronizar roles</button>
+        </div>
+
+        <p class="discord-role-message" id="discordRoleMessage">Tu colección permanece guardada en este navegador.</p>
+      </div>
+    </section>
+
+    <section class="control-panel">
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="Buscar por nombre en español o inglés..." autocomplete="off" />
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <span class="filter-label">Estado</span>
+          <div class="segmented" id="statusFilters">
+            <button class="active" data-status="all">Todos <span id="countAll">83</span></button>
+            <button class="new-filter-button" data-status="new">Nuevos <span id="countNew">17</span></button>
+            <button data-status="owned">Tengo <span id="countOwned">0</span></button>
+            <button data-status="missing">Me faltan <span id="countMissing">83</span></button>
+            <button data-status="mastered">Dominados <span id="countMastered">0</span></button>
+            <button data-status="unmastered">Sin dominar <span id="countUnmastered">0</span></button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label class="filter-label" for="themeSelect">Tema</label>
+          <select id="themeSelect">
+            <option value="all">Todos los temas</option>
+          </select>
+        </div>
+
+        <label class="toggle">
+          <input id="groupToggle" type="checkbox" checked />
+          <span class="toggle-ui"></span>
+          Agrupar por tema
+        </label>
+
+        <button class="reset-filters" id="resetFilters" type="button">↻ Limpiar filtros</button>
+      </div>
+    </section>
+
+    <section class="results-heading">
+      <div>
+        <span class="eyebrow">ARCHIVO DEL VAULT</span>
+        <h2 id="resultsTitle">Todos los Sprites</h2>
+      </div>
+      <span class="result-count" id="resultCount">83 resultados</span>
+    </section>
+
+    <section id="spriteContainer" class="sprite-container"></section>
+
+    <section id="emptyState" class="empty-state" hidden>
+      <span>◇</span>
+      <h3>No encontramos Sprites</h3>
+      <p>Prueba otro nombre o cambia los filtros.</p>
+    </section>
+  </main>
+
+  
+
+  
+  <section id="capturePage" class="capture-page" hidden>
+    <div class="capture-toolbar">
+      <button id="closeCapture" class="capture-back" type="button">← Volver</button>
+
+      <div class="capture-toolbar-copy">
+        <strong>Lista para compartir</strong>
+        <span>Los Sprites en rojo son los que te faltan.</span>
+      </div>
+
+      <div class="capture-view-buttons" id="captureViewButtons">
+        <button class="active" type="button" data-capture-view="all">Todos juntos</button>
+        <button type="button" data-capture-view="missing">Solo me faltan</button>
+        <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
+      </div>
+    </div>
+
+    <article id="captureSheet" class="capture-sheet">
+      <header class="capture-sheet-header">
+        <div class="capture-sheet-brand">
+          <img src="images/sprite-vault-logo.png" alt="" />
+          <div>
+            <strong>SPRITE VAULT</strong>
+            <span>Mi colección de Sprites</span>
+          </div>
+        </div>
+
+        <div class="capture-sheet-summary">
+          <div><strong id="captureOwned">0</strong><span>Tengo</span></div>
+          <div><strong id="captureMissing">83</strong><span>Me faltan</span></div>
+          <div><strong id="captureMastered">0</strong><span>Dominados</span></div>
+          <div><strong id="capturePercent">0%</strong><span>Completado</span></div>
+        </div>
+      </header>
+
+      <div class="capture-legend">
+        <span><i class="legend-owned">✓</i> Lo tengo</span>
+        <span><i class="legend-missing">!</i> Me falta</span>
+        <span><i class="legend-mastered">♛</i> Dominado</span>
+        <span><i class="legend-new">N</i> Nuevo</span>
+      </div>
+
+      <div class="capture-section-heading">
+        <div>
+          <span class="eyebrow">LISTA DE SPRITES</span>
+          <h1 id="captureTitle">Todos juntos</h1>
+        </div>
+        <span id="captureResultCount">83 Sprites</span>
+      </div>
+
+      <div id="captureGrid" class="capture-grid"></div>
+
+      <footer class="capture-sheet-footer">
+        <span>Sprite Vault</span>
+        <span>discord.gg/7AAnVUPZc</span>
+      </footer>
+    </article>
+
+    <p class="capture-tip" id="captureTip">
+      En teléfono, usa una captura con desplazamiento para guardar la lista completa.
+    </p>
+  </section>
+
+  <dialog id="spriteDialog" class="sprite-dialog">
+    <div class="dialog-card sprite-detail-card">
+      <button class="mobile-dialog-back" id="mobileCloseSpriteDialog" type="button">← Volver a la lista</button>
+      <button class="dialog-close" id="closeSpriteDialog" type="button" aria-label="Cerrar detalles">×</button>
+      <div class="sprite-detail-visual" id="detailVisual">
+        <img id="detailImage" alt="" />
+        <span id="detailNewBadge" class="new-badge detail-new">Nuevo</span>
+      </div>
+      <div class="sprite-detail-content">
+        <span class="eyebrow" id="detailTheme">TEMA</span>
+        <h2 id="detailName">Sprite</h2>
+        <div class="detail-secondary-row">
+          <span id="detailOriginalName"></span>
+          <span class="detail-find-rate">
+            <strong id="detailFindRate">—</strong>
+            <small>Probabilidad estimada de encontrarlo</small>
+          </span>
+        </div>
+
+        <div class="detail-rarity-card">
+          <span>Rareza</span><strong id="detailRarity">—</strong>
+        </div>
+
+        <div class="rarity-explanation" id="rarityExplanation"></div>
+        
+
+        <div class="detail-actions">
+          <button id="detailOwnedButton" type="button"></button>
+          <button id="detailMasteryButton" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <footer>
+    <div>
+      <strong>SPRITE VAULT</strong>
+      <span>© 2026 Sprite Vault — diseño y código original.</span>
+      <span>Sitio de fans gratuito, no comercial y no oficial.</span>
+    </div>
+    <span>Portions of the materials used are trademarks and/or copyrighted works of Epic Games, Inc. All rights reserved by Epic. This material is not official and is not endorsed by Epic.</span>
+  </footer>
+
+  <template id="spriteCardTemplate">
+    <article class="sprite-card">
+      <div class="sprite-visual">
+        <img class="sprite-image" alt="" loading="lazy" decoding="async" />
+        <span class="image-fallback" aria-hidden="true">✦</span>
+        <span class="sprite-rarity"></span>
+        <span class="new-badge">Nuevo</span>
+        <span class="new-status-label" hidden></span>
+        <span class="view-detail-hint">Ver detalles</span>
+      </div>
+      <div class="sprite-info">
+        <div class="sprite-title-row">
+          <div>
+            <span class="sprite-theme"></span>
+            <h3 class="sprite-name"></h3>
+            <div class="sprite-secondary-row">
+              <small class="sprite-original-name"></small>
+              <small class="sprite-find-rate" title="Probabilidad estimada de encontrarlo"></small>
+            </div>
+          </div>
+          <button class="favorite-button" title="Marcar como favorito" aria-label="Marcar como favorito">☆</button>
+        </div>
+        <div class="sprite-actions">
+          <button class="collection-button"></button>
+          <button class="mastery-button"></button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
+  <script src="discord-config.js?v=10.2"></script>
+  <script src="sprites.js?v=10.2"></script>
+  <script src="app.js?v=10.2"></script>
+  <script src="discord-integration.js?v=10.2"></script>
+</body>
+</html>
