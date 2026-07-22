@@ -2704,3 +2704,296 @@ body.sprite-dialog-open { overflow: hidden; }
     font-size: .52rem;
   }
 }
+
+
+/* ===== V10.1: mobile image visibility + one-screen compact capture ===== */
+
+/* A mastered Sprite uses a crown instead of a star. */
+.legend-mastered,
+.capture-mastered-badge,
+.capture-matrix-mastered {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #3b2500;
+  background: linear-gradient(145deg, #ffe89a, #ffbd39 72%);
+  border: 1px solid rgba(255,241,178,.9);
+  box-shadow: 0 2px 8px rgba(255,188,43,.38);
+}
+
+.capture-mastered-badge,
+.capture-matrix-mastered {
+  left: 50%;
+  right: auto;
+  top: 50%;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+}
+
+@media (max-width: 700px) {
+  /* Keep the entire character inside the card instead of cropping its body. */
+  .sprite-visual {
+    height: 172px;
+    padding: 8px;
+  }
+
+  .sprite-image {
+    width: 82%;
+    height: 82%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transform: none !important;
+  }
+
+  /* Screenshot mode becomes a true dense sheet. */
+  .capture-page.is-screenshot-mode {
+    padding: 0;
+  }
+
+  .capture-page.is-screenshot-mode .capture-toolbar {
+    position: relative;
+    top: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 0;
+  }
+
+  .capture-page.is-screenshot-mode .capture-toolbar-copy {
+    display: none;
+  }
+
+  .capture-page.is-screenshot-mode .capture-back {
+    min-height: 30px;
+    padding: 5px 8px;
+    border-radius: 9px;
+    font-size: .54rem;
+  }
+
+  .capture-page.is-screenshot-mode .capture-view-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 3px;
+  }
+
+  .capture-page.is-screenshot-mode .capture-view-buttons button {
+    min-height: 30px;
+    padding: 4px 2px;
+    border-radius: 8px;
+    font-size: .46rem;
+  }
+
+  .capture-page.is-screenshot-mode .capture-tip {
+    display: none;
+  }
+
+  .capture-sheet.is-screenshot {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-header {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(180px,1.7fr);
+    align-items: center;
+    gap: 4px;
+    padding: 4px 5px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-brand {
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-brand img {
+    width: 23px;
+    height: 23px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-brand strong {
+    font-size: .54rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-brand span {
+    display: none;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary {
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary div {
+    padding: 2px 1px;
+    border-radius: 5px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary strong {
+    font-size: .54rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-summary span {
+    font-size: .31rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-legend {
+    display: none;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading {
+    min-height: 23px;
+    padding: 3px 5px 2px;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading h1 {
+    margin-top: 1px;
+    font-size: .7rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading .eyebrow {
+    display: none;
+  }
+
+  .capture-sheet.is-screenshot #captureResultCount {
+    font-size: .43rem;
+  }
+
+  .capture-grid.is-matrix {
+    padding: 1px 3px 3px;
+  }
+
+  .capture-matrix {
+    gap: 1px;
+  }
+
+  .capture-matrix-row {
+    height: 24px;
+    grid-template-columns: 42px repeat(var(--capture-variant-count), minmax(0,1fr));
+    gap: 1px;
+  }
+
+  .capture-matrix-header {
+    height: 17px;
+    margin-bottom: 1px;
+  }
+
+  .capture-type-heading,
+  .capture-variant-heading {
+    min-height: 17px;
+    height: 17px;
+    padding: 1px;
+    border-radius: 4px;
+    font-size: .31rem;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .capture-type-heading {
+    padding-left: 3px;
+  }
+
+  .capture-type-label {
+    height: 24px;
+    gap: 0;
+    padding: 2px 3px;
+    border-radius: 4px;
+  }
+
+  .capture-type-label strong {
+    font-size: .39rem;
+    line-height: 1;
+  }
+
+  .capture-type-label span {
+    font-size: .3rem;
+    line-height: 1;
+  }
+
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 24px;
+    min-height: 24px;
+  }
+
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    width: 100%;
+    aspect-ratio: auto;
+    border-radius: 4px;
+  }
+
+  .capture-matrix-sprite img {
+    width: 98%;
+    height: 98%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.35));
+  }
+
+  .capture-matrix-sprite.is-owned::before,
+  .capture-matrix-sprite.is-missing::before,
+  .capture-matrix-mastered,
+  .capture-matrix-new {
+    width: 8px;
+    min-width: 8px;
+    height: 8px;
+    border-radius: 3px;
+    font-size: .27rem;
+    line-height: 1;
+  }
+
+  .capture-matrix-sprite.is-owned::before,
+  .capture-matrix-sprite.is-missing::before {
+    top: 1px;
+    left: 1px;
+  }
+
+  .capture-matrix-mastered {
+    width: 11px;
+    min-width: 11px;
+    height: 11px;
+    font-size: .38rem;
+    opacity: .92;
+  }
+
+  .capture-matrix-new {
+    top: 1px;
+    right: 1px;
+    padding-inline: 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-footer {
+    min-height: 12px;
+    padding: 2px 4px;
+    font-size: .31rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .sprite-visual {
+    height: 158px;
+  }
+
+  .sprite-image {
+    width: 80%;
+    height: 80%;
+  }
+
+  .capture-matrix-row,
+  .capture-type-label,
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 23px;
+    min-height: 23px;
+  }
+}

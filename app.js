@@ -455,7 +455,7 @@ function createCard(sprite) {
   collection.addEventListener("click",() => toggleOwned(sprite.id));
 
   const mastery = fragment.querySelector(".mastery-button");
-  mastery.textContent = item.mastered ? "★ Dominado" : "Dominar";
+  mastery.textContent = item.mastered ? "♛ Dominado" : "Dominar";
   mastery.classList.toggle("active",item.mastered);
   mastery.disabled = !item.owned || Boolean(state.publicProfile);
   mastery.addEventListener("click",() => toggleMastered(sprite.id));
@@ -636,7 +636,7 @@ function refreshDetail() {
   elements.detailOwnedButton.disabled = Boolean(state.publicProfile);
 
   elements.detailMasteryButton.textContent =
-    item.mastered ? "★ Dominado" : "Marcar como dominado";
+    item.mastered ? "♛ Dominado" : "Marcar como dominado";
   elements.detailMasteryButton.classList.toggle("active",item.mastered);
   elements.detailMasteryButton.disabled =
     !item.owned || Boolean(state.publicProfile);
@@ -673,6 +673,7 @@ function openCaptureView() {
 }
 
 function closeCaptureView() {
+  elements.capturePage.classList.remove("is-screenshot-mode");
   document.body.classList.remove("capture-mode");
   elements.capturePage.hidden = true;
   window.scrollTo({top:0,behavior:"auto"});
@@ -680,9 +681,9 @@ function closeCaptureView() {
 
 const CAPTURE_VARIANT_ORDER = [
   { theme: "Básico", label: "Normal" },
-  { theme: "Dorado", label: "Gold" },
-  { theme: "Gomita", label: "Gummy" },
-  { theme: "Galaxia", label: "Galaxy" },
+  { theme: "Dorado", label: "Dorado" },
+  { theme: "Gomita", label: "Gomita" },
+  { theme: "Galaxia", label: "Galaxia" },
   { theme: "Holográfico", label: "Holo" }
 ];
 
@@ -692,8 +693,8 @@ function getCaptureBaseKey(sprite) {
 
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
-  return basic.originalName
-    .replace(/^(Gold|Gummy|Galaxy|Holofoil)\s+/i, "")
+  return basic.name
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico)$/i, "")
     .trim();
 }
 
@@ -721,6 +722,7 @@ function renderCaptureView() {
     `${sprites.length} ${sprites.length === 1 ? "Sprite" : "Sprites"}`;
 
   const isScreenshot = state.captureView === "screenshot";
+  elements.capturePage.classList.toggle("is-screenshot-mode", isScreenshot);
   elements.captureSheet.classList.toggle("is-screenshot", isScreenshot);
   elements.captureGrid.classList.toggle("is-matrix", isScreenshot);
   elements.captureGrid.innerHTML = "";
@@ -833,7 +835,7 @@ function createCaptureMatrixSprite(sprite) {
   if (item.mastered) {
     const star = document.createElement("span");
     star.className = "capture-matrix-mastered";
-    star.textContent = "★";
+    star.textContent = "♛";
     tile.append(star);
   }
 
@@ -880,7 +882,7 @@ function createCaptureSprite(sprite) {
   if (item.mastered) {
     const masteredBadge = document.createElement("span");
     masteredBadge.className = "capture-mastered-badge";
-    masteredBadge.textContent = "★";
+    masteredBadge.textContent = "♛";
     imageWrap.append(masteredBadge);
   }
 
