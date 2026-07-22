@@ -58,7 +58,7 @@ const elements = Object.fromEntries([
   "collectionPercent","masteryPercent","missingCount","shareButton","heroSummary","countAll","countNew",
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
   "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
-  "captureGrid","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
+  "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
   "detailOwnedButton","detailMasteryButton","spriteShowcase","showcaseImage","showcaseTheme",
@@ -678,6 +678,25 @@ function closeCaptureView() {
   window.scrollTo({top:0,behavior:"auto"});
 }
 
+const CAPTURE_VARIANT_ORDER = [
+  { theme: "Básico", label: "Normal" },
+  { theme: "Dorado", label: "Gold" },
+  { theme: "Gomita", label: "Gummy" },
+  { theme: "Galaxia", label: "Galaxy" },
+  { theme: "Holográfico", label: "Holo" }
+];
+
+function getCaptureBaseKey(sprite) {
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube)$/i, "");
+}
+
+function getCaptureBaseLabel(group) {
+  const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
+  return basic.originalName
+    .replace(/^(Gold|Gummy|Galaxy|Holofoil)\s+/i, "")
+    .trim();
+}
+
 function renderCaptureView() {
   const total = SPRITES.length;
   const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
@@ -685,7 +704,7 @@ function renderCaptureView() {
   const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
   const pct = total ? Math.round(owned/total*100) : 0;
 
-  let sprites = state.captureView === "missing"
+  const sprites = state.captureView === "missing"
     ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
     : [...SPRITES];
 
@@ -693,16 +712,139 @@ function renderCaptureView() {
   elements.captureMissing.textContent = missing;
   elements.captureMastered.textContent = mastered;
   elements.capturePercent.textContent = `${pct}%`;
-  elements.captureTitle.textContent =
-    state.captureView === "missing" ? "Los que me faltan" : "Todos juntos";
+  elements.captureTitle.textContent = state.captureView === "missing"
+    ? "Los que me faltan"
+    : state.captureView === "screenshot"
+      ? "Captura compacta"
+      : "Todos juntos";
   elements.captureResultCount.textContent =
     `${sprites.length} ${sprites.length === 1 ? "Sprite" : "Sprites"}`;
 
+  const isScreenshot = state.captureView === "screenshot";
+  elements.captureSheet.classList.toggle("is-screenshot", isScreenshot);
+  elements.captureGrid.classList.toggle("is-matrix", isScreenshot);
   elements.captureGrid.innerHTML = "";
+  elements.captureTip.textContent = isScreenshot
+    ? "Diseñada para una sola captura con desplazamiento: cada fila es un tipo y cada columna una variante."
+    : "En teléfono, usa una captura con desplazamiento para guardar la lista completa.";
+
+  if (isScreenshot) {
+    renderCaptureMatrix();
+    return;
+  }
 
   for (const sprite of sprites) {
     elements.captureGrid.append(createCaptureSprite(sprite));
   }
+}
+
+function renderCaptureMatrix() {
+  const groups = new Map();
+
+  for (const sprite of SPRITES) {
+    const key = getCaptureBaseKey(sprite);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(sprite);
+  }
+
+  const availableThemes = [...new Set(SPRITES.map(sprite => sprite.theme))];
+  const variants = [
+    ...CAPTURE_VARIANT_ORDER.filter(item => availableThemes.includes(item.theme)),
+    ...availableThemes
+      .filter(theme => !CAPTURE_VARIANT_ORDER.some(item => item.theme === theme))
+      .map(theme => ({ theme, label: theme }))
+  ];
+
+  const matrix = document.createElement("div");
+  matrix.className = "capture-matrix";
+  matrix.style.setProperty("--capture-variant-count", variants.length);
+
+  const header = document.createElement("div");
+  header.className = "capture-matrix-row capture-matrix-header";
+
+  const typeHeader = document.createElement("span");
+  typeHeader.className = "capture-type-heading";
+  typeHeader.textContent = "Tipo";
+  header.append(typeHeader);
+
+  for (const variant of variants) {
+    const label = document.createElement("span");
+    label.className = `capture-variant-heading capture-variant-${variant.theme.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`;
+    label.textContent = variant.label;
+    header.append(label);
+  }
+
+  matrix.append(header);
+
+  for (const group of groups.values()) {
+    const row = document.createElement("div");
+    row.className = "capture-matrix-row";
+
+    const ownedCount = group.filter(sprite => state.progress[sprite.id].owned).length;
+    const label = document.createElement("div");
+    label.className = "capture-type-label";
+    label.innerHTML = `<strong>${getCaptureBaseLabel(group)}</strong><span>${ownedCount}/${group.length}</span>`;
+    row.append(label);
+
+    for (const variant of variants) {
+      const sprite = group.find(item => item.theme === variant.theme);
+      const cell = document.createElement("div");
+      cell.className = "capture-matrix-cell";
+
+      if (sprite) {
+        cell.append(createCaptureMatrixSprite(sprite));
+      } else {
+        const empty = document.createElement("span");
+        empty.className = "capture-matrix-empty";
+        empty.textContent = "—";
+        cell.append(empty);
+      }
+
+      row.append(cell);
+    }
+
+    matrix.append(row);
+  }
+
+  elements.captureGrid.append(matrix);
+}
+
+function createCaptureMatrixSprite(sprite) {
+  const item = state.progress[sprite.id];
+  const tile = document.createElement("div");
+
+  tile.className = [
+    "capture-matrix-sprite",
+    item.owned ? "is-owned" : "is-missing",
+    item.mastered ? "is-mastered" : "",
+    sprite.isNew ? "is-new" : ""
+  ].filter(Boolean).join(" ");
+
+  applyThemeVisuals(tile, sprite.theme);
+  tile.title = `${sprite.originalName} · ${sprite.theme} · ${item.owned ? "Lo tengo" : "Me falta"}`;
+  tile.setAttribute("aria-label", tile.title);
+
+  const image = document.createElement("img");
+  image.src = sprite.image;
+  image.alt = sprite.originalName;
+  image.loading = "eager";
+  tile.append(image);
+
+  if (item.mastered) {
+    const star = document.createElement("span");
+    star.className = "capture-matrix-mastered";
+    star.textContent = "★";
+    tile.append(star);
+  }
+
+  if (sprite.isNew) {
+    const badge = document.createElement("span");
+    badge.className = "capture-matrix-new";
+    badge.textContent = "N";
+    tile.append(badge);
+  }
+
+  return tile;
 }
 
 function createCaptureSprite(sprite) {

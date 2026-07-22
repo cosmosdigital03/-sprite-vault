@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9.9" />
+  <link rel="stylesheet" href="styles.css?v=10.0" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -249,6 +249,7 @@
       <div class="capture-view-buttons" id="captureViewButtons">
         <button class="active" type="button" data-capture-view="all">Todos juntos</button>
         <button type="button" data-capture-view="missing">Solo me faltan</button>
+        <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
       </div>
     </div>
 
@@ -293,7 +294,7 @@
       </footer>
     </article>
 
-    <p class="capture-tip">
+    <p class="capture-tip" id="captureTip">
       En teléfono, usa una captura con desplazamiento para guardar la lista completa.
     </p>
   </section>
@@ -372,9 +373,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=9.9"></script>
-  <script src="sprites.js?v=9.9"></script>
-  <script src="app.js?v=9.9"></script>
-  <script src="discord-integration.js?v=9.9"></script>
+  <script src="discord-config.js?v=10.0"></script>
+  <script src="sprites.js?v=10.0"></script>
+  <script src="app.js?v=10.0"></script>
+  <script src="discord-integration.js?v=10.0"></script>
 </body>
 </html>
