@@ -3088,3 +3088,134 @@ body.sprite-dialog-open { overflow: hidden; }
   }
 }
 
+
+
+/* ===== V10.3: restore visible screenshot sprites + crown corner badge ===== */
+.capture-mastered-badge,
+.capture-matrix-mastered {
+  left: auto;
+  top: auto;
+  transform: none;
+}
+
+.capture-mastered-badge {
+  right: 5px;
+  bottom: 5px;
+}
+
+.capture-matrix-mastered {
+  right: 3px;
+  bottom: 3px;
+}
+
+@media (max-width: 700px) {
+  .capture-sheet.is-screenshot .capture-matrix {
+    gap: 3px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-row {
+    height: 44px;
+    grid-template-columns: 60px repeat(var(--capture-variant-count), minmax(0, 1fr));
+    gap: 3px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label,
+  .capture-sheet.is-screenshot .capture-matrix-cell,
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label {
+    padding: 4px 6px;
+    gap: 4px;
+    border-radius: 8px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label strong {
+    font-size: .61rem;
+    line-height: 1.05;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label span {
+    min-height: 14px;
+    padding: 2px 5px;
+    border-radius: 999px;
+    font-size: .42rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    border-radius: 8px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,.34));
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-sprite.is-owned::before,
+  .capture-sheet.is-screenshot .capture-matrix-sprite.is-missing::before {
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    font-size: .42rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-mastered,
+  .capture-sheet.is-screenshot .capture-matrix-new {
+    width: 12px;
+    min-width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    font-size: .42rem;
+    line-height: 1;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-mastered {
+    right: 2px;
+    bottom: 2px;
+    opacity: .96;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-new {
+    top: 2px;
+    right: 2px;
+    padding-inline: 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    font-size: .92rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .capture-sheet.is-screenshot .capture-matrix-row {
+    height: 40px;
+    grid-template-columns: 58px repeat(var(--capture-variant-count), minmax(0, 1fr));
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label,
+  .capture-sheet.is-screenshot .capture-matrix-cell,
+  .capture-sheet.is-screenshot .capture-matrix-sprite,
+  .capture-sheet.is-screenshot .capture-matrix-empty {
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label strong {
+    font-size: .56rem;
+  }
+
+  .capture-sheet.is-screenshot .capture-type-label span {
+    font-size: .39rem;
+  }
+}
