@@ -2997,3 +2997,235 @@ body.sprite-dialog-open { overflow: hidden; }
     min-height: 23px;
   }
 }
+
+/* ===== V10.1.5 TEST: corrected compact capture + simplified top action ===== */
+
+/* Replace the large promotional card with one compact top action. */
+.top-discord-button {
+  min-height: 40px;
+  display: inline-grid;
+  place-items: center;
+  white-space: nowrap;
+  box-shadow: 0 9px 24px rgba(88,101,242,.22);
+}
+
+.compact-share-button,
+.reset-filters {
+  min-height: 40px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.compact-share-button {
+  border: 1px solid rgba(139,92,246,.35);
+  background: linear-gradient(135deg,rgba(139,92,246,.18),rgba(53,215,255,.08));
+  color: #e8e3ff;
+}
+
+.compact-share-button:hover {
+  border-color: rgba(189,165,255,.62);
+  background: linear-gradient(135deg,rgba(139,92,246,.27),rgba(53,215,255,.12));
+}
+
+/* The crown returns to the original mastery-marker position. */
+.capture-mastered-badge,
+.capture-matrix-mastered {
+  left: auto;
+  right: 5px;
+  top: auto;
+  bottom: 5px;
+  transform: none;
+}
+
+.capture-matrix-mastered {
+  right: 2px;
+  bottom: 2px;
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    min-height: 64px;
+  }
+
+  .top-discord-button {
+    min-height: 36px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: .68rem;
+  }
+
+  .compact-share-button,
+  .reset-filters {
+    flex: 1 1 calc(50% - 8px);
+    min-height: 38px;
+    margin: 0;
+    font-size: .72rem;
+  }
+
+  /* Keep screenshot controls tiny, but do not crush the Sprite artwork. */
+  .capture-page.is-screenshot-mode .capture-toolbar {
+    grid-template-columns: auto 1fr;
+    margin-bottom: 4px;
+    padding: 4px;
+  }
+
+  .capture-page.is-screenshot-mode .capture-back {
+    min-height: 28px;
+    padding: 4px 7px;
+  }
+
+  .capture-page.is-screenshot-mode .capture-view-buttons button {
+    min-height: 28px;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-header {
+    grid-template-columns: minmax(0,.72fr) minmax(190px,1.55fr);
+    padding: 4px 5px;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading {
+    min-height: 20px;
+    padding: 2px 5px 1px;
+  }
+
+  .capture-sheet.is-screenshot .capture-section-heading h1 {
+    font-size: .66rem;
+  }
+
+  .capture-grid.is-matrix {
+    padding: 1px 3px 4px;
+  }
+
+  .capture-matrix {
+    gap: 1px;
+  }
+
+  /* 29px keeps all 21 rows compact while giving the complete character room. */
+  .capture-matrix-row {
+    height: 29px;
+    grid-template-columns: 43px repeat(var(--capture-variant-count), minmax(0,1fr));
+    gap: 1px;
+  }
+
+  .capture-matrix-header {
+    height: 18px;
+    margin-bottom: 1px;
+  }
+
+  .capture-type-heading,
+  .capture-variant-heading {
+    min-height: 18px;
+    height: 18px;
+    font-size: .32rem;
+  }
+
+  .capture-type-label,
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 29px;
+    min-height: 29px;
+  }
+
+  .capture-type-label {
+    padding: 2px 3px;
+  }
+
+  .capture-type-label strong {
+    font-size: .4rem;
+  }
+
+  .capture-type-label span {
+    font-size: .29rem;
+  }
+
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    aspect-ratio: auto !important;
+    border-radius: 4px;
+  }
+
+  .capture-matrix-sprite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 2px;
+  }
+
+  /* Use an explicit height instead of 98% width/height, which Safari compressed incorrectly. */
+  .capture-matrix-sprite img {
+    display: block;
+    width: auto;
+    height: 27px;
+    max-width: 88%;
+    max-height: 27px;
+    object-fit: contain;
+    object-position: center;
+    transform: none !important;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.38));
+  }
+
+  .capture-matrix-sprite.is-owned::before,
+  .capture-matrix-sprite.is-missing::before,
+  .capture-matrix-mastered,
+  .capture-matrix-new {
+    width: 8px;
+    min-width: 8px;
+    height: 8px;
+    font-size: .27rem;
+  }
+
+  .capture-matrix-mastered {
+    right: 1px;
+    bottom: 1px;
+    width: 9px;
+    min-width: 9px;
+    height: 9px;
+    font-size: .31rem;
+    opacity: .96;
+  }
+
+  .capture-sheet.is-screenshot .capture-sheet-footer {
+    min-height: 10px;
+    padding: 1px 4px 2px;
+  }
+}
+
+@media (max-width: 390px) {
+  .brand strong {
+    font-size: .72rem;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .top-discord-button {
+    max-width: 128px;
+    font-size: .62rem;
+  }
+
+  .capture-matrix-row,
+  .capture-type-label,
+  .capture-matrix-cell,
+  .capture-matrix-sprite,
+  .capture-matrix-empty {
+    height: 28px;
+    min-height: 28px;
+  }
+
+  .capture-matrix-sprite img {
+    height: 26px;
+    max-height: 26px;
+  }
+}
+
+/* Prevent the global site-footer spacing from affecting the compact capture footer. */
+.capture-sheet-footer {
+  width: 100%;
+  margin: 0;
+}

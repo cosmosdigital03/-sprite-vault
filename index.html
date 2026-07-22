@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=10.1" />
+  <link rel="stylesheet" href="styles.css?v=10.1.5" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -25,28 +25,10 @@
       </span>
     </a>
 
+    <div class="header-actions">
+      <a class="button button-primary top-discord-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
+    </div>
   </header>
-
-  <section class="discord-cta-banner" aria-label="Únete a Sprite Vault">
-    <div class="discord-cta-icon" aria-hidden="true">🎁</div>
-    <div class="discord-cta-copy">
-      <span class="discord-cta-kicker">COMPLETA TU COLECCIÓN</span>
-      <strong>¿Te falta un Sprite?</strong>
-      <p>Únete a <b>Sprite Vault</b> para hacer intercambios, prestar o recibir Sprites y completar tu colección con la comunidad.</p>
-      <small>El rastreador sigue siendo gratis y público para todos.</small>
-    </div>
-    <div class="discord-cta-actions">
-      <div class="discord-cta-benefits" aria-label="Beneficios">
-        <span>🤝 Intercambios</span>
-        <span>🎁 Regalos</span>
-        <span>🏆 Roles</span>
-      </div>
-      <div class="discord-cta-button-row">
-        <button class="button discord-share-button" id="shareButton" type="button">Compartir lista</button>
-        <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
-      </div>
-    </div>
-  </section>
 
   <main class="page-shell">
     <section class="hero">
@@ -213,6 +195,7 @@
           Agrupar por tema
         </label>
 
+        <button class="compact-share-button" id="shareButton" type="button">Compartir lista</button>
         <button class="reset-filters" id="resetFilters" type="button">↻ Limpiar filtros</button>
       </div>
     </section>
@@ -373,9 +356,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=10.1"></script>
-  <script src="sprites.js?v=10.1"></script>
-  <script src="app.js?v=10.1"></script>
-  <script src="discord-integration.js?v=10.1"></script>
+  <script src="discord-config.js?v=10.1.5"></script>
+  <script src="sprites.js?v=10.1.5"></script>
+  <script src="app.js?v=10.1.5"></script>
+  <script src="discord-integration.js?v=10.1.5"></script>
 </body>
 </html>

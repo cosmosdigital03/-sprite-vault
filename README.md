@@ -1,4 +1,4 @@
-# Sprite Vault Tracker — V10.1
+# Sprite Vault Tracker — V10.1.5
 
 Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
@@ -201,7 +201,7 @@ Los porcentajes de aparición pueden cambiar con el tiempo y no son probabilidad
 
 ## Actualización V9.7 — Banner y roles por colección
 
-> Nota: la configuración de cinco roles descrita en esta sección fue reemplazada por el sistema V10.1 al final de este archivo. Usa `DISCORD_ROLE_RULES`, no `DISCORD_COLLECTION_ROLES`.
+> Nota: la configuración de cinco roles descrita en esta sección fue reemplazada por el sistema V10.1.5 al final de este archivo. Usa `DISCORD_ROLE_RULES`, no `DISCORD_COLLECTION_ROLES`.
 
 - Se agregó un banner público en español: **¿Te falta un Sprite?**
 - El banner invita a entrar a Sprite Vault para hacer intercambios, prestar o recibir Sprites.
@@ -249,7 +249,7 @@ Los siguientes valores son privados y nunca deben aparecer en `discord-config.js
 La Publishable/Anon key de Supabase sí se usa en el navegador; protege los datos con autenticación y Row Level Security.
 
 
-## Actualización V10.1 — Colección, Dominio y Especiales
+## Actualización V10.1.5 — Colección, Dominio y Especiales
 
 - El sincronizador ahora administra tres grupos independientes de roles:
   - **Colección:** mantiene solamente el nivel más alto alcanzado.
@@ -272,7 +272,7 @@ Además de los tres que ya creaste, crea estos dos si deseas sincronizarlos:
 
 El rol de Cubos quedará preparado, pero no se entregará hasta que los Sprites Cubo estén añadidos a `sprites.js` con tema `Cubo` o un ID que comience con `cube_`.
 
-### Secretos de Supabase para V10.1
+### Secretos de Supabase para V10.1.5
 
 Usa estos secretos en la Edge Function:
 
@@ -286,7 +286,7 @@ Para `DISCORD_ROLE_RULES`, abre `supabase/ROLE-RULES-ONE-LINE.txt`, reemplaza ca
 No agregues los tres roles separadores al JSON. El bot solo debe administrar los 10 roles de Colección, 7 de Dominio y 5 Especiales.
 
 
-## Cambios V10.1
+## Cambios V10.1.5
 
 - Botón móvil visible “Volver a la lista” dentro de los detalles de cada Sprite.
 - El botón Atrás del teléfono también cierra los detalles.
@@ -297,14 +297,14 @@ No agregues los tres roles separadores al JSON. El bot solo debe administrar los
 - Incluye la Edge Function corregida para respetar los límites de Discord.
 
 
-## V10.1 — Mobile compact UI
+## V10.1.5 — Mobile compact UI
 
 - Mobile cards and progress sections are denser and easier to scan.
 - Sprite details use a floating rounded back button.
 - Sharing adds a Screenshot mode organized by Sprite type, one row per type and one column per variant.
 - Existing browser progress and Discord role synchronization remain unchanged.
 
-## V10.1
+## V10.1.5
 - Restored full Sprite visibility on mobile cards.
 - Screenshot matrix reduced to about 632 CSS pixels for all 21 type rows.
 - Screenshot type names and variant headings are now Spanish.
