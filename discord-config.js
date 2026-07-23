@@ -40,3 +40,40 @@ window.SPRITE_VAULT_CONFIG = {
     { key: "cubes",    name: "🧊 Sprites Cubos" }
   ]
 };
+
+/*
+  Cube Sprite release update.
+  This runs before app.js initializes, preserving every existing Sprite ID and
+  saved selection while moving the Nuevo tag exclusively to Cube variants.
+*/
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof SPRITES === "undefined" || !Array.isArray(SPRITES)) return;
+
+  SPRITES.forEach((sprite) => {
+    sprite.isNew = false;
+  });
+
+  const cubeSprites = [
+    { id: "batman_cube", name: "Batman Cubo", originalName: "Cube Batman", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_FossilMeal_Cube_L.webp", findRate: "0%", isNew: true },
+    { id: "water_cube", name: "Agua Cubo", originalName: "Cube Water", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_water_cube.webp", findRate: "0%", isNew: true },
+    { id: "earth_cube", name: "Tierra Cubo", originalName: "Cube Earth", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Earth_Cube_ui_L.webp", findRate: "0%", isNew: true },
+    { id: "fire_cube", name: "Fuego Cubo", originalName: "Cube Fire", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fire_Cube_ui_L.webp", findRate: "0%", isNew: true },
+    { id: "duck_cube", name: "Pato Cubo", originalName: "Cube Duck", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_duck_cube.webp", findRate: "0%", isNew: true },
+    { id: "ghost_cube", name: "Fantasma Cubo", originalName: "Cube Ghost", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_ghost_cube.webp", findRate: "0%", isNew: true },
+    { id: "dream_cube", name: "Sueño Cubo", originalName: "Cube Dream", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Sleepy_Cube_ui_L.webp", findRate: "0%", isNew: true },
+    { id: "demon_cube", name: "Demonio Cubo", originalName: "Cube Demon", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_demon_cube.webp", findRate: "0%", isNew: true },
+    { id: "punk_cube", name: "Punk Cubo", originalName: "Cube Punk", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Punk_Cube_ui_L.webp", findRate: "0%", isNew: true },
+    { id: "king_cube", name: "Rey Cubo", originalName: "Cube King", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_king_cube.webp", findRate: "0%", isNew: true },
+    { id: "zeropoint_cube", name: "Punto Cero Cubo", originalName: "Cube Zero Point", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_zero_point_cube.webp", findRate: "0%", isNew: true },
+    { id: "fishy_cube", name: "Pez Cubo", originalName: "Cube Fishy", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Fishy_Cube_L.webp", findRate: "0%", isNew: true },
+    { id: "striker_cube", name: "Atacante Cubo", originalName: "Cube Striker", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_soccer_cube.webp", findRate: "0%", isNew: true },
+    { id: "aura_cube", name: "Aura Cubo", originalName: "Cube Aura", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/tmp_drifter_cube.webp", findRate: "0%", isNew: true },
+    { id: "boss_cube", name: "Jefe Cubo", originalName: "Cube Boss", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_Creature_Sprite_Boss_Cube_ui_L.webp", findRate: "0%", isNew: true },
+    { id: "grim_cube", name: "Sombrío Cubo", originalName: "Cube Grim", theme: "Cubo", rarity: "Especial", image: "https://fortnite.gg/img/x/sprites/icons/T_Icon_BR_GrimReaper_Cube_L.webp", findRate: "0%", isNew: true }
+  ];
+
+  const existingIds = new Set(SPRITES.map((sprite) => sprite.id));
+  cubeSprites.forEach((sprite) => {
+    if (!existingIds.has(sprite.id)) SPRITES.push(sprite);
+  });
+});
