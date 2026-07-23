@@ -6,7 +6,8 @@ const THEME_VISUALS = {
   "Gomita": { accent:"rgba(255,118,193,.82)", overlay:"linear-gradient(165deg,rgba(147,34,92,.40),rgba(41,11,45,.68))", overlayHover:"linear-gradient(165deg,rgba(147,34,92,.14),rgba(41,11,45,.20))", border:"rgba(255,118,193,.25)", shadow:"rgba(129,35,85,.28)" },
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
-  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" }
+  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
+  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" }
 
 };
 
@@ -684,7 +685,8 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Dorado", label: "Dorado" },
   { theme: "Gomita", label: "Gomita" },
   { theme: "Galaxia", label: "Galaxia" },
-  { theme: "Holográfico", label: "Holo" }
+  { theme: "Holográfico", label: "Holo" },
+  { theme: "Cubo", label: "Cubo" }
 ];
 
 function getCaptureBaseKey(sprite) {

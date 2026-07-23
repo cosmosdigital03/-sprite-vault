@@ -2053,6 +2053,7 @@ body.sprite-dialog-open { overflow: hidden; }
 .capture-variant-gomita { color: #ff9bd1; background: rgba(255,118,193,.09); }
 .capture-variant-galaxia { color: #b9adff; background: rgba(132,116,255,.1); }
 .capture-variant-holografico { color: #9af4ff; background: rgba(104,236,255,.09); }
+.capture-variant-cubo { color: #d6a4ff; background: rgba(181,92,255,.12); }
 
 .capture-type-label {
   min-width: 0;
