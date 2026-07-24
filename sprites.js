@@ -667,7 +667,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/batman_basic.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "batman_gold",
@@ -677,7 +677,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/batman_gold.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "batman_candy",
@@ -687,7 +687,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/batman_candy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "batman_galaxy",
@@ -697,7 +697,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/batman_galaxy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "batman_holofoil",
@@ -707,7 +707,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/batman_holofoil.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "pollo_basic",
@@ -717,7 +717,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/pollo_basic.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "vini_jr_basic",
@@ -727,7 +727,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/vini_jr_basic.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "air_basic",
@@ -737,7 +737,7 @@ const SPRITES = [
     "rarity": "Raro",
     "image": "images/air_basic.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "air_gold",
@@ -747,7 +747,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/air_gold.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "air_candy",
@@ -757,7 +757,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/air_candy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "air_galaxy",
@@ -767,7 +767,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/air_galaxy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "air_holofoil",
@@ -777,7 +777,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/air_holofoil.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "seven_basic",
@@ -787,7 +787,7 @@ const SPRITES = [
     "rarity": "Legendario",
     "image": "images/seven_basic.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "seven_gold",
@@ -797,7 +797,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/seven_gold.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "seven_candy",
@@ -807,7 +807,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/seven_candy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "seven_galaxy",
@@ -817,7 +817,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/seven_galaxy.webp",
     "findRate": "0%",
-    "isNew": false
+    "isNew": true
   },
   {
     "id": "seven_holofoil",
@@ -826,86 +826,6 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/seven_holofoil.webp",
-    "findRate": "0%",
-    "isNew": false
-  },
-  {
-    "id": "earth_cube",
-    "name": "Tierra del Cubo",
-    "originalName": "Cube Earth",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/earth_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "fire_cube",
-    "name": "Fuego del Cubo",
-    "originalName": "Cube Fire",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/fire_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "fishy_cube",
-    "name": "Pez del Cubo",
-    "originalName": "Cube Fishy",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/fishy_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "punk_cube",
-    "name": "Punk del Cubo",
-    "originalName": "Cube Punk",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/punk_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "dream_cube",
-    "name": "Sueño del Cubo",
-    "originalName": "Cube Dream",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/dream_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "boss_cube",
-    "name": "Jefe del Cubo",
-    "originalName": "Cube Boss",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/boss_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "batman_cube",
-    "name": "Batman del Cubo",
-    "originalName": "Cube Batman",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/batman_cube.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "grim_cube",
-    "name": "Sombrío del Cubo",
-    "originalName": "Cube Grim",
-    "theme": "Cubo",
-    "rarity": "Especial",
-    "image": "images/grim_cube.webp",
     "findRate": "0%",
     "isNew": true
   }

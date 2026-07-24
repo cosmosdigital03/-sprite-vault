@@ -1,10 +1,10 @@
-# Sprite Vault Tracker — V10.8
+# Sprite Vault Tracker — V10.6
 
-Esta versión incluye 91 Sprites registrados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
+Esta versión incluye los 83 Sprites publicados y guarda sus imágenes dentro de la carpeta `images/`. El sitio ya no depende de las direcciones de imágenes del rastreador de referencia.
 
 ## Qué incluye
 
-- 91 imágenes locales (PNG y WebP).
+- 83 imágenes locales (PNG y WebP).
 - Nombres en español y nombres originales en inglés.
 - Búsqueda en ambos idiomas.
 - Filtros por estado y tema.
@@ -259,8 +259,8 @@ La Publishable/Anon key de Supabase sí se usa en el navegador; protege los dato
 - Se configuraron los siete niveles de Dominio desde 5 hasta 75+ Sprites dominados.
 - Se prepararon roles Especiales para Galaxia, Gummy, Dorados, Holofoil y Cubos.
 - Los roles `🧩 Colección`, `🏆 Dominio` y `✨ Especiales` son separadores visuales; el bot nunca los asigna.
-- El tracker actual contiene 91 Sprites. El nivel máximo alcanzable de Colección ahora es `🪄 Coleccionista Mítico` con 90 Sprites.
-- `👑✨ Coleccionista Absoluto` comenzará a funcionar automáticamente cuando el tracker alcance 100 Sprites.
+- El tracker actual contiene 83 Sprites. Por ahora, el nivel máximo alcanzable de Colección es `🐉 Coleccionista Legendario` con 80 Sprites.
+- `🪄 Coleccionista Mítico` y `👑✨ Coleccionista Absoluto` comenzarán a funcionar automáticamente cuando el tracker alcance 90 y 100 Sprites.
 - La clave local sigue siendo `spriteVaultProgressV4`; la actualización no borra selecciones guardadas.
 
 ### Roles Especiales que debes tener creados
@@ -317,12 +317,3 @@ No agregues los tres roles separadores al JSON. El bot solo debe administrar los
 - Se corrigió el botón **Únete a Sprite Vault** en móvil para que nunca se salga de su caja; en pantallas pequeñas usa la etiqueta compacta **Únete al Vault**.
 - En la vista **Screenshot**, el nombre de cada tipo y su contador ahora tienen más espacio y el contador aparece como una pequeña etiqueta separada.
 - Se actualizó la versión de caché de los archivos a `10.2`.
-
-
-## Actualización V10.8 — Cube Sprites
-
-- Se agregaron 8 Cube Sprites: Earth, Fire, Fishy, Punk, Dream, Boss, Batman y Grim.
-- Se removió la etiqueta **Nuevo** de los Sprites de la actualización anterior.
-- Los 8 Cube Sprites ahora son los únicos marcados como **Nuevo**.
-- Se agregó la variante **Cubo** al filtro y a la captura compacta.
-- Total actualizado: **91 Sprites**.
