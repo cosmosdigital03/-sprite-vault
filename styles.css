@@ -3193,3 +3193,73 @@ body.sprite-dialog-open { overflow: hidden; }
   width: 100%;
   margin: 0;
 }
+
+
+/* ===== V11.0: capture modes for missing/unmastered + desktop PNG download ===== */
+.capture-toolbar-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.capture-download {
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(91, 224, 255, .28);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(28, 62, 90, .96), rgba(17, 34, 59, .96));
+  color: #eaf7ff;
+  font-weight: 900;
+  letter-spacing: .02em;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,.22);
+}
+
+.capture-download:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 24px rgba(0,0,0,.28);
+}
+
+.capture-download:disabled {
+  opacity: .7;
+  cursor: wait;
+}
+
+@media (min-width: 701px) {
+  .capture-view-buttons {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .capture-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .capture-toolbar-copy {
+    display: none;
+  }
+
+  .capture-toolbar-actions {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .capture-view-buttons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .capture-view-buttons button {
+    font-size: .72rem;
+    min-height: 42px;
+    line-height: 1.1;
+    padding: 8px 10px;
+  }
+
+  .capture-download {
+    display: none;
+  }
+}

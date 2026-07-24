@@ -57,7 +57,7 @@ const elements = Object.fromEntries([
   "emptyState","resultCount","resultsTitle","collectionText","masteryText","collectionBar","masteryBar",
   "collectionPercent","masteryPercent","missingCount","shareButton","heroSummary","countAll","countNew",
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
-  "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
+  "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons","downloadCapture",
   "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
@@ -668,6 +668,10 @@ function openCaptureView() {
     button.classList.toggle("active",button.dataset.captureView === "all");
   });
 
+  if (elements.downloadCapture) {
+    elements.downloadCapture.disabled = false;
+  }
+
   renderCaptureView();
   window.scrollTo({top:0,behavior:"auto"});
 }
@@ -698,26 +702,50 @@ function getCaptureBaseLabel(group) {
     .trim();
 }
 
+function getCaptureSprites() {
+  if (state.captureView === "missing") {
+    return SPRITES.filter(sprite => !state.progress[sprite.id].owned);
+  }
+
+  if (state.captureView === "unmastered") {
+    return SPRITES.filter(sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered);
+  }
+
+  return [...SPRITES];
+}
+
+function getCaptureTitle() {
+  if (state.captureView === "missing") return "Captura me faltan sprite";
+  if (state.captureView === "unmastered") return "Captura no dominado";
+  if (state.captureView === "screenshot") return "Captura compacta";
+  return "Todos juntos";
+}
+
+function getCaptureTip() {
+  if (state.captureView === "screenshot") {
+    return "Diseñada para una sola captura con desplazamiento: cada fila es un tipo y cada columna una variante.";
+  }
+
+  if (window.matchMedia('(max-width: 700px)').matches) {
+    return "En teléfono, usa una captura con desplazamiento para guardar la lista completa.";
+  }
+
+  return "En PC, usa el botón Descargar PNG para guardar esta vista como imagen.";
+}
+
 function renderCaptureView() {
   const total = SPRITES.length;
   const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
   const missing = total-owned;
   const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
   const pct = total ? Math.round(owned/total*100) : 0;
-
-  const sprites = state.captureView === "missing"
-    ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
-    : [...SPRITES];
+  const sprites = getCaptureSprites();
 
   elements.captureOwned.textContent = owned;
   elements.captureMissing.textContent = missing;
   elements.captureMastered.textContent = mastered;
   elements.capturePercent.textContent = `${pct}%`;
-  elements.captureTitle.textContent = state.captureView === "missing"
-    ? "Los que me faltan"
-    : state.captureView === "screenshot"
-      ? "Captura compacta"
-      : "Todos juntos";
+  elements.captureTitle.textContent = getCaptureTitle();
   elements.captureResultCount.textContent =
     `${sprites.length} ${sprites.length === 1 ? "Sprite" : "Sprites"}`;
 
@@ -726,9 +754,13 @@ function renderCaptureView() {
   elements.captureSheet.classList.toggle("is-screenshot", isScreenshot);
   elements.captureGrid.classList.toggle("is-matrix", isScreenshot);
   elements.captureGrid.innerHTML = "";
-  elements.captureTip.textContent = isScreenshot
-    ? "Diseñada para una sola captura con desplazamiento: cada fila es un tipo y cada columna una variante."
-    : "En teléfono, usa una captura con desplazamiento para guardar la lista completa.";
+  elements.captureTip.textContent = getCaptureTip();
+
+  if (elements.downloadCapture) {
+    elements.downloadCapture.hidden = window.matchMedia('(max-width: 700px)').matches;
+    elements.downloadCapture.textContent = 'Descargar PNG';
+    elements.downloadCapture.disabled = false;
+  }
 
   if (isScreenshot) {
     renderCaptureMatrix();
@@ -925,6 +957,7 @@ elements.status.addEventListener("click",event => {
 elements.resetFilters.addEventListener("click",resetFilters);
 elements.shareButton.addEventListener("click",openCaptureView);
 elements.closeCapture.addEventListener("click",closeCaptureView);
+if (elements.downloadCapture) elements.downloadCapture.addEventListener("click", downloadCurrentCapture);
 
 elements.captureViewButtons.addEventListener("click",event => {
   const button = event.target.closest("button[data-capture-view]");
@@ -937,6 +970,64 @@ elements.captureViewButtons.addEventListener("click",event => {
   });
 
   renderCaptureView();
+});
+
+async function downloadCurrentCapture() {
+  if (!elements.downloadCapture || elements.downloadCapture.disabled) return;
+
+  if (typeof html2canvas === "undefined") {
+    alert("No se pudo cargar la herramienta para descargar la imagen.");
+    return;
+  }
+
+  const button = elements.downloadCapture;
+  const previousText = button.textContent;
+  button.disabled = true;
+  button.textContent = "Generando PNG...";
+
+  try {
+    const previousScrollY = window.scrollY;
+    await document.fonts.ready;
+
+    const canvas = await html2canvas(elements.captureSheet, {
+      backgroundColor: "#060912",
+      scale: Math.max(2, window.devicePixelRatio || 1),
+      useCORS: true,
+      logging: false,
+      scrollX: 0,
+      scrollY: -window.scrollY,
+      windowWidth: document.documentElement.clientWidth,
+      windowHeight: document.documentElement.scrollHeight
+    });
+
+    const slugMap = {
+      all: "todos-juntos",
+      missing: "captura-me-faltan-sprite",
+      unmastered: "captura-no-dominado",
+      screenshot: "captura-compacta"
+    };
+
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = `sprite-vault-${slugMap[state.captureView] || 'captura'}.png`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+
+    window.scrollTo({ top: previousScrollY, behavior: "auto" });
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo descargar la imagen PNG.");
+  } finally {
+    button.disabled = false;
+    button.textContent = previousText;
+  }
+}
+
+window.addEventListener("resize",() => {
+  if (!elements.capturePage.hidden) {
+    renderCaptureView();
+  }
 });
 
 elements.closeSpriteDialog.addEventListener("click",() => closeSpriteDetail());

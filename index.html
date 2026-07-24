@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=10.7" />
+  <link rel="stylesheet" href="styles.css?v=11.0" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -243,13 +243,18 @@
 
       <div class="capture-toolbar-copy">
         <strong>Lista para compartir</strong>
-        <span>Los Sprites en rojo son los que te faltan.</span>
+        <span>Genera imágenes de tus Sprites faltantes o no dominados.</span>
       </div>
 
-      <div class="capture-view-buttons" id="captureViewButtons">
-        <button class="active" type="button" data-capture-view="all">Todos juntos</button>
-        <button type="button" data-capture-view="missing">Solo me faltan</button>
-        <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
+      <div class="capture-toolbar-actions">
+        <div class="capture-view-buttons" id="captureViewButtons">
+          <button class="active" type="button" data-capture-view="all">Todos juntos</button>
+          <button type="button" data-capture-view="missing">Captura me faltan sprite</button>
+          <button type="button" data-capture-view="unmastered">Captura no dominado</button>
+          <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
+        </div>
+
+        <button id="downloadCapture" class="capture-download" type="button">Descargar PNG</button>
       </div>
     </div>
 
