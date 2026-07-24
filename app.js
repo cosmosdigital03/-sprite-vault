@@ -1246,15 +1246,114 @@ function writeCapturePreviewPage(previewWindow,imageUrl,title,imageWidth) {
   previewWindow.document.close();
 }
 
-async function openGeneratedCapture(mode,button) {
-  const previewWindow = window.open("","_blank");
-  if (!previewWindow) {
-    alert("Permite las ventanas emergentes para abrir la captura completa.");
-    return;
+
+let mobileCaptureObjectUrl = null;
+
+function ensureMobileCapturePreview() {
+  let preview = document.getElementById("mobileCapturePreview");
+  if (preview) return preview;
+
+  preview = document.createElement("section");
+  preview.id = "mobileCapturePreview";
+  preview.className = "mobile-capture-preview";
+  preview.hidden = true;
+  preview.innerHTML = `
+    <header class="mobile-capture-preview-toolbar">
+      <button class="mobile-capture-preview-back" type="button">← Volver</button>
+      <strong class="mobile-capture-preview-title">Generando captura...</strong>
+    </header>
+    <div class="mobile-capture-preview-body">
+      <div class="mobile-capture-preview-loading">Generando captura...</div>
+      <img class="mobile-capture-preview-image" alt="" hidden>
+    </div>`;
+
+  document.body.append(preview);
+  preview.querySelector(".mobile-capture-preview-back").addEventListener("click", closeMobileCapturePreview);
+  return preview;
+}
+
+function openMobileCapturePreview(title) {
+  const preview = ensureMobileCapturePreview();
+  const image = preview.querySelector(".mobile-capture-preview-image");
+  const loading = preview.querySelector(".mobile-capture-preview-loading");
+
+  if (mobileCaptureObjectUrl) {
+    URL.revokeObjectURL(mobileCaptureObjectUrl);
+    mobileCaptureObjectUrl = null;
   }
 
-  previewWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;display:grid;place-items:center;background:#05070d;color:#fff;font:700 16px Arial,sans-serif}</style><title>Generando captura...</title></head><body>Generando captura...</body></html>`);
-  previewWindow.document.close();
+  preview.querySelector(".mobile-capture-preview-title").textContent = title;
+  loading.textContent = "Generando captura...";
+  loading.hidden = false;
+  image.hidden = true;
+  image.removeAttribute("src");
+  image.alt = title;
+  preview.hidden = false;
+  document.body.classList.add("mobile-capture-open");
+  preview.scrollTop = 0;
+}
+
+function showMobileCaptureResult(blob,title) {
+  const preview = ensureMobileCapturePreview();
+  const image = preview.querySelector(".mobile-capture-preview-image");
+  const loading = preview.querySelector(".mobile-capture-preview-loading");
+
+  if (mobileCaptureObjectUrl) URL.revokeObjectURL(mobileCaptureObjectUrl);
+  mobileCaptureObjectUrl = URL.createObjectURL(blob);
+
+  preview.querySelector(".mobile-capture-preview-title").textContent = title;
+  image.onload = () => {
+    loading.hidden = true;
+    image.hidden = false;
+    preview.scrollTop = 0;
+  };
+  image.onerror = () => {
+    loading.textContent = "No se pudo mostrar la captura.";
+  };
+  image.src = mobileCaptureObjectUrl;
+}
+
+function closeMobileCapturePreview() {
+  const preview = document.getElementById("mobileCapturePreview");
+  if (!preview) return;
+
+  preview.hidden = true;
+  document.body.classList.remove("mobile-capture-open");
+
+  if (mobileCaptureObjectUrl) {
+    URL.revokeObjectURL(mobileCaptureObjectUrl);
+    mobileCaptureObjectUrl = null;
+  }
+
+  const image = preview.querySelector(".mobile-capture-preview-image");
+  image.removeAttribute("src");
+  image.hidden = true;
+}
+
+function isMobileCaptureDevice() {
+  return window.matchMedia("(max-width: 700px)").matches ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+}
+
+async function openGeneratedCapture(mode,button) {
+  const useMobilePreview = isMobileCaptureDevice();
+  const previewTitle = mode === "missing"
+    ? "Captura me faltan sprite"
+    : "Captura no dominado";
+  let previewWindow = null;
+
+  if (useMobilePreview) {
+    openMobileCapturePreview(previewTitle);
+  } else {
+    previewWindow = window.open("","_blank");
+    if (!previewWindow) {
+      alert("Permite las ventanas emergentes para abrir la captura completa.");
+      return;
+    }
+
+    previewWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;display:grid;place-items:center;background:#05070d;color:#fff;font:700 16px Arial,sans-serif}</style><title>Generando captura...</title></head><body>Generando captura...</body></html>`);
+    previewWindow.document.close();
+  }
 
   const originalText = button.textContent;
   button.disabled = true;
@@ -1263,25 +1362,31 @@ async function openGeneratedCapture(mode,button) {
   try {
     const result = await buildCaptureExportCanvas(mode);
     if (!result) {
-      previewWindow.close();
+      if (useMobilePreview) closeMobileCapturePreview();
+      else previewWindow.close();
       return;
     }
 
     const blob = await new Promise(resolve => result.canvas.toBlob(resolve,"image/png"));
     if (!blob) throw new Error("The capture image could not be created.");
 
-    const imageUrl = URL.createObjectURL(blob);
-    writeCapturePreviewPage(
-      previewWindow,
-      imageUrl,
-      result.title,
-      result.canvas.width
-    );
+    if (useMobilePreview) {
+      showMobileCaptureResult(blob,result.title);
+    } else {
+      const imageUrl = URL.createObjectURL(blob);
+      writeCapturePreviewPage(
+        previewWindow,
+        imageUrl,
+        result.title,
+        result.canvas.width
+      );
 
-    previewWindow.addEventListener("beforeunload",() => URL.revokeObjectURL(imageUrl),{ once:true });
+      previewWindow.addEventListener("beforeunload",() => URL.revokeObjectURL(imageUrl),{ once:true });
+    }
   } catch (error) {
     console.error(error);
-    previewWindow.close();
+    if (useMobilePreview) closeMobileCapturePreview();
+    else if (previewWindow && !previewWindow.closed) previewWindow.close();
     alert("No se pudo generar la captura.");
   } finally {
     button.disabled = false;
