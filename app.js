@@ -6,7 +6,8 @@ const THEME_VISUALS = {
   "Gomita": { accent:"rgba(255,118,193,.82)", overlay:"linear-gradient(165deg,rgba(147,34,92,.40),rgba(41,11,45,.68))", overlayHover:"linear-gradient(165deg,rgba(147,34,92,.14),rgba(41,11,45,.20))", border:"rgba(255,118,193,.25)", shadow:"rgba(129,35,85,.28)" },
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
-  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" }
+  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
+  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" }
 
 };
 
@@ -684,7 +685,8 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Dorado", label: "Dorado" },
   { theme: "Gomita", label: "Gomita" },
   { theme: "Galaxia", label: "Galaxia" },
-  { theme: "Holográfico", label: "Holo" }
+  { theme: "Holográfico", label: "Holo" },
+  { theme: "Cubo", label: "Cubo" }
 ];
 
 function getCaptureBaseKey(sprite) {
@@ -694,7 +696,7 @@ function getCaptureBaseKey(sprite) {
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico|Cubo)$/i, "")
     .trim();
 }
 
@@ -936,7 +938,8 @@ const CAPTURE_EXPORT_THEME_ORDER = [
   "Dorado",
   "Gomita",
   "Galaxia",
-  "Holográfico"
+  "Holográfico",
+  "Cubo"
 ];
 
 function loadCaptureImage(source) {
@@ -1003,7 +1006,8 @@ function getCaptureExportPalette(sprite) {
     Dorado: ["#61460b", "#241a02", "#e8b946"],
     Gomita: ["#6b183f", "#260514", "#df5ca1"],
     Galaxia: ["#261552", "#080314", "#7a65dc"],
-    Holográfico: ["#204454", "#09171f", "#67dbe9"]
+    Holográfico: ["#204454", "#09171f", "#67dbe9"],
+    Cubo: ["#4e156f", "#180522", "#c16aff"]
   };
   const values = special[sprite.theme] || special.Básico;
 
@@ -1260,10 +1264,10 @@ function ensureMobileCapturePreview() {
   preview.innerHTML = `
     <header class="mobile-capture-preview-toolbar">
       <button class="mobile-capture-preview-back" type="button">← Volver</button>
-      <strong class="mobile-capture-preview-title">Generando captura...</strong>
+      <strong class="mobile-capture-preview-title">Sprite Vault</strong>
     </header>
     <div class="mobile-capture-preview-body">
-      <div class="mobile-capture-preview-loading">Generando captura...</div>
+      <div class="mobile-capture-preview-loading" aria-label="Cargando"></div>
       <img class="mobile-capture-preview-image" alt="" hidden>
     </div>`;
 
@@ -1283,7 +1287,7 @@ function openMobileCapturePreview(title) {
   }
 
   preview.querySelector(".mobile-capture-preview-title").textContent = title;
-  loading.textContent = "Generando captura...";
+  loading.textContent = "";
   loading.hidden = false;
   image.hidden = true;
   image.removeAttribute("src");
@@ -1308,7 +1312,7 @@ function showMobileCaptureResult(blob,title) {
     preview.scrollTop = 0;
   };
   image.onerror = () => {
-    loading.textContent = "No se pudo mostrar la captura.";
+    loading.textContent = "";
   };
   image.src = mobileCaptureObjectUrl;
 }
@@ -1351,7 +1355,7 @@ async function openGeneratedCapture(mode,button) {
       return;
     }
 
-    previewWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;display:grid;place-items:center;background:#05070d;color:#fff;font:700 16px Arial,sans-serif}</style><title>Generando captura...</title></head><body>Generando captura...</body></html>`);
+    previewWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;background:#05070d}</style><title>Sprite Vault</title></head><body></body></html>`);
     previewWindow.document.close();
   }
 

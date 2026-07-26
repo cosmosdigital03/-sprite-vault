@@ -3311,3 +3311,9 @@ body.mobile-capture-open {
     display: none !important;
   }
 }
+
+
+/* V11.3: cube sprites + silent capture loading */
+.mobile-capture-preview-loading { color: transparent; position: relative; }
+.mobile-capture-preview-loading::before { content:""; width:44px; height:44px; border-radius:999px; border:4px solid rgba(255,255,255,.18); border-top-color:#8c61ff; display:block; animation: mobileCaptureSpin .9s linear infinite; margin:auto; }
+@keyframes mobileCaptureSpin { to { transform: rotate(360deg); } }
