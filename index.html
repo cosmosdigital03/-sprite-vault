@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11.6" />
+  <link rel="stylesheet" href="styles.css?v=11.7" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -17,7 +17,7 @@
   <div class="ambient ambient-two"></div>
 
   <header class="site-header">
-    <a class="brand" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" aria-label="Entrar al Discord de Sprite Vault">
+    <a class="brand" href="https://discord.gg/ZrneTN3DRr" target="_blank" rel="noopener noreferrer" aria-label="Entrar al Discord de Sprite Vault">
       <span class="brand-mark"><img src="images/sprite-vault-logo.png" alt="" /></span>
       <span>
         <strong>SPRITE VAULT</strong>
@@ -25,6 +25,9 @@
       </span>
     </a>
 
+    <div class="header-actions">
+      <button class="button header-share-button" id="shareButton" type="button">Compartir lista</button>
+    </div>
   </header>
 
   <section class="discord-cta-banner" aria-label="Únete a Sprite Vault">
@@ -36,7 +39,6 @@
       <small>El rastreador sigue siendo gratis y público para todos.</small>
     </div>
 
-    <button class="button discord-share-button discord-share-top" id="shareButton" type="button">Compartir lista</button>
 
     <div class="discord-cta-actions">
       <div class="discord-cta-benefits" aria-label="Beneficios">
@@ -44,7 +46,7 @@
         <span>🎁 Regalos</span>
         <span>🏆 Roles</span>
       </div>
-      <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
+      <a class="button discord-cta-button" href="https://discord.gg/ZrneTN3DRr" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
     </div>
   </section>
 
@@ -195,7 +197,6 @@
             <button class="new-filter-button" data-status="new">Nuevos <span id="countNew">17</span></button>
             <button data-status="owned">Tengo <span id="countOwned">0</span></button>
             <button data-status="missing">Me faltan <span id="countMissing">91</span></button>
-            <a class="status-join-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" aria-label="Únete a Sprite Vault">Únete</a>
             <button data-status="mastered">Dominados <span id="countMastered">0</span></button>
             <button data-status="unmastered">Sin dominar <span id="countUnmastered">0</span></button>
           </div>
@@ -223,7 +224,10 @@
         <span class="eyebrow">ARCHIVO DEL VAULT</span>
         <h2 id="resultsTitle">Todos los Sprites</h2>
       </div>
-      <span class="result-count" id="resultCount">83 resultados</span>
+      <div class="results-heading-actions">
+        <span class="result-count" id="resultCount">91 resultados</span>
+        <a class="missing-results-join" id="missingResultsJoin" href="https://discord.gg/ZrneTN3DRr" target="_blank" rel="noopener noreferrer" hidden>Únete</a>
+      </div>
     </section>
 
     <section id="spriteContainer" class="sprite-container"></section>
@@ -292,7 +296,7 @@
 
       <footer class="capture-sheet-footer">
         <span>Sprite Vault</span>
-        <span>discord.gg/7AAnVUPZc</span>
+        <span>discord.gg/ZrneTN3DRr</span>
       </footer>
     </article>
 
@@ -375,9 +379,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=11.6"></script>
-  <script src="sprites.js?v=11.6"></script>
-  <script src="app.js?v=11.6"></script>
-  <script src="discord-integration.js?v=11.6"></script>
+  <script src="discord-config.js?v=11.7"></script>
+  <script src="sprites.js?v=11.7"></script>
+  <script src="app.js?v=11.7"></script>
+  <script src="discord-integration.js?v=11.7"></script>
 </body>
 </html>

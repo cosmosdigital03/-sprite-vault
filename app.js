@@ -55,7 +55,7 @@ const state = {
 
 const elements = Object.fromEntries([
   "spriteContainer","spriteCardTemplate","searchInput","themeSelect","groupToggle","statusFilters",
-  "emptyState","resultCount","resultsTitle","collectionText","masteryText","collectionBar","masteryBar",
+  "emptyState","resultCount","resultsTitle","missingResultsJoin","collectionText","masteryText","collectionBar","masteryBar",
   "collectionPercent","masteryPercent","missingCount","discordMissingHeadline","shareButton","heroSummary","countAll","countNew",
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
   "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
@@ -302,6 +302,9 @@ function render() {
   elements.resultCount.textContent =
     `${sprites.length} ${sprites.length === 1 ? "resultado" : "resultados"}`;
   elements.resultsTitle.textContent = headingText();
+  if (elements.missingResultsJoin) {
+    elements.missingResultsJoin.hidden = state.status !== "missing";
+  }
 
   if (state.status === "new") {
     renderNewGroup(sprites);
@@ -1226,7 +1229,7 @@ async function buildCaptureExportCanvas(mode) {
   ctx.fillStyle = "#0e1117";
   ctx.fillRect(border,footerY,canvas.width-border*2,footerH);
   ctx.fillStyle = "#ffffff";
-  const footerText = "discord.gg/7AAnVUPZc";
+  const footerText = "discord.gg/ZrneTN3DRr";
   fitCanvasText(ctx,footerText,canvas.width-border*2-30,24,10);
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";

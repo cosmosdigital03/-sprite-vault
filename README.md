@@ -91,7 +91,7 @@ El sitio incluye el aviso exigido por Epic:
 
 ## Actualización V7
 
-- El botón **Únete a Sprite Vault** abre `https://discord.gg/7AAnVUPZc`.
+- El botón **Únete a Sprite Vault** abre `https://discord.gg/ZrneTN3DRr`.
 - El icono `SV` fue reemplazado por el Sprite dorado local en `images/sprite-vault-logo.png`.
 
 

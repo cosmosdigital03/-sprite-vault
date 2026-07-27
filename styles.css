@@ -3314,7 +3314,7 @@ body.mobile-capture-open {
 .mobile-capture-preview-loading::before { display:none !important; content:none !important; }
 
 
-/* ===== V11.6: CTA actions, dynamic missing headline, and Discord entry points ===== */
+/* ===== V11.7: CTA actions, dynamic missing headline, and Discord entry points ===== */
 .brand {
   cursor: pointer;
   transition: transform .18s ease, filter .18s ease;
@@ -3470,5 +3470,161 @@ body.mobile-capture-open {
 
   .discord-cta-copy strong {
     font-size: .86rem;
+  }
+}
+
+
+/* ===== V11.7: top-right share action + conditional missing-results join ===== */
+.site-header .header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.header-share-button {
+  min-width: 154px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgba(121, 224, 255, .58);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7558ff 0%, #5865f2 52%, #22bfe4 100%);
+  color: #ffffff;
+  font-size: .84rem;
+  font-weight: 900;
+  letter-spacing: .015em;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0,0,0,.55);
+  box-shadow: 0 10px 26px rgba(88,101,242,.34), inset 0 1px rgba(255,255,255,.22);
+  white-space: nowrap;
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+
+.header-share-button:hover,
+.header-share-button:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+  box-shadow: 0 14px 32px rgba(88,101,242,.44), inset 0 1px rgba(255,255,255,.26);
+}
+
+/* Share is now in the actual top header, so the CTA has only its content/actions. */
+.discord-cta-banner {
+  grid-template-columns: auto minmax(0, 1fr) minmax(230px, auto);
+  grid-template-areas:
+    "icon copy actions";
+}
+
+.discord-cta-actions {
+  grid-area: actions;
+  align-self: center;
+}
+
+.results-heading-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.missing-results-join {
+  min-width: 92px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border: 1px solid rgba(139,116,255,.48);
+  border-radius: 12px;
+  background: linear-gradient(135deg,#7c5cff,#5865f2);
+  color: #fff;
+  text-decoration: none;
+  font-size: .78rem;
+  font-weight: 900;
+  box-shadow: 0 9px 22px rgba(88,101,242,.3);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.missing-results-join[hidden] {
+  display: none !important;
+}
+
+.missing-results-join:hover,
+.missing-results-join:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 13px 27px rgba(88,101,242,.4);
+}
+
+@media (max-width: 860px) {
+  .discord-cta-banner {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "icon copy"
+      "actions actions";
+  }
+
+  .discord-cta-actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    gap: 8px;
+  }
+
+  .site-header .header-actions {
+    flex: 0 0 auto;
+  }
+
+  .header-share-button {
+    min-width: 118px;
+    min-height: 40px;
+    padding: 9px 11px;
+    border-radius: 12px;
+    font-size: .7rem;
+    letter-spacing: 0;
+  }
+
+  .discord-cta-banner {
+    grid-template-columns: 46px minmax(0, 1fr);
+    grid-template-areas:
+      "icon copy"
+      "actions actions";
+  }
+
+  .results-heading {
+    align-items: center;
+    gap: 8px;
+  }
+
+  .results-heading-actions {
+    gap: 7px;
+  }
+
+  .missing-results-join {
+    min-width: 76px;
+    min-height: 36px;
+    padding: 7px 11px;
+    border-radius: 10px;
+    font-size: .7rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .brand small {
+    display: none;
+  }
+
+  .header-share-button {
+    min-width: 108px;
+    padding-inline: 8px;
+    font-size: .66rem;
+  }
+
+  .results-heading-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
   }
 }

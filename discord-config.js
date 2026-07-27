@@ -7,7 +7,7 @@ window.SPRITE_VAULT_CONFIG = {
   supabaseUrl: "https://vaxwnrhspjjbsdxgzeqr.supabase.co",
   supabasePublishableKey: "sb_publishable_J2ehJ9XLxh98LrbB-za-Cg_G8F3eTas",
   functionName: "sync-discord-role",
-  discordInvite: "https://discord.gg/7AAnVUPZc",
+  discordInvite: "https://discord.gg/ZrneTN3DRr",
 
   collectionRoleThresholds: [
     { min: 10,  max: 19,  name: "☁️ Coleccionista Básico" },
