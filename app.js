@@ -1267,7 +1267,6 @@ function ensureMobileCapturePreview() {
       <strong class="mobile-capture-preview-title">Sprite Vault</strong>
     </header>
     <div class="mobile-capture-preview-body">
-      <div class="mobile-capture-preview-loading" aria-label="Cargando"></div>
       <img class="mobile-capture-preview-image" alt="" hidden>
     </div>`;
 
@@ -1279,7 +1278,6 @@ function ensureMobileCapturePreview() {
 function openMobileCapturePreview(title) {
   const preview = ensureMobileCapturePreview();
   const image = preview.querySelector(".mobile-capture-preview-image");
-  const loading = preview.querySelector(".mobile-capture-preview-loading");
 
   if (mobileCaptureObjectUrl) {
     URL.revokeObjectURL(mobileCaptureObjectUrl);
@@ -1287,8 +1285,6 @@ function openMobileCapturePreview(title) {
   }
 
   preview.querySelector(".mobile-capture-preview-title").textContent = title;
-  loading.textContent = "";
-  loading.hidden = false;
   image.hidden = true;
   image.removeAttribute("src");
   image.alt = title;
@@ -1300,19 +1296,17 @@ function openMobileCapturePreview(title) {
 function showMobileCaptureResult(blob,title) {
   const preview = ensureMobileCapturePreview();
   const image = preview.querySelector(".mobile-capture-preview-image");
-  const loading = preview.querySelector(".mobile-capture-preview-loading");
 
   if (mobileCaptureObjectUrl) URL.revokeObjectURL(mobileCaptureObjectUrl);
   mobileCaptureObjectUrl = URL.createObjectURL(blob);
 
   preview.querySelector(".mobile-capture-preview-title").textContent = title;
   image.onload = () => {
-    loading.hidden = true;
     image.hidden = false;
     preview.scrollTop = 0;
   };
   image.onerror = () => {
-    loading.textContent = "";
+    image.hidden = false;
   };
   image.src = mobileCaptureObjectUrl;
 }
