@@ -55,8 +55,8 @@ const state = {
 
 const elements = Object.fromEntries([
   "spriteContainer","spriteCardTemplate","searchInput","themeSelect","groupToggle","statusFilters",
-  "emptyState","resultCount","resultsTitle","collectionText","masteryText","collectionBar","masteryBar",
-  "collectionPercent","masteryPercent","missingCount","shareButton","heroSummary","countAll","countNew",
+  "emptyState","resultCount","resultsTitle","missingResultsJoin","collectionText","masteryText","collectionBar","masteryBar",
+  "collectionPercent","masteryPercent","missingCount","discordMissingHeadline","shareButton","heroSummary","countAll","countNew",
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
   "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
   "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
@@ -302,6 +302,9 @@ function render() {
   elements.resultCount.textContent =
     `${sprites.length} ${sprites.length === 1 ? "resultado" : "resultados"}`;
   elements.resultsTitle.textContent = headingText();
+  if (elements.missingResultsJoin) {
+    elements.missingResultsJoin.hidden = state.status !== "missing";
+  }
 
   if (state.status === "new") {
     renderNewGroup(sprites);
@@ -519,6 +522,12 @@ function updateStats() {
   elements.masteryPercent.textContent = `${masteryPct}% dominado`;
   elements.missingCount.textContent =
     `${missing} ${missing===1 ? "Sprite" : "Sprites"}`;
+
+  if (elements.discordMissingHeadline) {
+    elements.discordMissingHeadline.textContent = missing === 1
+      ? "¿Te falta 1 Sprite?"
+      : `¿Te faltan ${missing} Sprites?`;
+  }
 
   if (!state.publicProfile) {
     elements.heroSummary.textContent =
@@ -1220,7 +1229,7 @@ async function buildCaptureExportCanvas(mode) {
   ctx.fillStyle = "#0e1117";
   ctx.fillRect(border,footerY,canvas.width-border*2,footerH);
   ctx.fillStyle = "#ffffff";
-  const footerText = "discord.gg/7AAnVUPZc";
+  const footerText = "discord.gg/ZrneTN3DRr";
   fitCanvasText(ctx,footerText,canvas.width-border*2-30,24,10);
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
