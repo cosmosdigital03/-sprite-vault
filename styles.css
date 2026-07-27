@@ -3195,71 +3195,280 @@ body.sprite-dialog-open { overflow: hidden; }
 }
 
 
-/* ===== V11.0: capture modes for missing/unmastered + desktop PNG download ===== */
-.capture-toolbar-actions {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
+/* ===== V11.1: four capture actions; generated images open in their own page ===== */
+.capture-view-buttons {
+  grid-template-columns: repeat(4,minmax(0,1fr));
 }
 
-.capture-download {
-  min-height: 48px;
-  padding: 0 18px;
-  border: 1px solid rgba(91, 224, 255, .28);
-  border-radius: 16px;
-  background: linear-gradient(180deg, rgba(28, 62, 90, .96), rgba(17, 34, 59, .96));
-  color: #eaf7ff;
-  font-weight: 900;
-  letter-spacing: .02em;
-  cursor: pointer;
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-  box-shadow: 0 10px 20px rgba(0,0,0,.22);
-}
-
-.capture-download:hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 24px rgba(0,0,0,.28);
-}
-
-.capture-download:disabled {
-  opacity: .7;
+.capture-view-buttons button:disabled {
+  opacity: .68;
   cursor: wait;
 }
 
-@media (min-width: 701px) {
-  .capture-view-buttons {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 700px) {
-  .capture-toolbar {
-    grid-template-columns: 1fr;
-  }
-
-  .capture-toolbar-copy {
-    display: none;
-  }
-
-  .capture-toolbar-actions {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-
   .capture-view-buttons {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2,minmax(0,1fr));
   }
 
   .capture-view-buttons button {
-    font-size: .72rem;
-    min-height: 42px;
-    line-height: 1.1;
-    padding: 8px 10px;
+    min-height: 43px;
+    padding: 7px 8px;
+    font-size: .68rem;
+    line-height: 1.12;
+    white-space: normal;
+  }
+}
+
+
+/* ===== V11.2: reliable same-page mobile capture preview ===== */
+body.mobile-capture-open {
+  overflow: hidden;
+}
+
+.mobile-capture-preview {
+  position: fixed;
+  z-index: 99999;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #05070d;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-capture-preview[hidden] {
+  display: none !important;
+}
+
+.mobile-capture-preview-toolbar {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 58px;
+  padding: max(8px, env(safe-area-inset-top)) 10px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+  background: rgba(5,7,13,.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.mobile-capture-preview-back {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(255,255,255,.07);
+  color: #fff;
+  font: inherit;
+  font-size: .84rem;
+  font-weight: 900;
+}
+
+.mobile-capture-preview-title {
+  overflow: hidden;
+  color: #fff;
+  font-size: .9rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile-capture-preview-body {
+  width: 100%;
+  min-height: calc(100dvh - 58px);
+  display: block;
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
+}
+
+.mobile-capture-preview-loading {
+  display: none !important;
+}
+
+.mobile-capture-preview-image {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  margin: 0;
+  background: #05070d;
+}
+
+@media (min-width: 701px) {
+  .mobile-capture-preview {
+    display: none !important;
+  }
+}
+
+
+/* V11.3: cube sprites + silent capture loading */
+.mobile-capture-preview-loading { color: transparent; position: relative; }
+.mobile-capture-preview-loading::before { content:""; width:44px; height:44px; border-radius:999px; border:4px solid rgba(255,255,255,.18); border-top-color:#8c61ff; display:block; animation: mobileCaptureSpin .9s linear infinite; margin:auto; }
+@keyframes mobileCaptureSpin { to { transform: rotate(360deg); } }
+
+
+/* V11.5: remove mobile capture loader so image stays centered */
+.mobile-capture-preview-loading,
+.mobile-capture-preview-loading::before { display:none !important; content:none !important; }
+
+
+/* ===== V11.6: CTA actions, dynamic missing headline, and Discord entry points ===== */
+.brand {
+  cursor: pointer;
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.brand:hover,
+.brand:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(1.12);
+}
+
+.discord-cta-banner {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon copy share"
+    "icon copy actions";
+  align-items: center;
+}
+
+.discord-cta-icon { grid-area: icon; }
+.discord-cta-copy { grid-area: copy; }
+.discord-share-top {
+  grid-area: share;
+  justify-self: end;
+  align-self: start;
+  min-width: 132px;
+  min-height: 38px;
+  padding: 8px 13px;
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  color: #f4f6ff;
+  font-size: .72rem;
+  font-weight: 850;
+}
+
+.discord-cta-actions {
+  grid-area: actions;
+  align-self: end;
+  min-width: 230px;
+}
+
+.discord-cta-button {
+  width: 100%;
+  min-height: 50px;
+  padding: 11px 18px;
+  font-size: .88rem;
+  font-weight: 900;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  border-color: rgba(154,164,255,.35);
+  box-shadow: 0 12px 32px rgba(88,101,242,.34), inset 0 1px rgba(255,255,255,.14);
+}
+
+.discord-cta-button:hover,
+.discord-cta-button:focus-visible {
+  box-shadow: 0 16px 38px rgba(88,101,242,.44), inset 0 1px rgba(255,255,255,.18);
+}
+
+.status-join-button {
+  min-width: 76px;
+  border: 1px solid rgba(139,116,255,.36);
+  border-radius: 9px;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#7c5cff,#5865f2);
+  color: #fff;
+  text-decoration: none;
+  font-size: .72rem;
+  font-weight: 900;
+  white-space: nowrap;
+  box-shadow: 0 8px 18px rgba(88,101,242,.22);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.status-join-button:hover,
+.status-join-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 22px rgba(88,101,242,.32);
+}
+
+@media (max-width: 860px) {
+  .discord-cta-banner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "icon copy share"
+      "actions actions actions";
   }
 
-  .capture-download {
-    display: none;
+  .discord-cta-actions {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, .72fr);
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .discord-cta-banner {
+    grid-template-columns: 46px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "icon copy share"
+      "actions actions actions";
+    align-items: start;
+  }
+
+  .discord-cta-copy strong {
+    padding-right: 2px;
+    font-size: .94rem;
+    line-height: 1.2;
+  }
+
+  .discord-share-top {
+    min-width: 104px;
+    min-height: 36px;
+    padding: 7px 9px;
+    font-size: .63rem;
+  }
+
+  .discord-cta-actions {
+    display: block;
+    width: 100%;
+  }
+
+  .discord-cta-button {
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 16px;
+    font-size: .9rem;
+    white-space: normal;
+  }
+
+  .segmented .status-join-button {
+    min-width: 0;
+    padding: 7px 5px;
+    font-size: .62rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .discord-cta-banner {
+    grid-template-columns: 42px minmax(0, 1fr) 94px;
+  }
+
+  .discord-share-top {
+    min-width: 94px;
+    padding-inline: 6px;
+    font-size: .59rem;
+  }
+
+  .discord-cta-copy strong {
+    font-size: .86rem;
   }
 }

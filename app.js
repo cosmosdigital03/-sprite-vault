@@ -6,7 +6,8 @@ const THEME_VISUALS = {
   "Gomita": { accent:"rgba(255,118,193,.82)", overlay:"linear-gradient(165deg,rgba(147,34,92,.40),rgba(41,11,45,.68))", overlayHover:"linear-gradient(165deg,rgba(147,34,92,.14),rgba(41,11,45,.20))", border:"rgba(255,118,193,.25)", shadow:"rgba(129,35,85,.28)" },
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
-  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" }
+  "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
+  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" }
 
 };
 
@@ -55,9 +56,9 @@ const state = {
 const elements = Object.fromEntries([
   "spriteContainer","spriteCardTemplate","searchInput","themeSelect","groupToggle","statusFilters",
   "emptyState","resultCount","resultsTitle","collectionText","masteryText","collectionBar","masteryBar",
-  "collectionPercent","masteryPercent","missingCount","shareButton","heroSummary","countAll","countNew",
+  "collectionPercent","masteryPercent","missingCount","discordMissingHeadline","shareButton","heroSummary","countAll","countNew",
   "countOwned","countMissing","countMastered","countUnmastered","progressRing","progressCircleValue",
-  "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons","downloadCapture",
+  "progressHeadline","progressSummary","resetFilters","capturePage","closeCapture","captureViewButtons",
   "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
@@ -519,6 +520,12 @@ function updateStats() {
   elements.missingCount.textContent =
     `${missing} ${missing===1 ? "Sprite" : "Sprites"}`;
 
+  if (elements.discordMissingHeadline) {
+    elements.discordMissingHeadline.textContent = missing === 1
+      ? "¿Te falta 1 Sprite?"
+      : `¿Te faltan ${missing} Sprites?`;
+  }
+
   if (!state.publicProfile) {
     elements.heroSummary.textContent =
       `${total} Sprites · Español · Guardado automático`;
@@ -668,10 +675,6 @@ function openCaptureView() {
     button.classList.toggle("active",button.dataset.captureView === "all");
   });
 
-  if (elements.downloadCapture) {
-    elements.downloadCapture.disabled = false;
-  }
-
   renderCaptureView();
   window.scrollTo({top:0,behavior:"auto"});
 }
@@ -688,7 +691,8 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Dorado", label: "Dorado" },
   { theme: "Gomita", label: "Gomita" },
   { theme: "Galaxia", label: "Galaxia" },
-  { theme: "Holográfico", label: "Holo" }
+  { theme: "Holográfico", label: "Holo" },
+  { theme: "Cubo", label: "Cubo" }
 ];
 
 function getCaptureBaseKey(sprite) {
@@ -698,39 +702,8 @@ function getCaptureBaseKey(sprite) {
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico|Cubo)$/i, "")
     .trim();
-}
-
-function getCaptureSprites() {
-  if (state.captureView === "missing") {
-    return SPRITES.filter(sprite => !state.progress[sprite.id].owned);
-  }
-
-  if (state.captureView === "unmastered") {
-    return SPRITES.filter(sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered);
-  }
-
-  return [...SPRITES];
-}
-
-function getCaptureTitle() {
-  if (state.captureView === "missing") return "Captura me faltan sprite";
-  if (state.captureView === "unmastered") return "Captura no dominado";
-  if (state.captureView === "screenshot") return "Captura compacta";
-  return "Todos juntos";
-}
-
-function getCaptureTip() {
-  if (state.captureView === "screenshot") {
-    return "Diseñada para una sola captura con desplazamiento: cada fila es un tipo y cada columna una variante.";
-  }
-
-  if (window.matchMedia('(max-width: 700px)').matches) {
-    return "En teléfono, usa una captura con desplazamiento para guardar la lista completa.";
-  }
-
-  return "En PC, usa el botón Descargar PNG para guardar esta vista como imagen.";
 }
 
 function renderCaptureView() {
@@ -739,13 +712,20 @@ function renderCaptureView() {
   const missing = total-owned;
   const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
   const pct = total ? Math.round(owned/total*100) : 0;
-  const sprites = getCaptureSprites();
+
+  const sprites = state.captureView === "missing"
+    ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
+    : [...SPRITES];
 
   elements.captureOwned.textContent = owned;
   elements.captureMissing.textContent = missing;
   elements.captureMastered.textContent = mastered;
   elements.capturePercent.textContent = `${pct}%`;
-  elements.captureTitle.textContent = getCaptureTitle();
+  elements.captureTitle.textContent = state.captureView === "missing"
+    ? "Los que me faltan"
+    : state.captureView === "screenshot"
+      ? "Captura compacta"
+      : "Todos juntos";
   elements.captureResultCount.textContent =
     `${sprites.length} ${sprites.length === 1 ? "Sprite" : "Sprites"}`;
 
@@ -754,13 +734,9 @@ function renderCaptureView() {
   elements.captureSheet.classList.toggle("is-screenshot", isScreenshot);
   elements.captureGrid.classList.toggle("is-matrix", isScreenshot);
   elements.captureGrid.innerHTML = "";
-  elements.captureTip.textContent = getCaptureTip();
-
-  if (elements.downloadCapture) {
-    elements.downloadCapture.hidden = window.matchMedia('(max-width: 700px)').matches;
-    elements.downloadCapture.textContent = 'Descargar PNG';
-    elements.downloadCapture.disabled = false;
-  }
+  elements.captureTip.textContent = isScreenshot
+    ? "Diseñada para una sola captura con desplazamiento: cada fila es un tipo y cada columna una variante."
+    : "En teléfono, usa una captura con desplazamiento para guardar la lista completa.";
 
   if (isScreenshot) {
     renderCaptureMatrix();
@@ -957,77 +933,488 @@ elements.status.addEventListener("click",event => {
 elements.resetFilters.addEventListener("click",resetFilters);
 elements.shareButton.addEventListener("click",openCaptureView);
 elements.closeCapture.addEventListener("click",closeCaptureView);
-if (elements.downloadCapture) elements.downloadCapture.addEventListener("click", downloadCurrentCapture);
+
+
+// ==========================================
+// V11.1: ADAPTIVE CAPTURE IMAGE GENERATOR
+// Based on the reference site's canvas export layout.
+// ==========================================
+const CAPTURE_EXPORT_THEME_ORDER = [
+  "Básico",
+  "Dorado",
+  "Gomita",
+  "Galaxia",
+  "Holográfico",
+  "Cubo"
+];
+
+function loadCaptureImage(source) {
+  return new Promise(resolve => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(null);
+    image.src = source;
+  });
+}
+
+function sortCaptureExportSprites(sprites) {
+  const originalOrder = new Map(SPRITES.map((sprite,index) => [sprite.id,index]));
+
+  return [...sprites].sort((a,b) => {
+    const themeA = CAPTURE_EXPORT_THEME_ORDER.indexOf(a.theme);
+    const themeB = CAPTURE_EXPORT_THEME_ORDER.indexOf(b.theme);
+    const safeA = themeA === -1 ? 999 : themeA;
+    const safeB = themeB === -1 ? 999 : themeB;
+
+    if (safeA !== safeB) return safeA-safeB;
+    return (originalOrder.get(a.id) || 0)-(originalOrder.get(b.id) || 0);
+  });
+}
+
+function getCaptureExportPalette(sprite) {
+  const palettes = {
+    Raro: {
+      top: "#104273",
+      bottom: "#081a35",
+      border: "#1d75bd",
+      badge: "#004a8e",
+      badgeText: "#71f4ff"
+    },
+    Épico: {
+      top: "#4d1566",
+      bottom: "#1e052c",
+      border: "#a341ca",
+      badge: "#511d7f",
+      badgeText: "#f598ff"
+    },
+    Legendario: {
+      top: "#743e0a",
+      bottom: "#301702",
+      border: "#cd7a25",
+      badge: "#8e4122",
+      badgeText: "#fbc568"
+    },
+    Mítico: {
+      top: "#70531c",
+      bottom: "#2e2107",
+      border: "#d1a63f",
+      badge: "#80622a",
+      badgeText: "#fff1a9"
+    }
+  };
+
+  if (sprite.rarity !== "Especial") {
+    return palettes[sprite.rarity] || palettes.Raro;
+  }
+
+  const special = {
+    Básico: ["#1c3345", "#09131e", "#5bc9f0"],
+    Dorado: ["#61460b", "#241a02", "#e8b946"],
+    Gomita: ["#6b183f", "#260514", "#df5ca1"],
+    Galaxia: ["#261552", "#080314", "#7a65dc"],
+    Holográfico: ["#204454", "#09171f", "#67dbe9"],
+    Cubo: ["#4e156f", "#180522", "#c16aff"]
+  };
+  const values = special[sprite.theme] || special.Básico;
+
+  return {
+    top: values[0],
+    bottom: values[1],
+    border: values[2],
+    badge: values[2],
+    badgeText: "#061119",
+    special: true
+  };
+}
+
+function fitCanvasText(ctx,text,maxWidth,startSize,minSize=8) {
+  let size = startSize;
+  ctx.font = `700 ${size}px "Oswald", "Arial Narrow", sans-serif`;
+  while (ctx.measureText(text).width > maxWidth && size > minSize) {
+    size -= .5;
+    ctx.font = `700 ${size}px "Oswald", "Arial Narrow", sans-serif`;
+  }
+  return size;
+}
+
+function drawCaptureExportCard(ctx,sprite,image,x,y,cardW,cardH,mode) {
+  const imageAreaH = cardH-38;
+  const palette = getCaptureExportPalette(sprite);
+
+  ctx.fillStyle = "#0f141d";
+  ctx.fillRect(x,y,cardW,cardH);
+
+  const background = ctx.createLinearGradient(x,y,x,y+imageAreaH);
+  background.addColorStop(0,palette.top);
+  background.addColorStop(1,palette.bottom);
+  ctx.fillStyle = background;
+  ctx.fillRect(x,y,cardW,imageAreaH);
+
+  if (palette.special) {
+    const rainbow = ctx.createLinearGradient(x,y,x+cardW,y+imageAreaH);
+    rainbow.addColorStop(0,"rgba(81,247,204,.16)");
+    rainbow.addColorStop(.5,"rgba(227,116,238,.23)");
+    rainbow.addColorStop(1,"rgba(181,246,158,.15)");
+    ctx.fillStyle = rainbow;
+    ctx.fillRect(x,y,cardW,imageAreaH);
+  }
+
+  const shine = ctx.createLinearGradient(x,y,x,y+imageAreaH);
+  shine.addColorStop(0,"rgba(255,255,255,.17)");
+  shine.addColorStop(1,"rgba(255,255,255,0)");
+  ctx.fillStyle = shine;
+  ctx.fillRect(x,y,cardW,imageAreaH);
+
+  if (image && image.naturalWidth > 0) {
+    const maxSize = cardW*.84;
+    const ratio = Math.min(maxSize/image.naturalWidth,maxSize/image.naturalHeight);
+    const drawW = image.naturalWidth*ratio;
+    const drawH = image.naturalHeight*ratio;
+    ctx.drawImage(
+      image,
+      x+(cardW-drawW)/2,
+      y+(imageAreaH-drawH)/2+2,
+      drawW,
+      drawH
+    );
+  }
+
+  if (mode === "unmastered") {
+    ctx.save();
+    ctx.fillStyle = "#00efff";
+    ctx.font = '900 12px "Oswald", "Arial Narrow", sans-serif';
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.shadowColor = "rgba(0,0,0,.9)";
+    ctx.shadowBlur = 4;
+    ctx.fillText("NO DOMINADO",x+7,y+7);
+    ctx.restore();
+  }
+
+  if (sprite.isNew) {
+    ctx.save();
+    ctx.fillStyle = "#50d9ff";
+    ctx.fillRect(x+cardW-34,y+6,28,20);
+    ctx.fillStyle = "#03131a";
+    ctx.font = '900 10px "Oswald", sans-serif';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("NUEVO",x+cardW-20,y+16);
+    ctx.restore();
+  }
+
+  const badgeW = 82;
+  ctx.fillStyle = palette.badge;
+  ctx.beginPath();
+  ctx.moveTo(x,y+imageAreaH-20);
+  ctx.lineTo(x+badgeW-12,y+imageAreaH-20);
+  ctx.lineTo(x+badgeW,y+imageAreaH);
+  ctx.lineTo(x,y+imageAreaH);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.fillStyle = palette.badgeText;
+  ctx.font = '900 12px "Oswald", "Arial Narrow", sans-serif';
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillText((sprite.rarity || "Raro").toUpperCase(),x+6,y+imageAreaH-10);
+
+  ctx.fillStyle = "rgba(15,20,29,.95)";
+  ctx.fillRect(x,y+imageAreaH,cardW,38);
+
+  const name = sprite.name.toUpperCase();
+  ctx.fillStyle = "#ffffff";
+  fitCanvasText(ctx,name,cardW-10,17,7);
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(name,x+cardW/2,y+imageAreaH+19);
+
+  ctx.fillStyle = palette.border;
+  ctx.fillRect(x,y+cardH-4,cardW,4);
+  ctx.strokeStyle = palette.border;
+  ctx.lineWidth = 3;
+  ctx.strokeRect(x+1.5,y+1.5,cardW-3,cardH-3);
+}
+
+async function buildCaptureExportCanvas(mode) {
+  const targetSprites = sortCaptureExportSprites(
+    mode === "missing"
+      ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
+      : SPRITES.filter(sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered)
+  );
+
+  if (targetSprites.length === 0) {
+    alert(mode === "missing"
+      ? "No te falta ningún Sprite."
+      : "No tienes Sprites pendientes por dominar.");
+    return null;
+  }
+
+  await document.fonts.ready;
+  try {
+    await document.fonts.load('900 32px "Oswald"');
+  } catch (error) {
+    console.warn("Oswald font was not available for the capture.",error);
+  }
+
+  const cardW = 160;
+  const cardH = 200;
+  const padding = 15;
+  const border = 8;
+  const headerH = 72;
+  const footerH = 55;
+  const maxCols = 6;
+  const cols = Math.min(maxCols,targetSprites.length);
+  const rows = Math.ceil(targetSprites.length/cols);
+  const innerWidth = cols*(cardW+padding)+padding;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = innerWidth+border*2;
+  canvas.height = border+headerH+padding+rows*(cardH+padding)+footerH+border;
+  const ctx = canvas.getContext("2d");
+
+  const accent = mode === "missing" ? "#ef4444" : "#00f0ff";
+  const fullTitle = mode === "missing"
+    ? "CAPTURA ME FALTAN SPRITE"
+    : "CAPTURA NO DOMINADO";
+  const title = cols <= 2
+    ? (mode === "missing" ? "ME FALTAN" : "NO DOMINADO")
+    : fullTitle;
+
+  ctx.fillStyle = accent;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#0b0d13";
+  ctx.fillRect(border,border,canvas.width-border*2,canvas.height-border*2);
+  ctx.fillStyle = "#181c25";
+  ctx.fillRect(border,border,canvas.width-border*2,headerH);
+
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(border,border+headerH);
+  ctx.lineTo(canvas.width-border,border+headerH);
+  ctx.stroke();
+
+  const [logo,...spriteImages] = await Promise.all([
+    loadCaptureImage("images/sprite-vault-logo.png"),
+    ...targetSprites.map(sprite => loadCaptureImage(sprite.image))
+  ]);
+
+  let titleX = border+padding;
+  if (logo) {
+    const logoSize = 42;
+    ctx.drawImage(logo,titleX,border+(headerH-logoSize)/2,logoSize,logoSize);
+    titleX += logoSize+12;
+  }
+
+  ctx.fillStyle = accent;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  fitCanvasText(ctx,`SPRITE VAULT: ${title}`,canvas.width-titleX-border-padding,32,14);
+  ctx.font = ctx.font.replace(/^700 /,'900 ');
+  ctx.fillText(`SPRITE VAULT: ${title}`,titleX,border+headerH/2);
+
+  targetSprites.forEach((sprite,index) => {
+    const column = index%cols;
+    const row = Math.floor(index/cols);
+    const x = border+padding+column*(cardW+padding);
+    const y = border+headerH+padding+row*(cardH+padding);
+    drawCaptureExportCard(ctx,sprite,spriteImages[index],x,y,cardW,cardH,mode);
+  });
+
+  const footerY = canvas.height-footerH-border;
+  ctx.fillStyle = "#0e1117";
+  ctx.fillRect(border,footerY,canvas.width-border*2,footerH);
+  ctx.fillStyle = "#ffffff";
+  const footerText = "discord.gg/7AAnVUPZc";
+  fitCanvasText(ctx,footerText,canvas.width-border*2-30,24,10);
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(footerText,canvas.width/2,footerY+footerH/2);
+
+  return { canvas, title };
+}
+
+function writeCapturePreviewPage(previewWindow,imageUrl,title,imageWidth) {
+  previewWindow.document.open();
+  previewWindow.document.write(`<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+  <meta name="theme-color" content="#05070d">
+  <title>${title} | Sprite Vault</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #05070d; }
+    body { display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; }
+    img { display: block; width: min(100%, ${imageWidth}px); height: auto; margin: 0 auto; }
+  </style>
+</head>
+<body><img src="${imageUrl}" alt="${title}"></body>
+</html>`);
+  previewWindow.document.close();
+}
+
+
+let mobileCaptureObjectUrl = null;
+
+function ensureMobileCapturePreview() {
+  let preview = document.getElementById("mobileCapturePreview");
+  if (preview) return preview;
+
+  preview = document.createElement("section");
+  preview.id = "mobileCapturePreview";
+  preview.className = "mobile-capture-preview";
+  preview.hidden = true;
+  preview.innerHTML = `
+    <header class="mobile-capture-preview-toolbar">
+      <button class="mobile-capture-preview-back" type="button">← Volver</button>
+      <strong class="mobile-capture-preview-title">Sprite Vault</strong>
+    </header>
+    <div class="mobile-capture-preview-body">
+      <img class="mobile-capture-preview-image" alt="" hidden>
+    </div>`;
+
+  document.body.append(preview);
+  preview.querySelector(".mobile-capture-preview-back").addEventListener("click", closeMobileCapturePreview);
+  return preview;
+}
+
+function openMobileCapturePreview(title) {
+  const preview = ensureMobileCapturePreview();
+  const image = preview.querySelector(".mobile-capture-preview-image");
+
+  if (mobileCaptureObjectUrl) {
+    URL.revokeObjectURL(mobileCaptureObjectUrl);
+    mobileCaptureObjectUrl = null;
+  }
+
+  preview.querySelector(".mobile-capture-preview-title").textContent = title;
+  image.hidden = true;
+  image.removeAttribute("src");
+  image.alt = title;
+  preview.hidden = false;
+  document.body.classList.add("mobile-capture-open");
+  preview.scrollTop = 0;
+}
+
+function showMobileCaptureResult(blob,title) {
+  const preview = ensureMobileCapturePreview();
+  const image = preview.querySelector(".mobile-capture-preview-image");
+
+  if (mobileCaptureObjectUrl) URL.revokeObjectURL(mobileCaptureObjectUrl);
+  mobileCaptureObjectUrl = URL.createObjectURL(blob);
+
+  preview.querySelector(".mobile-capture-preview-title").textContent = title;
+  image.onload = () => {
+    image.hidden = false;
+    preview.scrollTop = 0;
+  };
+  image.onerror = () => {
+    image.hidden = false;
+  };
+  image.src = mobileCaptureObjectUrl;
+}
+
+function closeMobileCapturePreview() {
+  const preview = document.getElementById("mobileCapturePreview");
+  if (!preview) return;
+
+  preview.hidden = true;
+  document.body.classList.remove("mobile-capture-open");
+
+  if (mobileCaptureObjectUrl) {
+    URL.revokeObjectURL(mobileCaptureObjectUrl);
+    mobileCaptureObjectUrl = null;
+  }
+
+  const image = preview.querySelector(".mobile-capture-preview-image");
+  image.removeAttribute("src");
+  image.hidden = true;
+}
+
+function isMobileCaptureDevice() {
+  return window.matchMedia("(max-width: 700px)").matches ||
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+}
+
+async function openGeneratedCapture(mode,button) {
+  const useMobilePreview = isMobileCaptureDevice();
+  const previewTitle = mode === "missing"
+    ? "Captura me faltan sprite"
+    : "Captura no dominado";
+  let previewWindow = null;
+
+  if (useMobilePreview) {
+    openMobileCapturePreview(previewTitle);
+  } else {
+    previewWindow = window.open("","_blank");
+    if (!previewWindow) {
+      alert("Permite las ventanas emergentes para abrir la captura completa.");
+      return;
+    }
+
+    previewWindow.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;min-height:100%;background:#05070d}</style><title>Sprite Vault</title></head><body></body></html>`);
+    previewWindow.document.close();
+  }
+
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = "Generando...";
+
+  try {
+    const result = await buildCaptureExportCanvas(mode);
+    if (!result) {
+      if (useMobilePreview) closeMobileCapturePreview();
+      else previewWindow.close();
+      return;
+    }
+
+    const blob = await new Promise(resolve => result.canvas.toBlob(resolve,"image/png"));
+    if (!blob) throw new Error("The capture image could not be created.");
+
+    if (useMobilePreview) {
+      showMobileCaptureResult(blob,result.title);
+    } else {
+      const imageUrl = URL.createObjectURL(blob);
+      writeCapturePreviewPage(
+        previewWindow,
+        imageUrl,
+        result.title,
+        result.canvas.width
+      );
+
+      previewWindow.addEventListener("beforeunload",() => URL.revokeObjectURL(imageUrl),{ once:true });
+    }
+  } catch (error) {
+    console.error(error);
+    if (useMobilePreview) closeMobileCapturePreview();
+    else if (previewWindow && !previewWindow.closed) previewWindow.close();
+    alert("No se pudo generar la captura.");
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
 
 elements.captureViewButtons.addEventListener("click",event => {
+  const generateButton = event.target.closest("button[data-capture-generate]");
+  if (generateButton) {
+    openGeneratedCapture(generateButton.dataset.captureGenerate,generateButton);
+    return;
+  }
+
   const button = event.target.closest("button[data-capture-view]");
   if (!button) return;
 
   state.captureView = button.dataset.captureView;
 
-  elements.captureViewButtons.querySelectorAll("button").forEach(item => {
+  elements.captureViewButtons.querySelectorAll("button[data-capture-view]").forEach(item => {
     item.classList.toggle("active",item === button);
   });
 
   renderCaptureView();
-});
-
-async function downloadCurrentCapture() {
-  if (!elements.downloadCapture || elements.downloadCapture.disabled) return;
-
-  if (typeof html2canvas === "undefined") {
-    alert("No se pudo cargar la herramienta para descargar la imagen.");
-    return;
-  }
-
-  const button = elements.downloadCapture;
-  const previousText = button.textContent;
-  button.disabled = true;
-  button.textContent = "Generando PNG...";
-
-  try {
-    const previousScrollY = window.scrollY;
-    await document.fonts.ready;
-
-    const canvas = await html2canvas(elements.captureSheet, {
-      backgroundColor: "#060912",
-      scale: Math.max(2, window.devicePixelRatio || 1),
-      useCORS: true,
-      logging: false,
-      scrollX: 0,
-      scrollY: -window.scrollY,
-      windowWidth: document.documentElement.clientWidth,
-      windowHeight: document.documentElement.scrollHeight
-    });
-
-    const slugMap = {
-      all: "todos-juntos",
-      missing: "captura-me-faltan-sprite",
-      unmastered: "captura-no-dominado",
-      screenshot: "captura-compacta"
-    };
-
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png");
-    link.download = `sprite-vault-${slugMap[state.captureView] || 'captura'}.png`;
-    document.body.append(link);
-    link.click();
-    link.remove();
-
-    window.scrollTo({ top: previousScrollY, behavior: "auto" });
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo descargar la imagen PNG.");
-  } finally {
-    button.disabled = false;
-    button.textContent = previousText;
-  }
-}
-
-window.addEventListener("resize",() => {
-  if (!elements.capturePage.hidden) {
-    renderCaptureView();
-  }
 });
 
 elements.closeSpriteDialog.addEventListener("click",() => closeSpriteDetail());

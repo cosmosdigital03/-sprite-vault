@@ -8,8 +8,8 @@
   <title>Sprite Vault | Rastreador de Sprites</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=11.6" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -17,7 +17,7 @@
   <div class="ambient ambient-two"></div>
 
   <header class="site-header">
-    <a class="brand" href="#" aria-label="Sprite Vault">
+    <a class="brand" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" aria-label="Entrar al Discord de Sprite Vault">
       <span class="brand-mark"><img src="images/sprite-vault-logo.png" alt="" /></span>
       <span>
         <strong>SPRITE VAULT</strong>
@@ -31,20 +31,20 @@
     <div class="discord-cta-icon" aria-hidden="true">🎁</div>
     <div class="discord-cta-copy">
       <span class="discord-cta-kicker">COMPLETA TU COLECCIÓN</span>
-      <strong>¿Te falta un Sprite?</strong>
+      <strong id="discordMissingHeadline">¿Te faltan 91 Sprites?</strong>
       <p>Únete a <b>Sprite Vault</b> para hacer intercambios, prestar o recibir Sprites y completar tu colección con la comunidad.</p>
       <small>El rastreador sigue siendo gratis y público para todos.</small>
     </div>
+
+    <button class="button discord-share-button discord-share-top" id="shareButton" type="button">Compartir lista</button>
+
     <div class="discord-cta-actions">
       <div class="discord-cta-benefits" aria-label="Beneficios">
         <span>🤝 Intercambios</span>
         <span>🎁 Regalos</span>
         <span>🏆 Roles</span>
       </div>
-      <div class="discord-cta-button-row">
-        <button class="button discord-share-button" id="shareButton" type="button">Compartir lista</button>
-        <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer"><span class="discord-cta-label-desktop">Únete a Sprite Vault</span><span class="discord-cta-label-mobile">Únete al Vault</span></a>
-      </div>
+      <a class="button discord-cta-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer">Únete a Sprite Vault</a>
     </div>
   </section>
 
@@ -54,7 +54,7 @@
         <span class="eyebrow">RASTREADOR DE SPRITES</span>
         <h1>Tu colección, en un solo lugar.</h1>
         <p>Marca los que tienes y los que ya dominaste.</p>
-        <div class="hero-summary" id="heroSummary">83 Sprites · Español · Guardado automático</div>
+        <div class="hero-summary" id="heroSummary">91 Sprites · Español · Guardado automático</div>
       </div>
 
       <aside class="sprite-showcase" id="spriteShowcase" aria-label="Sprite destacado">
@@ -91,7 +91,7 @@
         <div class="progress-circle-copy">
           <span class="eyebrow">PROGRESO TOTAL</span>
           <h2 id="progressHeadline">Comienza tu colección</h2>
-          <p id="progressSummary">0 de 83 Sprites agregados.</p>
+          <p id="progressSummary">0 de 91 Sprites agregados.</p>
         </div>
       </article>
 
@@ -99,7 +99,7 @@
         <article class="stat-card">
           <div class="stat-heading">
             <span>Colección</span>
-            <strong id="collectionText">0 / 83</strong>
+            <strong id="collectionText">0 / 91</strong>
           </div>
           <div class="progress-track"><div class="progress-fill" id="collectionBar"></div></div>
           <small id="collectionPercent">0% completado</small>
@@ -108,7 +108,7 @@
         <article class="stat-card">
           <div class="stat-heading">
             <span>Dominio</span>
-            <strong id="masteryText">0 / 83</strong>
+            <strong id="masteryText">0 / 91</strong>
           </div>
           <div class="progress-track"><div class="progress-fill mastery" id="masteryBar"></div></div>
           <small id="masteryPercent">0% dominado</small>
@@ -118,7 +118,7 @@
           <span class="stat-icon">⌁</span>
           <div>
             <span>Te faltan</span>
-            <strong id="missingCount">83 Sprites</strong>
+            <strong id="missingCount">91 Sprites</strong>
             <small>para completar el Vault</small>
           </div>
         </article>
@@ -163,7 +163,7 @@
           </div>
           <div>
             <span>Progreso registrado</span>
-            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">83</span> · <span id="discordMasteredCount">0</span> dominados</strong>
+            <strong><span id="discordOwnedCount">0</span> / <span id="discordTotalCount">91</span> · <span id="discordMasteredCount">0</span> dominados</strong>
           </div>
         </div>
 
@@ -191,10 +191,11 @@
         <div class="filter-group">
           <span class="filter-label">Estado</span>
           <div class="segmented" id="statusFilters">
-            <button class="active" data-status="all">Todos <span id="countAll">83</span></button>
+            <button class="active" data-status="all">Todos <span id="countAll">91</span></button>
             <button class="new-filter-button" data-status="new">Nuevos <span id="countNew">17</span></button>
             <button data-status="owned">Tengo <span id="countOwned">0</span></button>
-            <button data-status="missing">Me faltan <span id="countMissing">83</span></button>
+            <button data-status="missing">Me faltan <span id="countMissing">91</span></button>
+            <a class="status-join-button" href="https://discord.gg/7AAnVUPZc" target="_blank" rel="noopener noreferrer" aria-label="Únete a Sprite Vault">Únete</a>
             <button data-status="mastered">Dominados <span id="countMastered">0</span></button>
             <button data-status="unmastered">Sin dominar <span id="countUnmastered">0</span></button>
           </div>
@@ -242,19 +243,15 @@
       <button id="closeCapture" class="capture-back" type="button">← Volver</button>
 
       <div class="capture-toolbar-copy">
-        <strong>Lista para compartir</strong>
-        <span>Genera imágenes de tus Sprites faltantes o no dominados.</span>
+        <strong>Capturas para compartir</strong>
+        <span>Abre una imagen completa con todos los Sprites que coincidan.</span>
       </div>
 
-      <div class="capture-toolbar-actions">
-        <div class="capture-view-buttons" id="captureViewButtons">
-          <button class="active" type="button" data-capture-view="all">Todos juntos</button>
-          <button type="button" data-capture-view="missing">Captura me faltan sprite</button>
-          <button type="button" data-capture-view="unmastered">Captura no dominado</button>
-          <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
-        </div>
-
-        <button id="downloadCapture" class="capture-download" type="button">Descargar PNG</button>
+      <div class="capture-view-buttons" id="captureViewButtons">
+        <button class="active" type="button" data-capture-view="all">Todos juntos</button>
+        <button type="button" data-capture-generate="missing">Captura me faltan sprite</button>
+        <button type="button" data-capture-generate="unmastered">Captura no dominado</button>
+        <button type="button" data-capture-view="screenshot" title="Vista compacta para una captura completa">Screenshot</button>
       </div>
     </div>
 
@@ -270,7 +267,7 @@
 
         <div class="capture-sheet-summary">
           <div><strong id="captureOwned">0</strong><span>Tengo</span></div>
-          <div><strong id="captureMissing">83</strong><span>Me faltan</span></div>
+          <div><strong id="captureMissing">91</strong><span>Me faltan</span></div>
           <div><strong id="captureMastered">0</strong><span>Dominados</span></div>
           <div><strong id="capturePercent">0%</strong><span>Completado</span></div>
         </div>
@@ -288,7 +285,7 @@
           <span class="eyebrow">LISTA DE SPRITES</span>
           <h1 id="captureTitle">Todos juntos</h1>
         </div>
-        <span id="captureResultCount">83 Sprites</span>
+        <span id="captureResultCount">91 Sprites</span>
       </div>
 
       <div id="captureGrid" class="capture-grid"></div>
@@ -378,9 +375,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=10.6"></script>
-  <script src="sprites.js?v=10.2"></script>
-  <script src="app.js?v=10.6"></script>
-  <script src="discord-integration.js?v=10.6"></script>
+  <script src="discord-config.js?v=11.6"></script>
+  <script src="sprites.js?v=11.6"></script>
+  <script src="app.js?v=11.6"></script>
+  <script src="discord-integration.js?v=11.6"></script>
 </body>
 </html>
