@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11.7" />
+  <link rel="stylesheet" href="styles.css?v=11.8" />
 </head>
 <body>
   <div class="page-backdrop" aria-hidden="true"></div>
@@ -329,7 +329,15 @@
         </div>
 
         <div class="rarity-explanation" id="rarityExplanation"></div>
-        
+
+        <section class="detail-ability-card" aria-labelledby="detailAbilityHeading">
+          <span class="detail-card-label" id="detailAbilityHeading">Habilidad</span>
+          <p id="detailAbility">—</p>
+          <div class="detail-variant-bonus" id="detailVariantBonus" hidden>
+            <strong>Bonificación de variante</strong>
+            <p id="detailVariantBonusText"></p>
+          </div>
+        </section>
 
         <div class="detail-actions">
           <button id="detailOwnedButton" type="button"></button>
@@ -379,9 +387,9 @@
   </template>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" crossorigin="anonymous"></script>
-  <script src="discord-config.js?v=11.7"></script>
-  <script src="sprites.js?v=11.7"></script>
-  <script src="app.js?v=11.7"></script>
-  <script src="discord-integration.js?v=11.7"></script>
+  <script src="discord-config.js?v=11.8"></script>
+  <script src="sprites.js?v=11.8"></script>
+  <script src="app.js?v=11.8"></script>
+  <script src="discord-integration.js?v=11.8"></script>
 </body>
 </html>

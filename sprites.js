@@ -830,6 +830,86 @@ const SPRITES = [
     "isNew": false
   },
   {
+    "id": "water_gem",
+    "name": "Agua Gema",
+    "originalName": "Gem Water",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/water_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "earth_gem",
+    "name": "Tierra Gema",
+    "originalName": "Gem Earth",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/earth_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "duck_gem",
+    "name": "Pato Gema",
+    "originalName": "Gem Duck",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/duck_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "demon_gem",
+    "name": "Demonio Gema",
+    "originalName": "Gem Demon",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/demon_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "aura_gem",
+    "name": "Aura Gema",
+    "originalName": "Gem Aura",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/aura_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "punk_gem",
+    "name": "Punk Gema",
+    "originalName": "Gem Punk",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/punk_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "zeropoint_gem",
+    "name": "Punto Cero Gema",
+    "originalName": "Gem Zero Point",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/zeropoint_gem.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "john_wick_basic",
+    "name": "John Wick",
+    "originalName": "John Wick",
+    "theme": "Básico",
+    "rarity": "Mítico",
+    "image": "images/john_wick_basic.webp",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
     "id": "earth_cube",
     "name": "Tierra Cubo",
     "originalName": "Cube Earth",
@@ -837,7 +917,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/earth_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "fire_cube",
@@ -847,7 +927,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/fire_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "fishy_cube",
@@ -857,7 +937,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/fishy_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "punk_cube",
@@ -867,7 +947,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/punk_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "dream_cube",
@@ -877,7 +957,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/dream_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "boss_cube",
@@ -887,7 +967,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/boss_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "batman_cube",
@@ -897,7 +977,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/batman_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "grim_cube",
@@ -907,6 +987,6 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/grim_cube.webp",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   }
 ];

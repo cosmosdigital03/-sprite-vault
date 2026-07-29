@@ -39,6 +39,54 @@ const RARITY_VISUALS = {
   }
 };
 
+
+const SPRITE_ABILITIES = {
+  water: "Regenera tu escudo mientras permaneces dentro del agua. La cantidad recuperada aumenta al subir de nivel.",
+  earth: "Te da una probabilidad de encontrar objetos raros adicionales al abrir cofres. La probabilidad aumenta al subir de nivel.",
+  fire: "Crea una explosión de fuego después de infligir suficiente daño a un enemigo. Requiere menos daño al subir de nivel.",
+  duck: "Recupera escudo mientras usas gestos o improvisas. La recuperación aumenta al subir de nivel.",
+  ghost: "Te vuelve invisible durante unos segundos al recargar un arma. La duración aumenta al subir de nivel.",
+  dream: "Entrega un objeto aleatorio en cada nivel y, al llegar al nivel máximo, explota en botín legendario.",
+  demon: "Roba vida y escudo al eliminar a un enemigo. La curación aumenta al subir de nivel.",
+  punk: "Puede no hacer nada… o hacer algo infinito. Su efecto exacto es impredecible.",
+  king: "Aumenta el daño de tu pico. El daño adicional crece al subir de nivel.",
+  zeropoint: "Genera una Burbuja Escudo Jr. cuando usas un objeto de curación sobre ti, excepto salpicones y granadas.",
+  theburntpeanut: "Al eliminar jugadores, puede hacer que aparezca botín adicional, incluso mítico al nivel máximo.",
+  fishy: "Aumenta mucho la velocidad de nado y, al recibir daño, aumenta brevemente tu velocidad de movimiento.",
+  striker: "Activa Sobrecarga al trepar, superar obstáculos o escalar paredes. La duración aumenta al subir de nivel.",
+  aura: "Obtienes una carga de Roca de Choque después de infligir suficiente daño. Requiere menos daño al subir de nivel.",
+  boss: "Aumenta tu vida y escudo máximos. La bonificación aumenta al subir de nivel.",
+  grim: "Marca durante unos segundos a los jugadores que te ataquen. La duración aumenta al subir de nivel.",
+  batman: "Te permite impulsarte por el aire y desplegar la Batcapa para planear.",
+  pollo: "Después de una eliminación, regenera lentamente tu escudo y el de los aliados cercanos durante unos segundos.",
+  vini_jr: "Tras correr un poco, tus deslizamientos se vuelven destructivos. Golpear enemigos con una patada deslizante aumenta la cadencia y la velocidad de recarga.",
+  air: "Aumenta la velocidad al correr y la altura de salto, y elimina el daño por caída.",
+  seven: "Hace visibles para todo tu escuadrón las huellas de los enemigos. La duración aumenta al subir de nivel.",
+  john_wick: "Al derribar o eliminar a un enemigo, revela temporalmente a los enemigos cercanos."
+};
+
+const VARIANT_BONUSES = {
+  "Dorado": "Obtienes 3× de XP adicional por las eliminaciones.",
+  "Gomita": "Obtienes 20% más Polvo de Sprite al extraerlo.",
+  "Galaxia": "Obtienes 20% más munición además del poder normal del Sprite.",
+  "Gema": "Recibes 30% menos daño por caída además del poder normal del Sprite.",
+  "Holográfico": "Tu escuadrón tiene 5% de probabilidad adicional de encontrar variantes raras al saquear cofres.",
+  "Cubo": "Obtienes el efecto Sobrecarga mientras estás dentro de la tormenta."
+};
+
+function getSpriteBaseKey(sprite) {
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube)$/i, "");
+}
+
+function getSpriteAbility(sprite) {
+  return SPRITE_ABILITIES[getSpriteBaseKey(sprite)] ||
+    "La habilidad de este Sprite todavía no ha sido confirmada.";
+}
+
+function getVariantBonus(sprite) {
+  return VARIANT_BONUSES[sprite.theme] || "";
+}
+
 let showcaseIndex = -1;
 let showcaseTimer = null;
 
@@ -62,6 +110,7 @@ const elements = Object.fromEntries([
   "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
+  "detailAbility","detailVariantBonus","detailVariantBonusText",
   "detailOwnedButton","detailMasteryButton","spriteShowcase","showcaseImage","showcaseTheme",
   "showcaseName","showcaseRarity"
 ].map(id => [id, document.querySelector(`#${id}`)]));
@@ -639,6 +688,11 @@ function refreshDetail() {
   elements.detailRarity.textContent = sprite.rarity;
   elements.detailFindRate.textContent = sprite.findRate;
   elements.rarityExplanation.textContent = rarityMessage(sprite.findRate);
+  elements.detailAbility.textContent = getSpriteAbility(sprite);
+
+  const variantBonus = getVariantBonus(sprite);
+  elements.detailVariantBonus.hidden = !variantBonus;
+  elements.detailVariantBonusText.textContent = variantBonus;
 
   elements.detailOwnedButton.textContent =
     item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
@@ -694,6 +748,7 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Dorado", label: "Dorado" },
   { theme: "Gomita", label: "Gomita" },
   { theme: "Galaxia", label: "Galaxia" },
+  { theme: "Gema", label: "Gema" },
   { theme: "Holográfico", label: "Holo" },
   { theme: "Cubo", label: "Cubo" }
 ];
@@ -705,7 +760,7 @@ function getCaptureBaseKey(sprite) {
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico|Cubo)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo)$/i, "")
     .trim();
 }
 
