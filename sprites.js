@@ -830,82 +830,192 @@ const SPRITES = [
     "isNew": false
   },
   {
-    "id": "water_gem",
-    "name": "Agua Gema",
-    "originalName": "Gem Water",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/water_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "earth_gem",
-    "name": "Tierra Gema",
-    "originalName": "Gem Earth",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/earth_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "duck_gem",
-    "name": "Pato Gema",
-    "originalName": "Gem Duck",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/duck_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "demon_gem",
-    "name": "Demonio Gema",
-    "originalName": "Gem Demon",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/demon_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "aura_gem",
-    "name": "Aura Gema",
-    "originalName": "Gem Aura",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/aura_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "punk_gem",
-    "name": "Punk Gema",
-    "originalName": "Gem Punk",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/punk_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "zeropoint_gem",
-    "name": "Punto Cero Gema",
-    "originalName": "Gem Zero Point",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/zeropoint_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "john_wick_basic",
+    "id": "wick_basic",
     "name": "John Wick",
     "originalName": "John Wick",
     "theme": "Básico",
     "rarity": "Mítico",
-    "image": "images/john_wick_basic.webp",
+    "image": "images/wick_basic.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "grim_gem",
+    "name": "Sombrío Gema",
+    "originalName": "Gem Grim",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/grim_gem.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "grim_holofoil",
+    "name": "Sombrío Holográfico",
+    "originalName": "Holofoil Grim",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/grim_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "ironmouse_basic",
+    "name": "Ironmouse",
+    "originalName": "Ironmouse",
+    "theme": "Básico",
+    "rarity": "Mítico",
+    "image": "images/ironmouse_basic.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "llama_basic",
+    "name": "Llama",
+    "originalName": "Llama",
+    "theme": "Básico",
+    "rarity": "Legendario",
+    "image": "images/llama_basic.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "llama_candy",
+    "name": "Llama Gomita",
+    "originalName": "Gummy Llama",
+    "theme": "Gomita",
+    "rarity": "Especial",
+    "image": "images/llama_candy.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "llama_galaxy",
+    "name": "Llama Galáctica",
+    "originalName": "Galaxy Llama",
+    "theme": "Galaxia",
+    "rarity": "Especial",
+    "image": "images/llama_galaxy.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "llama_gem",
+    "name": "Llama Gema",
+    "originalName": "Gem Llama",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/llama_gem.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "llama_gold",
+    "name": "Llama Dorada",
+    "originalName": "Gold Llama",
+    "theme": "Dorado",
+    "rarity": "Especial",
+    "image": "images/llama_gold.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "peely_basic",
+    "name": "Peely",
+    "originalName": "Peely",
+    "theme": "Básico",
+    "rarity": "Legendario",
+    "image": "images/peely_basic.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "peely_candy",
+    "name": "Peely Gomita",
+    "originalName": "Gummy Peely",
+    "theme": "Gomita",
+    "rarity": "Especial",
+    "image": "images/peely_candy.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "peely_galaxy",
+    "name": "Peely Galáctico",
+    "originalName": "Galaxy Peely",
+    "theme": "Galaxia",
+    "rarity": "Especial",
+    "image": "images/peely_galaxy.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "peely_gold",
+    "name": "Peely Dorado",
+    "originalName": "Gold Peely",
+    "theme": "Dorado",
+    "rarity": "Especial",
+    "image": "images/peely_gold.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "peely_holofoil",
+    "name": "Peely Holográfico",
+    "originalName": "Holofoil Peely",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/peely_holofoil.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "earth_quack",
+    "name": "Tierra Quack",
+    "originalName": "Quack Earth",
+    "theme": "Quack",
+    "rarity": "Especial",
+    "image": "images/earth_quack.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "fire_quack",
+    "name": "Fuego Quack",
+    "originalName": "Quack Fire",
+    "theme": "Quack",
+    "rarity": "Especial",
+    "image": "images/fire_quack.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "water_quack",
+    "name": "Agua Quack",
+    "originalName": "Quack Water",
+    "theme": "Quack",
+    "rarity": "Especial",
+    "image": "images/water_quack.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "zeropoint_quack",
+    "name": "Punto Cero Quack",
+    "originalName": "Quack Zero Point",
+    "theme": "Quack",
+    "rarity": "Especial",
+    "image": "images/zeropoint_quack.png",
+    "findRate": "0%",
+    "isNew": true
+  },
+  {
+    "id": "zeropoint_cube",
+    "name": "Punto Cero Cubo",
+    "originalName": "Cube Zero Point",
+    "theme": "Cubo",
+    "rarity": "Especial",
+    "image": "images/zeropoint_cube.webp",
     "findRate": "0%",
     "isNew": true
   },

@@ -7,7 +7,8 @@ const THEME_VISUALS = {
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
   "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
-  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" }
+  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" },
+  "Quack": { accent:"rgba(104,205,255,.92)", overlay:"linear-gradient(165deg,rgba(31,119,183,.46),rgba(20,28,78,.72))", overlayHover:"linear-gradient(165deg,rgba(55,153,220,.16),rgba(35,45,103,.22))", border:"rgba(122,218,255,.32)", shadow:"rgba(45,107,177,.32)" }
 
 };
 
@@ -62,7 +63,11 @@ const SPRITE_ABILITIES = {
   vini_jr: "Tras correr un poco, tus deslizamientos se vuelven destructivos. Golpear enemigos con una patada deslizante aumenta la cadencia y la velocidad de recarga.",
   air: "Aumenta la velocidad al correr y la altura de salto, y elimina el daño por caída.",
   seven: "Hace visibles para todo tu escuadrón las huellas de los enemigos. La duración aumenta al subir de nivel.",
-  john_wick: "Al derribar o eliminar a un enemigo, revela temporalmente a los enemigos cercanos."
+  john_wick: "Al derribar o eliminar a un enemigo, revela temporalmente a los enemigos cercanos.",
+  wick: "Al derribar o eliminar a un jugador, revela a los demás enemigos cercanos. La marca dura más en cada nivel: 3 s, 3.5 s, 4 s, 4.5 s y 5 s.",
+  ironmouse: "Regenera vida con el tiempo cuando tienes poca salud. Mientras se regenera, obtienes Camuflaje y gravedad reducida. La vida recuperada aumenta por nivel: 60, 70, 80, 90 y 100.",
+  llama: "Puede encontrarse en Cofres Reliquia. Al abrir cajas de munición, existe una probabilidad de mejorar un arma. La probabilidad aumenta por nivel: 5%, 10%, 15%, 17% y 20%.",
+  peely: "Aparece cerca de zonas altas y montañosas. Emite un pulso que detecta jugadores con Sprites raros cercanos, pero también te marca en el mapa. El radio aumenta por nivel: 40 m, 50 m, 60 m, 70 m y 80 m."
 };
 
 const VARIANT_BONUSES = {
@@ -75,7 +80,7 @@ const VARIANT_BONUSES = {
 };
 
 function getSpriteBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack)$/i, "");
 }
 
 function getSpriteAbility(sprite) {
@@ -750,17 +755,18 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Galaxia", label: "Galaxia" },
   { theme: "Gema", label: "Gema" },
   { theme: "Holográfico", label: "Holo" },
-  { theme: "Cubo", label: "Cubo" }
+  { theme: "Cubo", label: "Cubo" },
+  { theme: "Quack", label: "Quack" }
 ];
 
 function getCaptureBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack)$/i, "");
 }
 
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo|Quack)$/i, "")
     .trim();
 }
 
@@ -1002,8 +1008,10 @@ const CAPTURE_EXPORT_THEME_ORDER = [
   "Dorado",
   "Gomita",
   "Galaxia",
+  "Gema",
   "Holográfico",
-  "Cubo"
+  "Cubo",
+  "Quack"
 ];
 
 function loadCaptureImage(source) {
@@ -1070,8 +1078,10 @@ function getCaptureExportPalette(sprite) {
     Dorado: ["#61460b", "#241a02", "#e8b946"],
     Gomita: ["#6b183f", "#260514", "#df5ca1"],
     Galaxia: ["#261552", "#080314", "#7a65dc"],
+    Gema: ["#114c47", "#041a18", "#49e6b2"],
     Holográfico: ["#204454", "#09171f", "#67dbe9"],
-    Cubo: ["#4e156f", "#180522", "#c16aff"]
+    Cubo: ["#4e156f", "#180522", "#c16aff"],
+    Quack: ["#1f6ba4", "#101b48", "#78d5ff"]
   };
   const values = special[sprite.theme] || special.Básico;
 
