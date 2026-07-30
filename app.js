@@ -8,7 +8,7 @@ const THEME_VISUALS = {
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
   "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
   "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" },
-  "Quack": { accent:"rgba(104,205,255,.92)", overlay:"linear-gradient(165deg,rgba(31,119,183,.46),rgba(20,28,78,.72))", overlayHover:"linear-gradient(165deg,rgba(55,153,220,.16),rgba(35,45,103,.22))", border:"rgba(122,218,255,.32)", shadow:"rgba(45,107,177,.32)" }
+  "Pato": { accent:"rgba(104,205,255,.92)", overlay:"linear-gradient(165deg,rgba(31,119,183,.46),rgba(20,28,78,.72))", overlayHover:"linear-gradient(165deg,rgba(55,153,220,.16),rgba(35,45,103,.22))", border:"rgba(122,218,255,.32)", shadow:"rgba(45,107,177,.32)" }
 
 };
 
@@ -756,7 +756,7 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Gema", label: "Gema" },
   { theme: "Holográfico", label: "Holo" },
   { theme: "Cubo", label: "Cubo" },
-  { theme: "Quack", label: "Quack" }
+  { theme: "Pato", label: "Pato" }
 ];
 
 function getCaptureBaseKey(sprite) {
@@ -766,7 +766,7 @@ function getCaptureBaseKey(sprite) {
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo|Quack)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo|Pato)$/i, "")
     .trim();
 }
 
@@ -1011,7 +1011,7 @@ const CAPTURE_EXPORT_THEME_ORDER = [
   "Gema",
   "Holográfico",
   "Cubo",
-  "Quack"
+  "Pato"
 ];
 
 function loadCaptureImage(source) {
@@ -1081,7 +1081,7 @@ function getCaptureExportPalette(sprite) {
     Gema: ["#114c47", "#041a18", "#49e6b2"],
     Holográfico: ["#204454", "#09171f", "#67dbe9"],
     Cubo: ["#4e156f", "#180522", "#c16aff"],
-    Quack: ["#1f6ba4", "#101b48", "#78d5ff"]
+    Pato: ["#1f6ba4", "#101b48", "#78d5ff"]
   };
   const values = special[sprite.theme] || special.Básico;
 
