@@ -6,7 +6,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Raro",
     "image": "images/water_basic.png",
-    "findRate": "12.83%",
+    "findRate": "0%",
     "isNew": false
   },
   {
@@ -16,7 +16,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/water_gold.png",
-    "findRate": "0.7%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -26,7 +26,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/water_candy.png",
-    "findRate": "0.28%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -36,7 +36,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/water_galaxy.png",
-    "findRate": "0.28%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -46,7 +46,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/water_holofoil.png",
-    "findRate": "0%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -56,7 +56,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Raro",
     "image": "images/earth_basic.png",
-    "findRate": "12.83%",
+    "findRate": "0%",
     "isNew": false
   },
   {
@@ -66,7 +66,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/earth_gold.png",
-    "findRate": "0.7%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -76,7 +76,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/earth_candy.png",
-    "findRate": "0.28%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -86,7 +86,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/earth_galaxy.png",
-    "findRate": "0.28%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -96,7 +96,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Raro",
     "image": "images/fire_basic.png",
-    "findRate": "12.45%",
+    "findRate": "0%",
     "isNew": false
   },
   {
@@ -106,7 +106,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/fire_gold.png",
-    "findRate": "0.68%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -116,7 +116,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/fire_candy.png",
-    "findRate": "0.68%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -126,7 +126,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/fire_galaxy.png",
-    "findRate": "0.27%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -136,7 +136,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/fire_holofoil.png",
-    "findRate": "0%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -146,7 +146,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/duck_basic.png",
-    "findRate": "5.74%",
+    "findRate": "6.48%",
     "isNew": false
   },
   {
@@ -156,7 +156,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/duck_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -166,7 +166,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/duck_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -176,7 +176,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/duck_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -186,7 +186,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/ghost_basic.png",
-    "findRate": "5.74%",
+    "findRate": "5.25%",
     "isNew": false
   },
   {
@@ -196,7 +196,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/ghost_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -206,7 +206,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/ghost_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -216,7 +216,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/ghost_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -226,7 +226,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/ghost_holofoil.png",
-    "findRate": "0%",
+    "findRate": "1.23%",
     "isNew": false
   },
   {
@@ -236,7 +236,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/dream_basic.png",
-    "findRate": "2.63%",
+    "findRate": "4.45%",
     "isNew": false
   },
   {
@@ -246,7 +246,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/dream_gold.png",
-    "findRate": "0.03%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -256,7 +256,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/dream_candy.png",
-    "findRate": "0.02%",
+    "findRate": "0.26%",
     "isNew": false
   },
   {
@@ -266,7 +266,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/dream_galaxy.png",
-    "findRate": "0.01%",
+    "findRate": "0.17%",
     "isNew": false
   },
   {
@@ -276,7 +276,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/demon_basic.png",
-    "findRate": "5.76%",
+    "findRate": "6.48%",
     "isNew": false
   },
   {
@@ -286,7 +286,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/demon_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -296,7 +296,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/demon_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -306,7 +306,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/demon_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -316,7 +316,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/punk_basic.png",
-    "findRate": "1.98%",
+    "findRate": "4.45%",
     "isNew": false
   },
   {
@@ -326,7 +326,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/punk_gold.png",
-    "findRate": "0.02%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -336,7 +336,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/punk_candy.png",
-    "findRate": "0.01%",
+    "findRate": "0.26%",
     "isNew": false
   },
   {
@@ -346,7 +346,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/punk_galaxy.png",
-    "findRate": "0.01%",
+    "findRate": "0.17%",
     "isNew": false
   },
   {
@@ -356,7 +356,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/king_basic.png",
-    "findRate": "5.74%",
+    "findRate": "5.25%",
     "isNew": false
   },
   {
@@ -366,7 +366,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/king_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -376,7 +376,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/king_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -386,7 +386,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/king_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -396,7 +396,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/king_holofoil.png",
-    "findRate": "0%",
+    "findRate": "1.23%",
     "isNew": false
   },
   {
@@ -406,7 +406,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/zeropoint_basic.png",
-    "findRate": "0.000098%",
+    "findRate": "0%",
     "isNew": false
   },
   {
@@ -416,7 +416,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/zeropoint_gold.png",
-    "findRate": "0.0000012%",
+    "findRate": "0.00014%",
     "isNew": false
   },
   {
@@ -426,7 +426,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/zeropoint_candy.png",
-    "findRate": "0.0000006%",
+    "findRate": "0.000085%",
     "isNew": false
   },
   {
@@ -436,8 +436,18 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/zeropoint_galaxy.png",
-    "findRate": "0.0000004%",
+    "findRate": "0.000056%",
     "isNew": false
+  },
+  {
+    "id": "zeropoint_holofoil",
+    "name": "Punto Cero Holográfico",
+    "originalName": "Holofoil Zero Point",
+    "theme": "Holográfico",
+    "rarity": "Especial",
+    "image": "images/zeropoint_holofoil.webp",
+    "findRate": "0.00028%",
+    "isNew": true
   },
   {
     "id": "theburntpeanut_basic",
@@ -446,7 +456,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/theburntpeanut_basic.png",
-    "findRate": "1.01%",
+    "findRate": "2.14%",
     "isNew": false
   },
   {
@@ -456,7 +466,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Raro",
     "image": "images/fishy_basic.png",
-    "findRate": "13.79%",
+    "findRate": "0%",
     "isNew": false
   },
   {
@@ -466,7 +476,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/fishy_gold.png",
-    "findRate": "0.17%",
+    "findRate": "0.64%",
     "isNew": false
   },
   {
@@ -476,7 +486,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/fishy_candy.png",
-    "findRate": "0.08%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -486,7 +496,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/fishy_galaxy.png",
-    "findRate": "0.06%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -496,7 +506,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/striker_basic.png",
-    "findRate": "5.74%",
+    "findRate": "5.25%",
     "isNew": false
   },
   {
@@ -506,7 +516,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/striker_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -516,7 +526,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/striker_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -526,7 +536,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/striker_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -536,7 +546,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/striker_holofoil.png",
-    "findRate": "0%",
+    "findRate": "1.23%",
     "isNew": false
   },
   {
@@ -546,7 +556,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Épico",
     "image": "images/aura_basic.png",
-    "findRate": "5.74%",
+    "findRate": "6.48%",
     "isNew": false
   },
   {
@@ -556,7 +566,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/aura_gold.png",
-    "findRate": "0.07%",
+    "findRate": "0.62%",
     "isNew": false
   },
   {
@@ -566,7 +576,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/aura_candy.png",
-    "findRate": "0.04%",
+    "findRate": "0.37%",
     "isNew": false
   },
   {
@@ -576,7 +586,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/aura_galaxy.png",
-    "findRate": "0.02%",
+    "findRate": "0.25%",
     "isNew": false
   },
   {
@@ -586,7 +596,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/boss_basic.png",
-    "findRate": "2.63%",
+    "findRate": "4.45%",
     "isNew": false
   },
   {
@@ -596,7 +606,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/boss_gold.png",
-    "findRate": "0.03%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -606,7 +616,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/boss_candy.png",
-    "findRate": "0.02%",
+    "findRate": "0.26%",
     "isNew": false
   },
   {
@@ -616,7 +626,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/boss_galaxy.png",
-    "findRate": "0.01%",
+    "findRate": "0.17%",
     "isNew": false
   },
   {
@@ -626,7 +636,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/grim_basic.png",
-    "findRate": "0.000098%",
+    "findRate": "0.15%",
     "isNew": false
   },
   {
@@ -636,7 +646,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/grim_gold.png",
-    "findRate": "0.0000012%",
+    "findRate": "0.01%",
     "isNew": false
   },
   {
@@ -646,7 +656,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/grim_candy.png",
-    "findRate": "0.0000006%",
+    "findRate": "0.01%",
     "isNew": false
   },
   {
@@ -656,7 +666,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/grim_galaxy.png",
-    "findRate": "0.0000004%",
+    "findRate": "0.01%",
     "isNew": false
   },
   {
@@ -666,7 +676,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/batman_basic.webp",
-    "findRate": "0%",
+    "findRate": "1.44%",
     "isNew": false
   },
   {
@@ -676,7 +686,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/batman_gold.webp",
-    "findRate": "0%",
+    "findRate": "0.17%",
     "isNew": false
   },
   {
@@ -686,7 +696,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/batman_candy.webp",
-    "findRate": "0%",
+    "findRate": "0.1%",
     "isNew": false
   },
   {
@@ -696,7 +706,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/batman_galaxy.webp",
-    "findRate": "0%",
+    "findRate": "0.07%",
     "isNew": false
   },
   {
@@ -706,7 +716,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/batman_holofoil.webp",
-    "findRate": "0%",
+    "findRate": "0.34%",
     "isNew": false
   },
   {
@@ -716,7 +726,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/pollo_basic.webp",
-    "findRate": "0%",
+    "findRate": "2.14%",
     "isNew": false
   },
   {
@@ -726,7 +736,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/vini_jr_basic.webp",
-    "findRate": "0%",
+    "findRate": "2.14%",
     "isNew": false
   },
   {
@@ -746,7 +756,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/air_gold.webp",
-    "findRate": "0%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -756,7 +766,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/air_candy.webp",
-    "findRate": "0%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -766,7 +776,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/air_galaxy.webp",
-    "findRate": "0%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -776,7 +786,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/air_holofoil.webp",
-    "findRate": "0%",
+    "findRate": "0.53%",
     "isNew": false
   },
   {
@@ -786,7 +796,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/seven_basic.webp",
-    "findRate": "0%",
+    "findRate": "3.63%",
     "isNew": false
   },
   {
@@ -796,7 +806,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/seven_gold.webp",
-    "findRate": "0%",
+    "findRate": "0.43%",
     "isNew": false
   },
   {
@@ -806,7 +816,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/seven_candy.webp",
-    "findRate": "0%",
+    "findRate": "0.26%",
     "isNew": false
   },
   {
@@ -816,7 +826,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/seven_galaxy.webp",
-    "findRate": "0%",
+    "findRate": "0.17%",
     "isNew": false
   },
   {
@@ -826,7 +836,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/seven_holofoil.webp",
-    "findRate": "0%",
+    "findRate": "0.85%",
     "isNew": false
   },
   {
@@ -846,7 +856,7 @@ const SPRITES = [
     "theme": "Gema",
     "rarity": "Especial",
     "image": "images/grim_gem.png",
-    "findRate": "0%",
+    "findRate": "0.00099%",
     "isNew": true
   },
   {
@@ -866,7 +876,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Mítico",
     "image": "images/ironmouse_basic.png",
-    "findRate": "0%",
+    "findRate": "2.14%",
     "isNew": true
   },
   {
@@ -876,7 +886,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/llama_basic.png",
-    "findRate": "0%",
+    "findRate": "4.45%",
     "isNew": true
   },
   {
@@ -886,7 +896,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/llama_candy.png",
-    "findRate": "0%",
+    "findRate": "0.26%",
     "isNew": true
   },
   {
@@ -896,7 +906,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/llama_galaxy.png",
-    "findRate": "0%",
+    "findRate": "0.17%",
     "isNew": true
   },
   {
@@ -916,7 +926,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/llama_gold.png",
-    "findRate": "0%",
+    "findRate": "0.43%",
     "isNew": true
   },
   {
@@ -926,7 +936,7 @@ const SPRITES = [
     "theme": "Básico",
     "rarity": "Legendario",
     "image": "images/peely_basic.png",
-    "findRate": "0%",
+    "findRate": "4.62%",
     "isNew": true
   },
   {
@@ -936,7 +946,7 @@ const SPRITES = [
     "theme": "Gomita",
     "rarity": "Especial",
     "image": "images/peely_candy.png",
-    "findRate": "0%",
+    "findRate": "0.26%",
     "isNew": true
   },
   {
@@ -946,7 +956,7 @@ const SPRITES = [
     "theme": "Galaxia",
     "rarity": "Especial",
     "image": "images/peely_galaxy.png",
-    "findRate": "0%",
+    "findRate": "0.17%",
     "isNew": true
   },
   {
@@ -956,7 +966,7 @@ const SPRITES = [
     "theme": "Dorado",
     "rarity": "Especial",
     "image": "images/peely_gold.png",
-    "findRate": "0%",
+    "findRate": "0.43%",
     "isNew": true
   },
   {
@@ -966,7 +976,7 @@ const SPRITES = [
     "theme": "Holográfico",
     "rarity": "Especial",
     "image": "images/peely_holofoil.png",
-    "findRate": "0%",
+    "findRate": "0.85%",
     "isNew": true
   },
   {
@@ -1016,7 +1026,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/zeropoint_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.000014%",
     "isNew": true
   },
   {
@@ -1026,7 +1036,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/earth_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.21%",
     "isNew": false
   },
   {
@@ -1036,7 +1046,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/fire_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.21%",
     "isNew": false
   },
   {
@@ -1046,7 +1056,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/fishy_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.21%",
     "isNew": false
   },
   {
@@ -1056,7 +1066,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/punk_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.04%",
     "isNew": false
   },
   {
@@ -1066,7 +1076,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/dream_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.04%",
     "isNew": false
   },
   {
@@ -1076,7 +1086,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/boss_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.04%",
     "isNew": false
   },
   {
@@ -1086,7 +1096,7 @@ const SPRITES = [
     "theme": "Cubo",
     "rarity": "Especial",
     "image": "images/batman_cube.webp",
-    "findRate": "0%",
+    "findRate": "0.02%",
     "isNew": false
   },
   {
