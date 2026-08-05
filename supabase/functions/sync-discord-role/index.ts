@@ -33,6 +33,13 @@ type DiscordMember = {
   roles?: string[];
 };
 
+const MASTERY_100_ROLE: ThresholdRole = {
+  min: 100,
+  max: null,
+  roleId: "1534593463318741162",
+  name: "🏆 100 Sprites Dominados",
+};
+
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -78,13 +85,26 @@ function validateSpecialRules(value: unknown): SpecialRole[] {
   return rules;
 }
 
+function applyLatestMasteryMilestones(rules: ThresholdRole[]): ThresholdRole[] {
+  const role75 = rules.find(rule => rule.min === 75);
+  if (!role75) throw new Error("Mastery role for 75 Sprites is missing.");
+
+  return validateThresholdRules([
+    ...rules.filter(rule => rule.min < 75),
+    { ...role75, max: 99 },
+    MASTERY_100_ROLE,
+  ], "Mastery");
+}
+
 function readRoleRules(): RoleRules {
   const raw = Deno.env.get("DISCORD_ROLE_RULES");
   if (!raw) throw new Error("DISCORD_ROLE_RULES is missing.");
   const parsed = JSON.parse(raw) as Partial<RoleRules>;
+  const masteryRules = validateThresholdRules(parsed.mastery, "Mastery");
+
   return {
     collection: validateThresholdRules(parsed.collection, "Collection"),
-    mastery: validateThresholdRules(parsed.mastery, "Mastery"),
+    mastery: applyLatestMasteryMilestones(masteryRules),
     specials: validateSpecialRules(parsed.specials),
   };
 }
