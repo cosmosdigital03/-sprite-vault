@@ -23,13 +23,14 @@ window.SPRITE_VAULT_CONFIG = {
   ],
 
   masteryRoleThresholds: [
-    { min: 5,  max: 9,   name: "🏅 5 Sprites Dominados" },
-    { min: 10, max: 14,  name: "🥉 10 Sprites Dominados" },
-    { min: 15, max: 19,  name: "🥈 15 Sprites Dominados" },
-    { min: 20, max: 29,  name: "🥇 20 Sprites Dominados" },
-    { min: 30, max: 49,  name: "💠 30 Sprites Dominados" },
-    { min: 50, max: 74,  name: "👑 50 Sprites Dominados" },
-    { min: 75, max: null, name: "🌌 75 Sprites Dominados" }
+    { min: 5,   max: 9,   name: "🏅 5 Sprites Dominados" },
+    { min: 10,  max: 14,  name: "🥉 10 Sprites Dominados" },
+    { min: 15,  max: 19,  name: "🥈 15 Sprites Dominados" },
+    { min: 20,  max: 29,  name: "🥇 20 Sprites Dominados" },
+    { min: 30,  max: 49,  name: "💠 30 Sprites Dominados" },
+    { min: 50,  max: 74,  name: "👑 50 Sprites Dominados" },
+    { min: 75,  max: 99,  name: "🌌 75 Sprites Dominados" },
+    { min: 100, max: null, name: "🏆 100 Sprites Dominados" }
   ],
 
   specialRoles: [

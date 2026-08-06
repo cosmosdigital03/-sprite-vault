@@ -100,9 +100,15 @@
     },
     {
       "min": 75,
-      "max": null,
+      "max": 99,
       "roleId": "ROLE_ID_75_DOMINADOS",
       "name": "🌌 75 Sprites Dominados"
+    },
+    {
+      "min": 100,
+      "max": null,
+      "roleId": "1534593463318741162",
+      "name": "🏆 100 Sprites Dominados"
     }
   ],
   "specials": [

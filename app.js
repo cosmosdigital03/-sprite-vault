@@ -7,7 +7,8 @@ const THEME_VISUALS = {
   "Galaxia": { accent:"rgba(132,116,255,.88)", overlay:"linear-gradient(165deg,rgba(62,38,143,.48),rgba(8,14,41,.74))", overlayHover:"linear-gradient(165deg,rgba(62,38,143,.12),rgba(8,14,41,.20))", border:"rgba(132,116,255,.28)", shadow:"rgba(71,52,154,.28)" },
   "Gema": { accent:"rgba(63,230,165,.84)", overlay:"linear-gradient(165deg,rgba(8,102,70,.40),rgba(8,27,26,.70))", overlayHover:"linear-gradient(165deg,rgba(8,102,70,.12),rgba(8,27,26,.20))", border:"rgba(63,230,165,.25)", shadow:"rgba(16,113,82,.28)" },
   "Holográfico": { accent:"rgba(104,236,255,.86)", overlay:"linear-gradient(165deg,rgba(90,48,189,.32),rgba(12,40,72,.62))", overlayHover:"linear-gradient(165deg,rgba(90,48,189,.10),rgba(12,40,72,.18))", border:"rgba(104,236,255,.26)", shadow:"rgba(58,145,175,.30)" },
-  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" }
+  "Cubo": { accent:"rgba(181,92,255,.92)", overlay:"linear-gradient(165deg,rgba(104,28,170,.50),rgba(31,8,57,.76))", overlayHover:"linear-gradient(165deg,rgba(130,44,205,.18),rgba(45,13,75,.24))", border:"rgba(196,120,255,.34)", shadow:"rgba(102,35,165,.34)" },
+  "Pato": { accent:"rgba(104,205,255,.92)", overlay:"linear-gradient(165deg,rgba(31,119,183,.46),rgba(20,28,78,.72))", overlayHover:"linear-gradient(165deg,rgba(55,153,220,.16),rgba(35,45,103,.22))", border:"rgba(122,218,255,.32)", shadow:"rgba(45,107,177,.32)" }
 
 };
 
@@ -39,6 +40,58 @@ const RARITY_VISUALS = {
   }
 };
 
+
+const SPRITE_ABILITIES = {
+  water: "Regenera escudo mientras permaneces dentro del agua. Por nivel recupera 2, 3, 4, 5 y 6 de escudo por intervalo.",
+  earth: "Al abrir cofres, tienes probabilidad de encontrar botín raro adicional. Por nivel: 10%, 12.5%, 15%, 17.5% y 20%.",
+  fire: "Crea una explosión de fuego después de infligir suficiente daño a un enemigo. Requiere menos daño al subir de nivel.",
+  duck: "Usar gestos o improvisar música regenera escudo. Por nivel recupera 2, 3, 4, 6 y 8 de escudo por intervalo.",
+  ghost: "Te vuelve invisible durante unos segundos al recargar un arma. La duración aumenta al subir de nivel.",
+  dream: "Entrega un objeto aleatorio en cada nivel y, al llegar al nivel máximo, explota en botín legendario.",
+  demon: "Al eliminar a un enemigo, absorbe vida y escudo. Por nivel cura 10, 15, 20, 25 y 30 puntos por eliminación.",
+  punk: "Puede no hacer nada… o hacer algo infinito. Su efecto exacto es impredecible.",
+  king: "Aumenta el daño de tu pico. El daño adicional crece al subir de nivel.",
+  zeropoint: "Genera una Burbuja Escudo Jr. al usar un objeto de curación sobre ti, excepto salpicones y granadas. Dura 6, 7, 8, 9 y 10 segundos por nivel.",
+  theburntpeanut: "Al eliminar jugadores, puede hacer que aparezca botín adicional, incluso mítico al nivel máximo.",
+  fishy: "Aumenta mucho la velocidad de nado y, al recibir daño, aumenta brevemente tu velocidad de movimiento.",
+  striker: "Activa Sobrecarga al trepar, superar obstáculos o escalar paredes. La duración aumenta al subir de nivel.",
+  aura: "Obtienes una carga de Roca de Choque al causar suficiente daño. El requisito baja por nivel: 175, 150, 125, 100 y 75 de daño.",
+  boss: "Aumenta tu vida y escudo máximos. La bonificación aumenta al subir de nivel.",
+  grim: "Marca a los jugadores que te atacan. La marca dura 3, 3.5, 4, 4.5 y 5 segundos según el nivel.",
+  batman: "Te permite impulsarte por el aire y desplegar la Batcapa para planear.",
+  pollo: "Después de una eliminación, regenera lentamente tu escudo y el de los aliados cercanos durante unos segundos.",
+  vini_jr: "Tras correr un poco, tus deslizamientos se vuelven destructivos. Golpear enemigos con una patada deslizante aumenta la cadencia y la velocidad de recarga.",
+  air: "Aumenta la velocidad al correr y la altura de salto, y elimina el daño por caída.",
+  seven: "Hace visibles para todo tu escuadrón las huellas de los enemigos. La duración aumenta al subir de nivel.",
+  john_wick: "Al derribar o eliminar a un enemigo, revela temporalmente a los enemigos cercanos.",
+  wick: "Al derribar o eliminar a un jugador, revela a los demás enemigos cercanos. La marca dura más en cada nivel: 3 s, 3.5 s, 4 s, 4.5 s y 5 s.",
+  ironmouse: "Regenera vida con el tiempo cuando tienes poca salud. Mientras se regenera, obtienes Camuflaje y gravedad reducida. La vida recuperada aumenta por nivel: 60, 70, 80, 90 y 100.",
+  llama: "Al abrir cajas de munición, existe una probabilidad de mejorar un arma. Por nivel: 5%, 10%, 15%, 17% y 20%.",
+  peely: "Aparece cerca de zonas altas y montañosas. Emite un pulso que detecta jugadores con Sprites raros cercanos, pero también te marca en el mapa. El radio aumenta por nivel: 40 m, 50 m, 60 m, 70 m y 80 m."
+};
+
+const VARIANT_BONUSES = {
+  "Dorado": "Obtienes 3× de XP adicional por las eliminaciones.",
+  "Gomita": "Obtienes 20% más Polvo de Sprite al extraerlo.",
+  "Galaxia": "Obtienes 20% más munición además del poder normal del Sprite.",
+  "Gema": "Recibes 30% menos daño por caída además del poder normal del Sprite.",
+  "Holográfico": "Tu escuadrón tiene 5% de probabilidad adicional de encontrar variantes raras al saquear cofres.",
+  "Cubo": "Obtienes el efecto Sobrecarga mientras estás dentro de la tormenta."
+};
+
+function getSpriteBaseKey(sprite) {
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack)$/i, "");
+}
+
+function getSpriteAbility(sprite) {
+  return SPRITE_ABILITIES[getSpriteBaseKey(sprite)] ||
+    "La habilidad de este Sprite todavía no ha sido confirmada.";
+}
+
+function getVariantBonus(sprite) {
+  return VARIANT_BONUSES[sprite.theme] || "";
+}
+
 let showcaseIndex = -1;
 let showcaseTimer = null;
 
@@ -62,6 +115,7 @@ const elements = Object.fromEntries([
   "captureGrid","captureSheet","captureTip","captureOwned","captureMissing","captureMastered","capturePercent","captureTitle",
   "captureResultCount","spriteDialog","closeSpriteDialog","mobileCloseSpriteDialog","detailVisual","detailImage","detailNewBadge",
   "detailTheme","detailName","detailOriginalName","detailRarity","detailFindRate","rarityExplanation",
+  "detailAbility","detailVariantBonus","detailVariantBonusText",
   "detailOwnedButton","detailMasteryButton","spriteShowcase","showcaseImage","showcaseTheme",
   "showcaseName","showcaseRarity"
 ].map(id => [id, document.querySelector(`#${id}`)]));
@@ -639,6 +693,11 @@ function refreshDetail() {
   elements.detailRarity.textContent = sprite.rarity;
   elements.detailFindRate.textContent = sprite.findRate;
   elements.rarityExplanation.textContent = rarityMessage(sprite.findRate);
+  elements.detailAbility.textContent = getSpriteAbility(sprite);
+
+  const variantBonus = getVariantBonus(sprite);
+  elements.detailVariantBonus.hidden = !variantBonus;
+  elements.detailVariantBonusText.textContent = variantBonus;
 
   elements.detailOwnedButton.textContent =
     item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
@@ -694,18 +753,20 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Dorado", label: "Dorado" },
   { theme: "Gomita", label: "Gomita" },
   { theme: "Galaxia", label: "Galaxia" },
+  { theme: "Gema", label: "Gema" },
   { theme: "Holográfico", label: "Holo" },
-  { theme: "Cubo", label: "Cubo" }
+  { theme: "Cubo", label: "Cubo" },
+  { theme: "Pato", label: "Pato" }
 ];
 
 function getCaptureBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack)$/i, "");
 }
 
 function getCaptureBaseLabel(group) {
   const basic = group.find(sprite => sprite.theme === "Básico") || group[0];
   return basic.name
-    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Holográfica|Holográfico|Cubo)$/i, "")
+    .replace(/\s+(Dorada|Dorado|Gomita|Galáctica|Galáctico|Gema|Holográfica|Holográfico|Cubo|Pato)$/i, "")
     .trim();
 }
 
@@ -947,8 +1008,10 @@ const CAPTURE_EXPORT_THEME_ORDER = [
   "Dorado",
   "Gomita",
   "Galaxia",
+  "Gema",
   "Holográfico",
-  "Cubo"
+  "Cubo",
+  "Pato"
 ];
 
 function loadCaptureImage(source) {
@@ -1015,8 +1078,10 @@ function getCaptureExportPalette(sprite) {
     Dorado: ["#61460b", "#241a02", "#e8b946"],
     Gomita: ["#6b183f", "#260514", "#df5ca1"],
     Galaxia: ["#261552", "#080314", "#7a65dc"],
+    Gema: ["#114c47", "#041a18", "#49e6b2"],
     Holográfico: ["#204454", "#09171f", "#67dbe9"],
-    Cubo: ["#4e156f", "#180522", "#c16aff"]
+    Cubo: ["#4e156f", "#180522", "#c16aff"],
+    Pato: ["#1f6ba4", "#101b48", "#78d5ff"]
   };
   const values = special[sprite.theme] || special.Básico;
 
