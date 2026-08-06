@@ -1,0 +1,33 @@
+name: Recommit Gem Update files
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/recommit-gem-files.yml
+
+permissions:
+  contents: write
+
+jobs:
+  recommit-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Touch Gem Update files
+        run: |
+          printf '\n// Gem Update V12 recommit trigger: 2026-08-06\n' >> app.js
+          printf '\n// Gem Update V12 recommit trigger: 2026-08-06\n' >> sprites.js
+
+      - name: Commit app.js and sprites.js
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js sprites.js
+          git commit -m "Recommit Gem Update V12 files"
+          git push
