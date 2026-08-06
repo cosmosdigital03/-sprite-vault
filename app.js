@@ -42,22 +42,22 @@ const RARITY_VISUALS = {
 
 
 const SPRITE_ABILITIES = {
-  water: "Regenera tu escudo mientras permaneces dentro del agua. La cantidad recuperada aumenta al subir de nivel.",
-  earth: "Te da una probabilidad de encontrar objetos raros adicionales al abrir cofres. La probabilidad aumenta al subir de nivel.",
+  water: "Regenera escudo mientras permaneces dentro del agua. Por nivel recupera 2, 3, 4, 5 y 6 de escudo por intervalo.",
+  earth: "Al abrir cofres, tienes probabilidad de encontrar botín raro adicional. Por nivel: 10%, 12.5%, 15%, 17.5% y 20%.",
   fire: "Crea una explosión de fuego después de infligir suficiente daño a un enemigo. Requiere menos daño al subir de nivel.",
-  duck: "Recupera escudo mientras usas gestos o improvisas. La recuperación aumenta al subir de nivel.",
+  duck: "Usar gestos o improvisar música regenera escudo. Por nivel recupera 2, 3, 4, 6 y 8 de escudo por intervalo.",
   ghost: "Te vuelve invisible durante unos segundos al recargar un arma. La duración aumenta al subir de nivel.",
   dream: "Entrega un objeto aleatorio en cada nivel y, al llegar al nivel máximo, explota en botín legendario.",
-  demon: "Roba vida y escudo al eliminar a un enemigo. La curación aumenta al subir de nivel.",
+  demon: "Al eliminar a un enemigo, absorbe vida y escudo. Por nivel cura 10, 15, 20, 25 y 30 puntos por eliminación.",
   punk: "Puede no hacer nada… o hacer algo infinito. Su efecto exacto es impredecible.",
   king: "Aumenta el daño de tu pico. El daño adicional crece al subir de nivel.",
-  zeropoint: "Genera una Burbuja Escudo Jr. cuando usas un objeto de curación sobre ti, excepto salpicones y granadas.",
+  zeropoint: "Genera una Burbuja Escudo Jr. al usar un objeto de curación sobre ti, excepto salpicones y granadas. Dura 6, 7, 8, 9 y 10 segundos por nivel.",
   theburntpeanut: "Al eliminar jugadores, puede hacer que aparezca botín adicional, incluso mítico al nivel máximo.",
   fishy: "Aumenta mucho la velocidad de nado y, al recibir daño, aumenta brevemente tu velocidad de movimiento.",
   striker: "Activa Sobrecarga al trepar, superar obstáculos o escalar paredes. La duración aumenta al subir de nivel.",
-  aura: "Obtienes una carga de Roca de Choque después de infligir suficiente daño. Requiere menos daño al subir de nivel.",
+  aura: "Obtienes una carga de Roca de Choque al causar suficiente daño. El requisito baja por nivel: 175, 150, 125, 100 y 75 de daño.",
   boss: "Aumenta tu vida y escudo máximos. La bonificación aumenta al subir de nivel.",
-  grim: "Marca durante unos segundos a los jugadores que te ataquen. La duración aumenta al subir de nivel.",
+  grim: "Marca a los jugadores que te atacan. La marca dura 3, 3.5, 4, 4.5 y 5 segundos según el nivel.",
   batman: "Te permite impulsarte por el aire y desplegar la Batcapa para planear.",
   pollo: "Después de una eliminación, regenera lentamente tu escudo y el de los aliados cercanos durante unos segundos.",
   vini_jr: "Tras correr un poco, tus deslizamientos se vuelven destructivos. Golpear enemigos con una patada deslizante aumenta la cadencia y la velocidad de recarga.",
@@ -66,7 +66,7 @@ const SPRITE_ABILITIES = {
   john_wick: "Al derribar o eliminar a un enemigo, revela temporalmente a los enemigos cercanos.",
   wick: "Al derribar o eliminar a un jugador, revela a los demás enemigos cercanos. La marca dura más en cada nivel: 3 s, 3.5 s, 4 s, 4.5 s y 5 s.",
   ironmouse: "Regenera vida con el tiempo cuando tienes poca salud. Mientras se regenera, obtienes Camuflaje y gravedad reducida. La vida recuperada aumenta por nivel: 60, 70, 80, 90 y 100.",
-  llama: "Puede encontrarse en Cofres Reliquia. Al abrir cajas de munición, existe una probabilidad de mejorar un arma. La probabilidad aumenta por nivel: 5%, 10%, 15%, 17% y 20%.",
+  llama: "Al abrir cajas de munición, existe una probabilidad de mejorar un arma. Por nivel: 5%, 10%, 15%, 17% y 20%.",
   peely: "Aparece cerca de zonas altas y montañosas. Emite un pulso que detecta jugadores con Sprites raros cercanos, pero también te marca en el mapa. El radio aumenta por nivel: 40 m, 50 m, 60 m, 70 m y 80 m."
 };
 

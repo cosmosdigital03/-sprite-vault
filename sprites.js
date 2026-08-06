@@ -40,6 +40,16 @@ const SPRITES = [
     "isNew": false
   },
   {
+    "id": "water_gem",
+    "name": "Agua Gema",
+    "originalName": "Gem Water",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/water_gem.webp",
+    "findRate": "0.37%",
+    "isNew": true
+  },
+  {
     "id": "water_holofoil",
     "name": "Agua Holográfica",
     "originalName": "Holofoil Water",
@@ -88,6 +98,16 @@ const SPRITES = [
     "image": "images/earth_galaxy.png",
     "findRate": "0.43%",
     "isNew": false
+  },
+  {
+    "id": "earth_gem",
+    "name": "Tierra Gema",
+    "originalName": "Gem Earth",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/earth_gem.webp",
+    "findRate": "0.37%",
+    "isNew": true
   },
   {
     "id": "fire_basic",
@@ -178,6 +198,16 @@ const SPRITES = [
     "image": "images/duck_galaxy.png",
     "findRate": "0.25%",
     "isNew": false
+  },
+  {
+    "id": "duck_gem",
+    "name": "Pato Gema",
+    "originalName": "Gem Duck",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/duck_gem.webp",
+    "findRate": "0.1%",
+    "isNew": true
   },
   {
     "id": "ghost_basic",
@@ -310,6 +340,16 @@ const SPRITES = [
     "isNew": false
   },
   {
+    "id": "demon_gem",
+    "name": "Demonio Gema",
+    "originalName": "Gem Demon",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/demon_gem.webp",
+    "findRate": "0.1%",
+    "isNew": true
+  },
+  {
     "id": "punk_basic",
     "name": "Punk",
     "originalName": "Punk",
@@ -348,6 +388,16 @@ const SPRITES = [
     "image": "images/punk_galaxy.png",
     "findRate": "0.17%",
     "isNew": false
+  },
+  {
+    "id": "punk_gem",
+    "name": "Punk Gema",
+    "originalName": "Gem Punk",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/punk_gem.webp",
+    "findRate": "0%",
+    "isNew": true
   },
   {
     "id": "king_basic",
@@ -440,6 +490,16 @@ const SPRITES = [
     "isNew": false
   },
   {
+    "id": "zeropoint_gem",
+    "name": "Punto Cero Gema",
+    "originalName": "Gem Zero Point",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/zeropoint_gem.webp",
+    "findRate": "0.00001%",
+    "isNew": true
+  },
+  {
     "id": "zeropoint_holofoil",
     "name": "Punto Cero Holográfico",
     "originalName": "Holofoil Zero Point",
@@ -447,7 +507,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/zeropoint_holofoil.webp",
     "findRate": "0.00028%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "theburntpeanut_basic",
@@ -590,6 +650,16 @@ const SPRITES = [
     "isNew": false
   },
   {
+    "id": "aura_gem",
+    "name": "Aura Gema",
+    "originalName": "Gem Aura",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/aura_gem.webp",
+    "findRate": "0.08%",
+    "isNew": true
+  },
+  {
     "id": "boss_basic",
     "name": "Jefe",
     "originalName": "Boss",
@@ -668,6 +738,16 @@ const SPRITES = [
     "image": "images/grim_galaxy.png",
     "findRate": "0.01%",
     "isNew": false
+  },
+  {
+    "id": "grim_gem",
+    "name": "Sombrío Gema",
+    "originalName": "Gem Grim",
+    "theme": "Gema",
+    "rarity": "Especial",
+    "image": "images/grim_gem.png",
+    "findRate": "0.00099%",
+    "isNew": true
   },
   {
     "id": "batman_basic",
@@ -847,17 +927,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/wick_basic.png",
     "findRate": "0%",
-    "isNew": true
-  },
-  {
-    "id": "grim_gem",
-    "name": "Sombrío Gema",
-    "originalName": "Gem Grim",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/grim_gem.png",
-    "findRate": "0.00099%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "grim_holofoil",
@@ -867,7 +937,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/grim_holofoil.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "ironmouse_basic",
@@ -877,7 +947,7 @@ const SPRITES = [
     "rarity": "Mítico",
     "image": "images/ironmouse_basic.png",
     "findRate": "2.14%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "llama_basic",
@@ -887,7 +957,7 @@ const SPRITES = [
     "rarity": "Legendario",
     "image": "images/llama_basic.png",
     "findRate": "4.45%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "llama_candy",
@@ -897,7 +967,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/llama_candy.png",
     "findRate": "0.26%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "llama_galaxy",
@@ -907,7 +977,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/llama_galaxy.png",
     "findRate": "0.17%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "llama_gem",
@@ -927,7 +997,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/llama_gold.png",
     "findRate": "0.43%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "peely_basic",
@@ -937,7 +1007,7 @@ const SPRITES = [
     "rarity": "Legendario",
     "image": "images/peely_basic.png",
     "findRate": "4.62%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "peely_candy",
@@ -947,7 +1017,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/peely_candy.png",
     "findRate": "0.26%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "peely_galaxy",
@@ -957,7 +1027,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/peely_galaxy.png",
     "findRate": "0.17%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "peely_gold",
@@ -967,7 +1037,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/peely_gold.png",
     "findRate": "0.43%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "peely_holofoil",
@@ -977,7 +1047,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/peely_holofoil.png",
     "findRate": "0.85%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "earth_quack",
@@ -987,7 +1057,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/earth_quack.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "fire_quack",
@@ -997,7 +1067,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/fire_quack.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "water_quack",
@@ -1007,7 +1077,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/water_quack.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "zeropoint_quack",
@@ -1017,7 +1087,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/zeropoint_quack.png",
     "findRate": "0%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "zeropoint_cube",
@@ -1027,7 +1097,7 @@ const SPRITES = [
     "rarity": "Especial",
     "image": "images/zeropoint_cube.webp",
     "findRate": "0.000014%",
-    "isNew": true
+    "isNew": false
   },
   {
     "id": "earth_cube",
