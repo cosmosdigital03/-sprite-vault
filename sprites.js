@@ -390,16 +390,6 @@ const SPRITES = [
     "isNew": false
   },
   {
-    "id": "punk_gem",
-    "name": "Punk Gema",
-    "originalName": "Gem Punk",
-    "theme": "Gema",
-    "rarity": "Especial",
-    "image": "images/punk_gem.webp",
-    "findRate": "0%",
-    "isNew": true
-  },
-  {
     "id": "king_basic",
     "name": "Rey",
     "originalName": "King",
