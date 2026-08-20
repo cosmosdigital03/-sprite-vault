@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b16" />
+  <meta name="description" content="Códigos Lobby Hacks de Fortnite Override en Sprite Vault." />
+  <title>Lobby Hacks | Sprite Vault</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=12.0" />
+  <link rel="stylesheet" href="codes.css?v=12.0" />
+</head>
+<body class="lobby-hacks-page">
+  <div class="page-backdrop" aria-hidden="true"></div>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Volver al rastreador de Sprite Vault">
+      <span class="brand-mark"><img src="images/sprite-vault-logo.png" alt="" /></span>
+      <span>
+        <strong>SPRITE VAULT</strong>
+        <small>Lobby Hacks</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      <a class="button header-share-button lobby-back-link" href="index.html">← Sprites</a>
+    </div>
+  </header>
+
+  <main class="lobby-shell">
+    <section class="lobby-hero">
+      <div class="lobby-hero-copy">
+        <span class="lobby-kicker">FORTNITE · OVERRIDE</span>
+        <h1>Lobby Hacks</h1>
+        <p>Copia los códigos directamente y marca cada uno como <b>Usado</b> o <b>No usado</b>. Tu progreso se guarda automáticamente en este navegador.</p>
+      </div>
+
+      <aside class="lobby-progress-card" aria-label="Progreso de códigos">
+        <span>PROGRESO</span>
+        <strong id="hackProgressText">0 usados de 17</strong>
+        <div class="hack-progress-track"><div class="hack-progress-fill" id="hackProgressFill"></div></div>
+        <div class="lobby-mini-stats">
+          <div><b id="hackUnusedCount">17</b><span>No usados</span></div>
+          <div><b id="hackUsedCount">0</b><span>Usados</span></div>
+          <div><b id="hackTotalCount">17</b><span>Total</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="lobby-toolbar" aria-label="Filtros de códigos">
+      <div class="hack-filter-tabs" id="hackFilters">
+        <button type="button" data-filter="unused">No usados <span id="filterUnusedCount">17</span></button>
+        <button type="button" data-filter="used">Usados <span id="filterUsedCount">0</span></button>
+        <button type="button" data-filter="all">Todos <span id="filterAllCount">17</span></button>
+      </div>
+
+      <div class="hack-bulk-actions">
+        <button type="button" id="markAllUsed">✓ Marcar todos usados</button>
+        <button type="button" id="markAllUnused">↻ Todos no usados</button>
+      </div>
+    </section>
+
+    <section id="hackList" aria-live="polite"></section>
+
+    <p class="lobby-source-note">
+      Códigos sincronizados con la lista pública de Fortnite Sprites consultada el 20 de agosto de 2026. Las recompensas pueden cambiar o expirar según Fortnite.
+    </p>
+  </main>
+
+  <footer>
+    <div>
+      <strong>SPRITE VAULT</strong>
+      <span>© 2026 Sprite Vault — sitio comunitario gratuito y no oficial.</span>
+    </div>
+    <span>Fortnite y sus materiales relacionados pertenecen a Epic Games, Inc. Sprite Vault no está afiliado ni respaldado por Epic Games.</span>
+  </footer>
+
+  <script src="codes-data.js?v=12.0"></script>
+  <script src="codes-app.js?v=12.0"></script>
+</body>
+</html>
