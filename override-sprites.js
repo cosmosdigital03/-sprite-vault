@@ -4,6 +4,8 @@
 
 SPRITES.forEach(sprite => {
   if (!sprite.season) sprite.season = "Runners";
+  // "Nuevo" now means the current Override season only.
+  sprite.isNew = false;
 });
 
 const OVERRIDE_IMAGE_BASE = "https://raw.githubusercontent.com/staticvacant/fnsprites/70490e67a1c4ce082748060f8dc0f446fe0b767f/sprites";
