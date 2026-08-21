@@ -1,0 +1,494 @@
+/* Sprite Vault V13 — UX, mobile capture, and Cheat Master visual layer */
+
+:root {
+  --sv13-panel: rgba(10, 14, 27, .86);
+  --sv13-panel-strong: rgba(7, 10, 20, .96);
+  --sv13-border: rgba(112, 225, 255, .16);
+  --sv13-cyan: #68e7ff;
+  --sv13-cyan-strong: #21d7ff;
+  --sv13-green: #60ff9d;
+  --sv13-text-dim: #a7b6ca;
+  --sv13-radius: 18px;
+}
+
+body.sv-v13 .page-shell {
+  width: min(1480px, calc(100% - 32px));
+}
+
+body.sv-v13 .hero {
+  padding-bottom: 20px;
+}
+
+body.sv-v13 .progress-overview {
+  margin-bottom: 14px;
+}
+
+body.sv-v13 .control-panel {
+  position: relative;
+  z-index: 20;
+  margin: 0 0 22px;
+  padding: 16px;
+  border: 1px solid var(--sv13-border);
+  border-radius: var(--sv13-radius);
+  background: linear-gradient(180deg, rgba(15,21,40,.94), rgba(8,11,24,.92));
+  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+}
+
+body.sv-v13 .control-panel .search-wrap {
+  min-height: 52px;
+  border-radius: 14px;
+}
+
+body.sv-v13 .control-panel .filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(170px, .6fr) auto auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 14px;
+}
+
+body.sv-v13 .control-panel .filter-group:first-child,
+body.sv-v13 .control-panel .filter-group:nth-child(2) {
+  grid-column: 1 / -1;
+}
+
+body.sv-v13 .segmented {
+  gap: 7px;
+  padding: 5px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 14px;
+  background: rgba(3,6,15,.58);
+}
+
+body.sv-v13 .segmented button {
+  min-height: 38px;
+  border-radius: 10px;
+}
+
+body.sv-v13 .results-heading {
+  margin-top: 8px;
+}
+
+/* Compact command bar inspired by the reference tracker: important actions are always visible. */
+.vault-command-bar {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  margin: 4px 0 12px;
+  padding: 12px;
+  border: 1px solid var(--sv13-border);
+  border-radius: var(--sv13-radius);
+  background:
+    linear-gradient(110deg, rgba(23,39,65,.78), rgba(9,13,27,.92) 42%, rgba(12,24,38,.90));
+  box-shadow: 0 14px 40px rgba(0,0,0,.18);
+}
+
+.vault-command-copy {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vault-command-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid rgba(104,231,255,.28);
+  border-radius: 12px;
+  background: rgba(42,186,225,.10);
+  color: var(--sv13-cyan);
+  font-family: monospace;
+  font-weight: 900;
+  box-shadow: inset 0 0 22px rgba(33,215,255,.08);
+}
+
+.vault-command-copy strong {
+  display: block;
+  font-size: .95rem;
+  letter-spacing: .02em;
+}
+
+.vault-command-copy span {
+  display: block;
+  margin-top: 2px;
+  color: var(--sv13-text-dim);
+  font-size: .78rem;
+}
+
+.vault-command-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.vault-command-actions button {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 11px;
+  background: rgba(5,8,18,.66);
+  color: #eaf8ff;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .16s ease, border-color .16s ease, background .16s ease;
+}
+
+.vault-command-actions button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(104,231,255,.35);
+  background: rgba(30,69,91,.52);
+}
+
+.vault-command-actions button[data-quick="cheat"] {
+  color: #9cffbd;
+  border-color: rgba(89,255,145,.24);
+  background: rgba(6,48,27,.35);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.vault-command-actions .vault-command-primary {
+  color: #041018;
+  border-color: transparent;
+  background: linear-gradient(135deg, #78efff, #4fc8ff);
+  box-shadow: 0 8px 24px rgba(47,206,255,.20);
+}
+
+.vault-filter-toggle {
+  display: none;
+}
+
+/* Put collection workflow before Discord configuration. */
+body.sv-v13 .discord-role-panel.sv-secondary-panel {
+  margin-top: 34px;
+  opacity: .96;
+}
+
+/* CHEAT MASTER — Matrix / coding rain only on these cards. */
+.cheat-master-card {
+  --theme-accent: rgba(83,255,142,.95) !important;
+  --theme-border: rgba(83,255,142,.42) !important;
+  --theme-shadow: rgba(0,255,100,.28) !important;
+}
+
+.cheat-master-card .sprite-visual,
+.cheat-master-detail {
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(24,255,104,.12), transparent 52%),
+    linear-gradient(160deg, #03130a, #020705 58%, #03150b) !important;
+}
+
+.cheat-master-card .sprite-visual::after,
+.cheat-master-detail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(180deg, transparent 0 48%, rgba(79,255,139,.10) 50%, transparent 52%),
+    repeating-linear-gradient(180deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px);
+  mix-blend-mode: screen;
+}
+
+.matrix-rain {
+  position: absolute;
+  inset: -22% 0 0;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .47;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 82%, transparent 100%);
+}
+
+.matrix-rain span {
+  justify-self: center;
+  color: #72ff9e;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(7px, .65vw, 10px);
+  line-height: 1.05;
+  white-space: pre;
+  text-shadow: 0 0 7px rgba(64,255,122,.9);
+  writing-mode: vertical-rl;
+  letter-spacing: 2px;
+  animation: svMatrixFall var(--matrix-speed, 4.2s) linear infinite;
+  animation-delay: var(--matrix-delay, 0s);
+}
+
+.cheat-master-card .sprite-image,
+.cheat-master-detail img {
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.54)) drop-shadow(0 0 14px rgba(84,255,143,.18));
+}
+
+.cheat-master-card .sprite-rarity,
+.cheat-master-card .new-badge,
+.cheat-master-card .new-status-label,
+.cheat-master-card .view-detail-hint {
+  z-index: 4;
+}
+
+.cheat-master-card .sprite-theme {
+  color: #70ff9c !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .08em;
+}
+
+.cheat-master-card .sprite-theme::before {
+  content: "> ";
+  opacity: .78;
+}
+
+.cheat-master-card .sprite-name {
+  text-shadow: 0 0 20px rgba(79,255,132,.08);
+}
+
+.cheat-master-card::before {
+  content: "CHEAT MASTER";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 8;
+  padding: 4px 7px;
+  border: 1px solid rgba(105,255,154,.38);
+  border-radius: 7px;
+  background: rgba(1,20,9,.78);
+  color: #81ffa7;
+  font: 800 9px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .09em;
+  box-shadow: 0 0 18px rgba(60,255,117,.12);
+}
+
+@keyframes svMatrixFall {
+  from { transform: translateY(-46%); }
+  to { transform: translateY(72%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .matrix-rain span { animation: none; transform: none; }
+}
+
+/* Capture / screenshot usability */
+.capture-toolbar .sv-save-capture,
+.capture-toolbar .sv-share-capture {
+  min-height: 40px;
+  padding: 0 13px;
+  border: 1px solid rgba(104,231,255,.25);
+  border-radius: 10px;
+  background: rgba(31,105,135,.35);
+  color: #eafaff;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.capture-toolbar .sv-save-capture {
+  color: #041018;
+  border-color: transparent;
+  background: linear-gradient(135deg,#82efff,#4bd7ff);
+}
+
+.sv-capture-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sv-capture-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 99999;
+  transform: translateX(-50%) translateY(10px);
+  max-width: min(92vw, 520px);
+  padding: 10px 14px;
+  border: 1px solid rgba(104,231,255,.22);
+  border-radius: 12px;
+  background: rgba(4,8,17,.94);
+  color: #effbff;
+  box-shadow: 0 16px 50px rgba(0,0,0,.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.sv-capture-toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Phone layout */
+@media (max-width: 760px) {
+  body.sv-v13 .page-shell {
+    width: min(100% - 18px, 1480px);
+  }
+
+  body.sv-v13 .site-header {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  body.sv-v13 .header-actions .header-share-button:last-child {
+    display: none;
+  }
+
+  body.sv-v13 .discord-cta-banner {
+    margin: 8px 9px 12px;
+    padding: 12px;
+    gap: 9px;
+  }
+
+  body.sv-v13 .discord-cta-copy p,
+  body.sv-v13 .discord-cta-copy small,
+  body.sv-v13 .discord-cta-benefits {
+    display: none;
+  }
+
+  body.sv-v13 .hero {
+    grid-template-columns: 1fr;
+    padding-top: 18px;
+  }
+
+  body.sv-v13 .hero-copy h1 {
+    font-size: clamp(2rem, 10vw, 3.2rem);
+  }
+
+  body.sv-v13 .sprite-showcase {
+    display: none;
+  }
+
+  .vault-command-bar {
+    position: sticky;
+    top: 8px;
+    z-index: 60;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    padding: 10px;
+    backdrop-filter: blur(16px);
+  }
+
+  .vault-command-copy {
+    display: none;
+  }
+
+  .vault-command-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 6px;
+  }
+
+  .vault-command-actions button {
+    min-width: 0;
+    padding: 0 6px;
+    font-size: .7rem;
+  }
+
+  .vault-filter-toggle {
+    display: block;
+  }
+
+  body.sv-v13 .control-panel {
+    margin-bottom: 14px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  body.sv-v13 .control-panel .filters {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  body.sv-v13 .control-panel:not(.sv-filters-open) .filters {
+    display: none;
+  }
+
+  body.sv-v13 .season-segmented,
+  body.sv-v13 #statusFilters {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  body.sv-v13 .results-heading {
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  body.sv-v13 .results-heading h2 {
+    font-size: 1.35rem;
+  }
+
+  body.sv-v13 .sprite-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 9px;
+  }
+
+  body.sv-v13 .sprite-card {
+    min-width: 0;
+  }
+
+  body.sv-v13 .sprite-info {
+    padding: 10px 9px 9px;
+  }
+
+  body.sv-v13 .sprite-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  body.sv-v13 .sprite-actions button {
+    min-height: 36px;
+    font-size: .72rem;
+  }
+
+  .matrix-rain {
+    grid-template-columns: repeat(8,1fr);
+    opacity: .38;
+  }
+
+  .matrix-rain span:nth-child(n+9) {
+    display: none;
+  }
+
+  .sv-capture-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .capture-toolbar .sv-save-capture,
+  .capture-toolbar .sv-share-capture {
+    width: 100%;
+  }
+
+  body.sv-v13 .capture-toolbar {
+    gap: 9px;
+  }
+}
+
+@media (max-width: 420px) {
+  body.sv-v13 .sprite-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .vault-command-actions {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+
+  .vault-command-actions .vault-command-primary {
+    grid-column: 1 / -1;
+  }
+}
