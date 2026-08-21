@@ -1,4 +1,4 @@
-/* Sprite Vault V13.2 — requested cleanup: season button + split Override capture */
+/* Sprite Vault V13.3 — season switch + split Override capture + generated image preview */
 (() => {
   "use strict";
 
@@ -7,6 +7,9 @@
   const SEASON_KEY = "spriteVaultSeasonV1";
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+  let captureRendererPromise = null;
+  let generatedPreviewUrl = null;
 
   function setSeason(season, reset = false) {
     if (typeof state === "undefined" || typeof render !== "function") return;
@@ -85,6 +88,10 @@
     const visual = document.createElement("div");
     visual.className = "sv-split-tile-visual";
     const image = document.createElement("img");
+    if (/^https?:\/\//i.test(sprite.image)) {
+      image.crossOrigin = "anonymous";
+      image.referrerPolicy = "no-referrer";
+    }
     image.src = sprite.image;
     image.alt = sprite.name;
     image.loading = "eager";
@@ -162,6 +169,146 @@
     }
   }
 
+  function ensureCaptureRenderer() {
+    if (window.html2canvas) return Promise.resolve(window.html2canvas);
+    if (captureRendererPromise) return captureRendererPromise;
+
+    captureRendererPromise = new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+      script.crossOrigin = "anonymous";
+      script.onload = () => resolve(window.html2canvas);
+      script.onerror = () => reject(new Error("No se pudo cargar el generador de imagen."));
+      document.head.append(script);
+    });
+    return captureRendererPromise;
+  }
+
+  async function waitForCaptureImages(root) {
+    const images = $$("img", root);
+    await Promise.all(images.map(image => new Promise(resolve => {
+      if (image.complete) {
+        resolve();
+        return;
+      }
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+    })));
+  }
+
+  function ensureGeneratedPreview() {
+    let preview = $("#svGeneratedCapturePage");
+    if (preview) return preview;
+
+    preview = document.createElement("section");
+    preview.id = "svGeneratedCapturePage";
+    preview.className = "sv-generated-capture-page";
+    preview.hidden = true;
+    preview.innerHTML = `
+      <header class="sv-generated-capture-toolbar">
+        <button type="button" class="sv-generated-back">← Volver</button>
+        <div>
+          <strong>Captura Override</strong>
+          <span>Imagen creada desde tu colección actual</span>
+        </div>
+      </header>
+      <main class="sv-generated-capture-body">
+        <div class="sv-generated-loading">Generando imagen…</div>
+        <img class="sv-generated-image" alt="Captura de colección Override" hidden>
+      </main>`;
+
+    document.body.append(preview);
+    $(".sv-generated-back", preview).addEventListener("click", closeGeneratedPreview);
+    return preview;
+  }
+
+  function openGeneratedPreview() {
+    const preview = ensureGeneratedPreview();
+    const image = $(".sv-generated-image", preview);
+    $(".sv-generated-loading", preview).hidden = false;
+    image.hidden = true;
+    image.removeAttribute("src");
+    preview.hidden = false;
+    document.body.classList.add("sv-generated-capture-open");
+    preview.scrollTop = 0;
+  }
+
+  function closeGeneratedPreview() {
+    const preview = $("#svGeneratedCapturePage");
+    if (!preview) return;
+    preview.hidden = true;
+    document.body.classList.remove("sv-generated-capture-open");
+    if (generatedPreviewUrl) {
+      URL.revokeObjectURL(generatedPreviewUrl);
+      generatedPreviewUrl = null;
+    }
+    const image = $(".sv-generated-image", preview);
+    image.removeAttribute("src");
+    image.hidden = true;
+  }
+
+  async function generateCaptureImage(button) {
+    const sheet = $("#captureSheet");
+    if (!sheet) return;
+
+    renderSplitCapture();
+    openGeneratedPreview();
+
+    const original = button.textContent;
+    button.disabled = true;
+    button.textContent = "Generando…";
+
+    try {
+      await document.fonts?.ready;
+      await waitForCaptureImages(sheet);
+      const renderer = await ensureCaptureRenderer();
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+      const width = Math.ceil(sheet.scrollWidth);
+      const height = Math.ceil(sheet.scrollHeight);
+      const deviceScale = Math.min(2, Math.max(1, window.devicePixelRatio || 1));
+      const scale = height * deviceScale > 15000 ? Math.max(1, 15000 / height) : deviceScale;
+
+      const canvas = await renderer(sheet, {
+        backgroundColor: "#080b14",
+        scale,
+        useCORS: true,
+        allowTaint: false,
+        logging: false,
+        width,
+        height,
+        windowWidth: Math.max(document.documentElement.clientWidth, width),
+        windowHeight: Math.max(document.documentElement.clientHeight, height),
+        scrollX: 0,
+        scrollY: 0
+      });
+
+      const blob = await new Promise(resolve => canvas.toBlob(resolve, "image/png", 1));
+      if (!blob) throw new Error("No se pudo crear la imagen PNG.");
+
+      if (generatedPreviewUrl) URL.revokeObjectURL(generatedPreviewUrl);
+      generatedPreviewUrl = URL.createObjectURL(blob);
+
+      const preview = ensureGeneratedPreview();
+      const image = $(".sv-generated-image", preview);
+      image.onload = () => {
+        $(".sv-generated-loading", preview).hidden = true;
+        image.hidden = false;
+        preview.scrollTop = 0;
+      };
+      image.src = generatedPreviewUrl;
+    } catch (error) {
+      console.error("Sprite Vault generated capture error:", error);
+      const preview = ensureGeneratedPreview();
+      const loading = $(".sv-generated-loading", preview);
+      loading.hidden = false;
+      loading.textContent = "No se pudo crear la imagen. Inténtalo nuevamente.";
+    } finally {
+      button.disabled = false;
+      button.textContent = original;
+    }
+  }
+
   function patchCapture() {
     $(".sv-capture-actions")?.remove();
     const buttons = $("#captureViewButtons");
@@ -170,6 +317,16 @@
     const copy = $(".capture-toolbar-copy");
     if (copy) {
       copy.innerHTML = "<strong>Captura Override</strong><span>Los tengo y No tengo, juntos y divididos en la misma vista.</span>";
+    }
+
+    const toolbar = $(".capture-toolbar");
+    if (toolbar && !$(".sv-generate-capture", toolbar)) {
+      const captureButton = document.createElement("button");
+      captureButton.type = "button";
+      captureButton.className = "sv-generate-capture";
+      captureButton.textContent = "Capturar imagen";
+      captureButton.addEventListener("click", () => generateCaptureImage(captureButton));
+      toolbar.append(captureButton);
     }
 
     if (typeof renderCaptureView === "function") {
@@ -191,7 +348,7 @@
   function init() {
     if (typeof state === "undefined" || typeof render !== "function") return;
 
-    // Always open the main tracker on the current season. Saved ownership/mastery is untouched.
+    // Main tracker opens on Override. Ownership/mastery storage is never reset.
     state.season = CURRENT;
     localStorage.setItem(SEASON_KEY, CURRENT);
 
