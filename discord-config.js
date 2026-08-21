@@ -43,14 +43,19 @@ window.SPRITE_VAULT_CONFIG = {
 };
 
 /*
-  V13 loads after the rest of the classic scripts so the upgrade can enhance
-  the existing tracker without replacing collection/storage logic.
+  V13 + V13.2 load after the classic tracker so the upgrades can enhance the
+  interface without replacing collection/storage logic.
 */
 window.addEventListener("load", () => {
   const style = document.createElement("link");
   style.rel = "stylesheet";
   style.href = "upgrade-v13.css?v=13.0.1";
   document.head.append(style);
+
+  const requestedStyle = document.createElement("link");
+  requestedStyle.rel = "stylesheet";
+  requestedStyle.href = "upgrade-v13-2.css?v=13.2.0";
+  document.head.append(requestedStyle);
 
   const script = document.createElement("script");
   script.src = "upgrade-v13.js?v=13.0.1";
@@ -60,6 +65,11 @@ window.addEventListener("load", () => {
     captureFix.src = "upgrade-v13-capture-fix.js?v=13.0.1";
     captureFix.async = false;
     document.body.append(captureFix);
+
+    const requestedPatch = document.createElement("script");
+    requestedPatch.src = "upgrade-v13-2.js?v=13.2.0";
+    requestedPatch.async = false;
+    document.body.append(requestedPatch);
   };
   document.body.append(script);
 }, { once: true });
