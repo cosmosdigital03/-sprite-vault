@@ -43,8 +43,8 @@ window.SPRITE_VAULT_CONFIG = {
 };
 
 /*
-  V13 + V13.4 load after the classic tracker so the upgrades can enhance the
-  interface without replacing collection/storage logic.
+  V13 + V13.5 load after the classic tracker so each enhancement layer can
+  improve the interface without replacing collection/storage logic.
 */
 window.addEventListener("load", () => {
   const style = document.createElement("link");
@@ -62,6 +62,11 @@ window.addEventListener("load", () => {
   goldReleaseStyle.href = "upgrade-v13-4.css?v=13.4.0";
   document.head.append(goldReleaseStyle);
 
+  const systemStyle = document.createElement("link");
+  systemStyle.rel = "stylesheet";
+  systemStyle.href = "upgrade-v13-5.css?v=13.5.0";
+  document.head.append(systemStyle);
+
   const script = document.createElement("script");
   script.src = "upgrade-v13.js?v=13.0.1";
   script.async = false;
@@ -78,6 +83,12 @@ window.addEventListener("load", () => {
       const goldReleasePatch = document.createElement("script");
       goldReleasePatch.src = "upgrade-v13-4.js?v=13.4.0";
       goldReleasePatch.async = false;
+      goldReleasePatch.onload = () => {
+        const systemPatch = document.createElement("script");
+        systemPatch.src = "upgrade-v13-5.js?v=13.5.0";
+        systemPatch.async = false;
+        document.body.append(systemPatch);
+      };
       document.body.append(goldReleasePatch);
     };
     document.body.append(requestedPatch);
