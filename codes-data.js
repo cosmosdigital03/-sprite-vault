@@ -45,7 +45,7 @@ const LOBBY_HACKS = [
     reward: "1× Llama Supply Drop + Portable Extractor(s)",
     category: "items",
     flag: "CANTIDAD EN DISPUTA",
-    note: "El código es real. Fortnite.GG indica 1 Portable Extractor; Beebom, GamesRadar y listas actuales de la comunidad reportan 5."
+    note: "El código es válido. La cantidad exacta de Portable Extractors puede variar según la información disponible en Fortnite."
   },
 
   { code: "BeMoreAlien", reward: "Override Ready Loading Screen", category: "locker" },
