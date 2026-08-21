@@ -41,3 +41,19 @@ window.SPRITE_VAULT_CONFIG = {
     { key: "cubes",    name: "🧊 Sprites Cubos" }
   ]
 };
+
+/*
+  V13 loads after the rest of the classic scripts so the upgrade can enhance
+  the existing tracker without replacing collection/storage logic.
+*/
+window.addEventListener("load", () => {
+  const style = document.createElement("link");
+  style.rel = "stylesheet";
+  style.href = `upgrade-v13.css?v=13.0.0`;
+  document.head.append(style);
+
+  const script = document.createElement("script");
+  script.src = `upgrade-v13.js?v=13.0.0`;
+  script.defer = true;
+  document.body.append(script);
+}, { once: true });
