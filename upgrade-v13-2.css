@@ -1,12 +1,56 @@
-/* Sprite Vault V13.2 requested cleanup */
+/* Sprite Vault V13.3 requested cleanup */
 body.sv-v13 .season-filter-group{display:none!important}
 body.sv-v13 .season-badge{display:none!important}
 .vault-command-actions [data-quick="cheat"]{display:none!important}
 .vault-season-switch{border-color:rgba(178,134,255,.30)!important;background:rgba(76,45,135,.30)!important;color:#d9c7ff!important}
 .cheat-master-card::before{display:none!important;content:none!important}
-@media (min-width:761px){body.sv-v13 .cheat-master-card .sprite-image{scale:.88;transform-origin:50% 50%}}
-body.sv-v13 .sv-capture-actions,body.sv-v13 #captureViewButtons,body.sv-v13 .capture-legend{display:none!important}
-body.sv-v13 .capture-toolbar{grid-template-columns:auto 1fr!important}
+
+/* Desktop only: pull every Sprite farther back so the full body/feet stay visible. */
+@media (min-width:761px){
+  body.sv-v13 .sprite-card .sprite-image{
+    scale:.78!important;
+    transform-origin:50% 42%!important;
+  }
+  body.sv-v13 .cheat-master-card .sprite-image{
+    scale:.78!important;
+    transform-origin:50% 42%!important;
+  }
+}
+
+/* Mobile artwork stays exactly as before. */
+@media (max-width:760px){
+  body.sv-v13 .sprite-card .sprite-image,
+  body.sv-v13 .cheat-master-card .sprite-image{
+    scale:1!important;
+  }
+}
+
+body.sv-v13 .sv-capture-actions,
+body.sv-v13 #captureViewButtons,
+body.sv-v13 .capture-legend{display:none!important}
+
+body.sv-v13 .capture-toolbar{
+  grid-template-columns:auto 1fr auto!important;
+  align-items:center;
+}
+
+.sv-generate-capture{
+  min-height:42px;
+  padding:0 18px;
+  border:1px solid rgba(104,231,255,.34);
+  border-radius:11px;
+  background:linear-gradient(135deg,#79efff,#42cfff);
+  color:#041018;
+  font:inherit;
+  font-size:.82rem;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 10px 26px rgba(47,206,255,.18);
+  transition:transform .16s ease,box-shadow .16s ease,opacity .16s ease;
+}
+.sv-generate-capture:hover{transform:translateY(-1px);box-shadow:0 13px 32px rgba(47,206,255,.26)}
+.sv-generate-capture:disabled{opacity:.62;cursor:wait;transform:none}
+
 body.sv-v13 .capture-sheet{width:min(1180px,calc(100vw - 32px))}
 body.sv-v13 .sv-split-capture{display:block}
 .sv-split-wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
@@ -30,5 +74,81 @@ body.sv-v13 .sv-split-capture{display:block}
 .sv-split-tile>strong{display:block;min-height:30px;padding:6px 4px;color:#f4f8ff;font-size:8px;line-height:1.12;text-align:center;overflow-wrap:anywhere}
 .sv-split-mastered{position:absolute;top:4px;right:4px;z-index:3;width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#ffd45a;color:#2c2100;font-size:10px;font-weight:900}
 .sv-split-empty{grid-column:1/-1;min-height:120px;display:grid;place-items:center;margin:0;padding:18px;color:#94a3b8;text-align:center;font-size:.8rem}
-@media (max-width:760px){body.sv-v13 .capture-toolbar{grid-template-columns:1fr!important}body.sv-v13 .capture-sheet{width:calc(100vw - 16px)}.sv-split-wrap{grid-template-columns:1fr;gap:12px}.sv-split-wrap::after{display:none}.sv-split-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* Generated image page: behaves like a dedicated preview page, not a download/share toolbar. */
+body.sv-generated-capture-open{overflow:hidden!important}
+.sv-generated-capture-page{
+  position:fixed;
+  inset:0;
+  z-index:100000;
+  overflow:auto;
+  background:#05070d;
+  color:#f4f8ff;
+}
+.sv-generated-capture-page[hidden]{display:none!important}
+.sv-generated-capture-toolbar{
+  position:sticky;
+  top:0;
+  z-index:5;
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  padding:12px max(14px,calc((100vw - 1220px)/2));
+  border-bottom:1px solid rgba(104,231,255,.14);
+  background:rgba(7,10,20,.94);
+  backdrop-filter:blur(16px);
+}
+.sv-generated-capture-toolbar button{
+  min-height:42px;
+  padding:0 16px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:11px;
+  background:rgba(255,255,255,.05);
+  color:#f4f8ff;
+  font:inherit;
+  font-weight:800;
+  cursor:pointer;
+}
+.sv-generated-capture-toolbar strong{display:block;font-size:.95rem}
+.sv-generated-capture-toolbar span{display:block;margin-top:2px;color:#91a3b9;font-size:.76rem}
+.sv-generated-capture-body{
+  width:min(1220px,100%);
+  min-height:calc(100vh - 72px);
+  margin:0 auto;
+  padding:18px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+.sv-generated-loading{
+  margin-top:18vh;
+  padding:16px 20px;
+  border:1px solid rgba(104,231,255,.16);
+  border-radius:14px;
+  background:rgba(11,16,30,.88);
+  color:#bcefff;
+  font-weight:800;
+}
+.sv-generated-image{
+  display:block;
+  width:min(100%,1180px);
+  height:auto;
+  margin:0 auto;
+  border-radius:14px;
+  box-shadow:0 28px 80px rgba(0,0,0,.45);
+}
+
+@media (max-width:760px){
+  body.sv-v13 .capture-toolbar{grid-template-columns:1fr!important}
+  .sv-generate-capture{width:100%}
+  body.sv-v13 .capture-sheet{width:calc(100vw - 16px)}
+  .sv-split-wrap{grid-template-columns:1fr;gap:12px}
+  .sv-split-wrap::after{display:none}
+  .sv-split-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .sv-generated-capture-toolbar{padding:10px;gap:10px}
+  .sv-generated-capture-toolbar span{display:none}
+  .sv-generated-capture-body{padding:8px}
+  .sv-generated-image{border-radius:8px}
+}
 @media (max-width:420px){.sv-split-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
