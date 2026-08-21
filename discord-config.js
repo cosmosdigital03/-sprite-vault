@@ -49,11 +49,17 @@ window.SPRITE_VAULT_CONFIG = {
 window.addEventListener("load", () => {
   const style = document.createElement("link");
   style.rel = "stylesheet";
-  style.href = `upgrade-v13.css?v=13.0.0`;
+  style.href = "upgrade-v13.css?v=13.0.1";
   document.head.append(style);
 
   const script = document.createElement("script");
-  script.src = `upgrade-v13.js?v=13.0.0`;
-  script.defer = true;
+  script.src = "upgrade-v13.js?v=13.0.1";
+  script.async = false;
+  script.onload = () => {
+    const captureFix = document.createElement("script");
+    captureFix.src = "upgrade-v13-capture-fix.js?v=13.0.1";
+    captureFix.async = false;
+    document.body.append(captureFix);
+  };
   document.body.append(script);
 }, { once: true });
