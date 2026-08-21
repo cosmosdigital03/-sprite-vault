@@ -1,0 +1,257 @@
+/* Sprite Vault V13.5 — subtle system/hacker visual language + direct PNG preview */
+
+body.sv-system-ui{
+  --sv-system-green:#61ff9b;
+  --sv-system-cyan:#5adfff;
+  --sv-system-yellow:#c9ff34;
+}
+
+/* Site-wide technical texture: intentionally faint so the room artwork remains visible. */
+body.sv-system-ui .page-backdrop::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(88,255,155,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(88,255,155,.025) 1px,transparent 1px),
+    repeating-linear-gradient(180deg,rgba(255,255,255,.012) 0 1px,transparent 1px 5px);
+  background-size:42px 42px,42px 42px,100% 5px;
+  mix-blend-mode:screen;
+  opacity:.72;
+}
+
+body.sv-system-ui .page-shell,
+body.sv-system-ui .site-header,
+body.sv-system-ui .discord-cta-banner,
+body.sv-system-ui footer{
+  position:relative;
+  z-index:1;
+}
+
+body.sv-system-ui .site-header{
+  border-bottom-color:rgba(97,255,155,.10);
+}
+
+.sv-system-status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-left:auto;
+  margin-right:8px;
+  padding:6px 9px;
+  border:1px solid rgba(97,255,155,.15);
+  border-radius:999px;
+  background:rgba(4,15,10,.46);
+  color:rgba(165,255,197,.76);
+  font:800 8px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.08em;
+  backdrop-filter:blur(9px);
+}
+.sv-system-status i{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--sv-system-green);
+  box-shadow:0 0 9px rgba(97,255,155,.75);
+}
+
+body.sv-system-ui .hero-summary,
+body.sv-system-ui .filter-label,
+body.sv-system-ui .eyebrow,
+body.sv-system-ui .showcase-kicker{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+
+body.sv-system-ui .control-panel,
+body.sv-system-ui .progress-circle-card,
+body.sv-system-ui .stat-card,
+body.sv-system-ui .discord-role-panel,
+body.sv-system-ui .vault-command-bar{
+  border-color:rgba(88,225,255,.14);
+  box-shadow:0 18px 55px rgba(0,0,0,.22), inset 0 0 0 1px rgba(97,255,155,.015);
+}
+
+body.sv-system-ui .control-panel::before{
+  content:"vault://filters  •  query.ready";
+  display:block;
+  margin:0 0 10px 2px;
+  color:rgba(97,255,155,.48);
+  font:800 8px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.08em;
+}
+
+body.sv-system-ui .progress-overview::before{
+  content:"collection.state // autosave:on";
+  grid-column:1/-1;
+  display:block;
+  margin:0 0 -2px 3px;
+  color:rgba(90,223,255,.38);
+  font:800 8px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.08em;
+}
+
+body.sv-system-ui .results-heading::before{
+  content:"index://override";
+  position:absolute;
+  right:0;
+  top:-13px;
+  color:rgba(97,255,155,.34);
+  font:800 8px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.08em;
+}
+body.sv-system-ui .results-heading{position:relative}
+
+body.sv-system-ui .sprite-card{
+  box-shadow:0 12px 32px rgba(0,0,0,.18), inset 0 0 0 1px rgba(97,255,155,.012);
+}
+body.sv-system-ui .sprite-card:hover{
+  box-shadow:0 17px 42px rgba(0,0,0,.26),0 0 24px rgba(90,223,255,.035);
+}
+
+body.sv-system-ui .search-wrap:focus-within{
+  border-color:rgba(97,255,155,.26);
+  box-shadow:0 0 0 3px rgba(97,255,155,.045);
+}
+
+body.sv-system-ui .vault-command-icon{
+  color:var(--sv-system-green);
+  border-color:rgba(97,255,155,.22);
+  background:rgba(25,112,65,.10);
+}
+
+/* Generated trade-card preview page */
+body.sv-trade-preview-open{overflow:hidden!important}
+.sv-trade-preview{
+  position:fixed;
+  inset:0;
+  z-index:110000;
+  overflow:auto;
+  background:
+    radial-gradient(circle at 50% 0,rgba(24,95,66,.14),transparent 34%),
+    #04070b;
+  color:#f3f9fc;
+}
+.sv-trade-preview[hidden]{display:none!important}
+
+.sv-trade-preview::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(97,255,155,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(97,255,155,.025) 1px,transparent 1px);
+  background-size:34px 34px;
+}
+
+.sv-trade-preview-toolbar{
+  position:sticky;
+  top:0;
+  z-index:4;
+  min-height:68px;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:14px;
+  padding:11px max(12px,calc((100vw - 1260px)/2));
+  border-bottom:1px solid rgba(97,255,155,.13);
+  background:rgba(5,9,14,.94);
+  backdrop-filter:blur(18px);
+}
+
+.sv-trade-preview-back{
+  min-height:42px;
+  padding:0 15px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:10px;
+  background:rgba(255,255,255,.045);
+  color:#f4f8fb;
+  font:inherit;
+  font-weight:850;
+  cursor:pointer;
+}
+.sv-trade-preview-toolbar strong{display:block;font-size:.94rem}
+.sv-trade-preview-toolbar div>span{
+  display:block;
+  margin-top:2px;
+  color:#8497a2;
+  font-size:.72rem;
+}
+.sv-trade-preview-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#a7ffc7;
+  font:900 8px/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  letter-spacing:.08em;
+}
+.sv-trade-preview-status i{
+  width:7px;height:7px;border-radius:50%;
+  background:#61ff9b;
+  box-shadow:0 0 10px rgba(97,255,155,.72);
+}
+
+.sv-trade-preview-body{
+  position:relative;
+  width:min(1260px,100%);
+  min-height:calc(100vh - 68px);
+  margin:0 auto;
+  padding:18px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+.sv-trade-preview-loading{
+  margin-top:20vh;
+  padding:15px 18px;
+  border:1px solid rgba(97,255,155,.14);
+  border-radius:12px;
+  background:rgba(7,14,12,.90);
+  color:#b9fbd0;
+  font:800 .82rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  box-shadow:0 18px 52px rgba(0,0,0,.35);
+}
+
+.sv-trade-preview-image{
+  display:block;
+  width:min(100%,1200px);
+  height:auto;
+  margin:0 auto;
+  border:1px solid rgba(201,255,52,.24);
+  border-radius:5px;
+  box-shadow:0 28px 90px rgba(0,0,0,.52),0 0 50px rgba(97,255,155,.035);
+}
+
+/* Keep capture button in the same visual language. */
+body.sv-system-ui .sv-generate-capture[data-sv-trade-card="1"]{
+  border-color:rgba(97,255,155,.28);
+  background:linear-gradient(135deg,#76f0ae,#55dcff);
+  box-shadow:0 10px 28px rgba(60,224,157,.14);
+}
+
+@media (max-width:760px){
+  .sv-system-status{display:none}
+  body.sv-system-ui .control-panel::before,
+  body.sv-system-ui .progress-overview::before,
+  body.sv-system-ui .results-heading::before{display:none}
+
+  .sv-trade-preview-toolbar{
+    grid-template-columns:auto minmax(0,1fr);
+    padding:9px;
+    gap:9px;
+  }
+  .sv-trade-preview-toolbar div>span,
+  .sv-trade-preview-status{display:none}
+  .sv-trade-preview-back{min-height:40px;padding:0 12px}
+  .sv-trade-preview-body{
+    padding:6px;
+    min-height:calc(100vh - 60px);
+  }
+  .sv-trade-preview-image{
+    width:100%;
+    border-radius:2px;
+  }
+}
