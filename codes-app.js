@@ -66,7 +66,7 @@ async function copyLobbyHack(text, button) {
   }
 
   const original = button.textContent;
-  button.textContent = "Copiado ✓";
+  button.textContent = button.classList.contains("hack-code") ? "> COPIADO ✓" : "Copiado ✓";
   button.classList.add("is-copied");
   window.setTimeout(() => {
     button.textContent = original;
@@ -74,29 +74,63 @@ async function copyLobbyHack(text, button) {
   }, 1200);
 }
 
-function createLobbyHackRow(item) {
+function createLobbyHackRow(item, absoluteIndex) {
   const used = lobbyHackState.used.has(item.code);
   const row = document.createElement("article");
-  row.className = `hack-row ${used ? "is-used" : "is-unused"}`;
+  row.className = `hack-row is-${item.category} ${used ? "is-used" : "is-unused"}`;
+
+  const line = document.createElement("span");
+  line.className = "hack-line-number";
+  line.textContent = String(absoluteIndex + 1).padStart(2, "0");
 
   const main = document.createElement("div");
   main.className = "hack-main";
 
+  const codeWrap = document.createElement("div");
+  codeWrap.className = "hack-code-wrap";
+  const prompt = document.createElement("span");
+  prompt.className = "hack-prompt";
+  prompt.textContent = "$ redeem";
+
   const codeButton = document.createElement("button");
   codeButton.type = "button";
   codeButton.className = "hack-code";
-  codeButton.textContent = item.code;
-  codeButton.title = "Toca para copiar";
+  codeButton.textContent = `> ${item.code}`;
+  codeButton.dataset.rawCode = item.code;
+  codeButton.title = "Toca para copiar el código";
   codeButton.addEventListener("click", () => copyLobbyHack(item.code, codeButton));
+  codeWrap.append(prompt, codeButton);
 
   const reward = document.createElement("div");
   reward.className = "hack-reward";
+
+  const rewardTop = document.createElement("div");
+  rewardTop.className = "hack-reward-top";
   const rewardStrong = document.createElement("strong");
   rewardStrong.textContent = item.reward;
-  const source = document.createElement("small");
-  source.textContent = `Fuente: ${item.source}`;
-  reward.append(rewardStrong, source);
-  main.append(codeButton, reward);
+  rewardTop.append(rewardStrong);
+
+  if (item.flag) {
+    const flag = document.createElement("span");
+    flag.className = "hack-flag";
+    flag.textContent = item.flag;
+    rewardTop.append(flag);
+  }
+
+  const meta = document.createElement("small");
+  meta.className = "hack-meta";
+  meta.textContent = used ? "status://redeemed" : "status://ready";
+
+  reward.append(rewardTop, meta);
+
+  if (item.note) {
+    const note = document.createElement("div");
+    note.className = "hack-note";
+    note.innerHTML = `<span aria-hidden="true">!</span><p>${item.note}</p>`;
+    reward.append(note);
+  }
+
+  main.append(codeWrap, reward);
 
   const actions = document.createElement("div");
   actions.className = "hack-actions";
@@ -115,8 +149,16 @@ function createLobbyHackRow(item) {
   usedButton.addEventListener("click", () => toggleLobbyHack(item.code));
 
   actions.append(copyButton, usedButton);
-  row.append(main, actions);
+  row.append(line, main, actions);
   return row;
+}
+
+function updateLobbySystemStatus(total, usedCount) {
+  const status = document.getElementById("hackSystemStatus");
+  if (status) status.textContent = `SYSTEM ONLINE · ${total} ENTRIES`;
+
+  const command = document.getElementById("hackCommandLine");
+  if (command) command.textContent = `vault@override:~$ lobby-hacks --active ${total} --redeemed ${usedCount}`;
 }
 
 function renderLobbyHacks() {
@@ -132,6 +174,7 @@ function renderLobbyHacks() {
   document.getElementById("hackUnusedCount").textContent = unusedCount;
   document.getElementById("hackTotalCount").textContent = total;
   document.getElementById("hackProgressText").textContent = `${usedCount} usados de ${total}`;
+  updateLobbySystemStatus(total, usedCount);
 
   const progress = total ? Math.round((usedCount / total) * 100) : 0;
   document.getElementById("hackProgressFill").style.width = `${progress}%`;
@@ -162,8 +205,8 @@ function renderLobbyHacks() {
     const empty = document.createElement("div");
     empty.className = "hack-empty";
     empty.innerHTML = lobbyHackState.filter === "unused"
-      ? "<strong>¡Ya usaste todos los códigos!</strong><span>Puedes verlos otra vez en la pestaña Usados.</span>"
-      : "<strong>No hay códigos aquí.</strong>";
+      ? "<strong>ACCESS COMPLETE ✓</strong><span>Ya usaste todos los códigos. Puedes verlos en la pestaña Usados.</span>"
+      : "<strong>NO ENTRIES FOUND</strong>";
     list.append(empty);
     return;
   }
@@ -173,19 +216,27 @@ function renderLobbyHacks() {
     if (!items.length) continue;
 
     const section = document.createElement("section");
-    section.className = "hack-category";
+    section.className = `hack-category tone-${category.tone}`;
 
     const heading = document.createElement("header");
     heading.className = "hack-category-heading";
+
+    const headingCopy = document.createElement("div");
+    headingCopy.className = "hack-category-copy";
+    const command = document.createElement("small");
+    command.textContent = `/${category.command}`;
     const title = document.createElement("h2");
-    title.textContent = category.label;
+    title.innerHTML = `<span aria-hidden="true">${category.icon}</span>${category.label}`;
+    headingCopy.append(command, title);
+
     const count = document.createElement("span");
-    count.textContent = `${items.length}`;
-    heading.append(title, count);
+    count.className = "hack-category-count";
+    count.textContent = `${items.length} ${items.length === 1 ? "CODE" : "CODES"}`;
+    heading.append(headingCopy, count);
 
     const rows = document.createElement("div");
     rows.className = "hack-rows";
-    items.forEach(item => rows.append(createLobbyHackRow(item)));
+    items.forEach(item => rows.append(createLobbyHackRow(item, LOBBY_HACKS.indexOf(item))));
 
     section.append(heading, rows);
     list.append(section);
