@@ -11,6 +11,14 @@
     ? savedSeason
     : CURRENT_SEASON;
 
+  // Keep Gold/Dorado variants active in the tracker.
+  SPRITES.forEach(sprite => {
+    if (sprite.theme === "Dorado") {
+      sprite.unreleased = false;
+      sprite.enabled = true;
+    }
+  });
+
   // Give Cheat Master variants their own visual identity while retaining the Vault style.
   if (typeof THEME_VISUALS !== "undefined") {
     THEME_VISUALS["Cheat Master"] = {
@@ -150,4 +158,12 @@
 
   refreshSeasonButtons();
   render();
+
+  // Load the PNG share/export menu after the main tracker has initialized.
+  if (!document.querySelector("script[data-sprite-vault-share-export]")) {
+    const shareScript = document.createElement("script");
+    shareScript.src = "share-export.js?v=13.0";
+    shareScript.dataset.spriteVaultShareExport = "true";
+    document.body.append(shareScript);
+  }
 })();
