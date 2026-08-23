@@ -1,6 +1,6 @@
 // Sprite Vault — Override (C7S4) roster
-// Source roster synchronized from staticvacant/fnsprites on 2026-08-20.
-// Existing entries are the previous Runners season; these are the released Override entries.
+// Source roster synchronized from staticvacant/fnsprites.
+// Existing entries are the previous Runners season; these are the Override entries shown in the Vault.
 
 SPRITES.forEach(sprite => {
   if (!sprite.season) sprite.season = "Runners";
@@ -8,7 +8,8 @@ SPRITES.forEach(sprite => {
   sprite.isNew = false;
 });
 
-const OVERRIDE_IMAGE_BASE = "https://raw.githubusercontent.com/staticvacant/fnsprites/70490e67a1c4ce082748060f8dc0f446fe0b767f/sprites";
+// Follow the current source assets so restored/updated Gold renders appear without another code change.
+const OVERRIDE_IMAGE_BASE = "https://raw.githubusercontent.com/staticvacant/fnsprites/main/sprites";
 
 const OVERRIDE_SPRITES = [
   { id:"bush_basic", name:"Bush", originalName:"Bush", theme:"Básico", rarity:"Raro" },
@@ -63,7 +64,9 @@ const OVERRIDE_SPRITES = [
   image: `${OVERRIDE_IMAGE_BASE}/${encodeURIComponent(sprite.id)}.png`,
   findRate: "No disponible",
   isNew: true,
-  season: "Override"
+  season: "Override",
+  unreleased: false,
+  enabled: true
 }));
 
 const existingSpriteIds = new Set(SPRITES.map(sprite => sprite.id));
