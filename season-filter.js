@@ -159,11 +159,12 @@
   refreshSeasonButtons();
   render();
 
-  // Load the PNG share/export menu after the main tracker has initialized.
-  if (!document.querySelector("script[data-sprite-vault-share-export]")) {
+  // Preserve the old Compartir lista/capture screen. Only override the final
+  // PNG preview so it opens in a second tab/page and leaves the tracker open.
+  if (!document.querySelector("script[data-sprite-vault-share-newtab]")) {
     const shareScript = document.createElement("script");
-    shareScript.src = "share-export.js?v=13.0";
-    shareScript.dataset.spriteVaultShareExport = "true";
+    shareScript.src = "share-newtab.js?v=13.1";
+    shareScript.dataset.spriteVaultShareNewtab = "true";
     document.body.append(shareScript);
   }
 })();
