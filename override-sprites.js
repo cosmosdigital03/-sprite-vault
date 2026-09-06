@@ -1,5 +1,6 @@
 // Sprite Vault — Override (C7S4) roster
-// Source roster synchronized from staticvacant/fnsprites.
+// Released roster verified against Fortnite.gg. Legacy Override renders continue to use
+// staticvacant/fnsprites; newer entries use their current Fortnite.gg sprite renders.
 // Existing entries are the previous Runners season; these are the Override entries shown in the Vault.
 
 SPRITES.forEach(sprite => {
@@ -10,6 +11,7 @@ SPRITES.forEach(sprite => {
 
 // Follow the current source assets so restored/updated Gold renders appear without another code change.
 const OVERRIDE_IMAGE_BASE = "https://raw.githubusercontent.com/staticvacant/fnsprites/main/sprites";
+const FORTNITE_GG_IMAGE_BASE = "https://fortnite.gg/img/x/sprites/icons";
 
 const OVERRIDE_SPRITES = [
   { id:"bush_basic", name:"Bush", originalName:"Bush", theme:"Básico", rarity:"Raro" },
@@ -69,7 +71,114 @@ const OVERRIDE_SPRITES = [
   enabled: true
 }));
 
+// These 11 released entries are present in Fortnite.gg's current 47-sprite Override roster
+// but were not yet present in Sprite Vault.
+const FORTNITE_GG_SPRITES = [
+  {
+    id:"megaman_basic",
+    name:"Mega Man",
+    originalName:"Mega Man",
+    theme:"Básico",
+    rarity:"Raro",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_ImprovedSlide_L.webp`
+  },
+
+  {
+    id:"overshield_basic",
+    name:"Overshield",
+    originalName:"Overshield",
+    theme:"Básico",
+    rarity:"Raro",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_L.webp`
+  },
+  {
+    id:"overshield_gold",
+    name:"Gold Overshield",
+    originalName:"Gold Overshield",
+    theme:"Dorado",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_Gold_L.webp`
+  },
+  {
+    id:"overshield_cheat",
+    name:"Cheat Master Overshield",
+    originalName:"Cheat Master Overshield",
+    theme:"Cheat Master",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_Cheatmaster_L.webp`
+  },
+
+  {
+    id:"xray_basic",
+    name:"X-Ray",
+    originalName:"X-Ray",
+    theme:"Básico",
+    rarity:"Legendario",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_L.webp`
+  },
+  {
+    id:"xray_gold",
+    name:"Gold X-Ray",
+    originalName:"Gold X-Ray",
+    theme:"Dorado",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_Gold_L.webp`
+  },
+  {
+    id:"xray_cheat",
+    name:"Cheat Master X-Ray",
+    originalName:"Cheatmaster X-Ray",
+    theme:"Cheat Master",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_Cheatmaster_L.webp`
+  },
+
+  {
+    id:"onigiri_basic",
+    name:"Onigiri",
+    originalName:"Onigiri",
+    theme:"Básico",
+    rarity:"Raro",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_L.webp`
+  },
+  {
+    id:"onigiri_gold",
+    name:"Gold Onigiri",
+    originalName:"Gold Onigiri",
+    theme:"Dorado",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_Gold_L.webp`
+  },
+  {
+    id:"onigiri_cheat",
+    name:"Cheat Master Onigiri",
+    originalName:"Cheatmaster Onigiri",
+    theme:"Cheat Master",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_Cheatmaster_L.webp`
+  },
+
+  {
+    id:"crown_hacker",
+    name:"Loot Hacker Crown",
+    originalName:"Loot Hacker Crown",
+    theme:"Loot Hacker",
+    rarity:"Especial",
+    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Crown_Hacker_L.webp`
+  }
+].map(sprite => ({
+  ...sprite,
+  findRate: "No disponible",
+  isNew: true,
+  season: "Override",
+  unreleased: false,
+  enabled: true
+}));
+
 const existingSpriteIds = new Set(SPRITES.map(sprite => sprite.id));
-for (const sprite of OVERRIDE_SPRITES) {
-  if (!existingSpriteIds.has(sprite.id)) SPRITES.push(sprite);
+for (const sprite of [...OVERRIDE_SPRITES, ...FORTNITE_GG_SPRITES]) {
+  if (!existingSpriteIds.has(sprite.id)) {
+    SPRITES.push(sprite);
+    existingSpriteIds.add(sprite.id);
+  }
 }
