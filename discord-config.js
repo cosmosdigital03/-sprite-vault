@@ -80,6 +80,11 @@ window.addEventListener("load", () => {
     requestedPatch.src = "upgrade-v13-2.js?v=13.3.0";
     requestedPatch.async = false;
     requestedPatch.onload = () => {
+      const captureImageFix = document.createElement("script");
+      captureImageFix.src = "capture-image-fix.js?v=13.3.1";
+      captureImageFix.async = false;
+      document.body.append(captureImageFix);
+
       const goldReleasePatch = document.createElement("script");
       goldReleasePatch.src = "upgrade-v13-4.js?v=13.4.0";
       goldReleasePatch.async = false;
