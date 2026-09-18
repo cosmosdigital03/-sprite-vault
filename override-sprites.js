@@ -1,182 +1,134 @@
 // Sprite Vault — Override (C7S4) roster
-// Released roster verified against Fortnite.gg. Legacy Override renders continue to use
-// staticvacant/fnsprites; newer entries use their current Fortnite.gg sprite renders.
-// Existing entries are the previous Runners season; these are the Override entries shown in the Vault.
+// Synced with the current Fortnite.GG Sprite roster on 2026-09-17.
+// Released entries count toward collection progress; datamined/upcoming entries remain visible
+// but are marked unreleased until they become obtainable.
 
 SPRITES.forEach(sprite => {
   if (!sprite.season) sprite.season = "Runners";
-  // "Nuevo" now means the current Override season only.
   sprite.isNew = false;
+  if (typeof sprite.unreleased !== "boolean") sprite.unreleased = false;
+  if (typeof sprite.enabled !== "boolean") sprite.enabled = true;
 });
 
-// Follow the current source assets so restored/updated Gold renders appear without another code change.
-const OVERRIDE_IMAGE_BASE = "https://raw.githubusercontent.com/staticvacant/fnsprites/main/sprites";
-const FORTNITE_GG_IMAGE_BASE = "https://fortnite.gg/img/x/sprites/icons";
+const OVERRIDE_ASSET_BASE =
+  "https://raw.githubusercontent.com/mombiemala/fnsprites/main/public/sprites";
 
-const OVERRIDE_SPRITES = [
-  { id:"bush_basic", name:"Bush", originalName:"Bush", theme:"Básico", rarity:"Raro" },
-  { id:"bush_gold", name:"Gold Bush", originalName:"Gold Bush", theme:"Dorado", rarity:"Especial" },
-  { id:"bush_cheat", name:"Cheat Master Bush", originalName:"Cheat Master Bush", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"jonesy_basic", name:"Jonesy", originalName:"Jonesy", theme:"Básico", rarity:"Raro" },
-  { id:"jonesy_gold", name:"Gold Jonesy", originalName:"Gold Jonesy", theme:"Dorado", rarity:"Especial" },
-  { id:"jonesy_cheat", name:"Cheat Master Jonesy", originalName:"Cheat Master Jonesy", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"adventure_basic", name:"Adventure", originalName:"Adventure", theme:"Básico", rarity:"Raro" },
-  { id:"adventure_gold", name:"Gold Adventure", originalName:"Gold Adventure", theme:"Dorado", rarity:"Especial" },
-  { id:"adventure_cheat", name:"Cheat Master Adventure", originalName:"Cheat Master Adventure", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"8bit_basic", name:"8-Bit", originalName:"8-Bit", theme:"Básico", rarity:"Raro" },
-  { id:"8bit_gold", name:"Gold 8-Bit", originalName:"Gold 8-Bit", theme:"Dorado", rarity:"Especial" },
-  { id:"8bit_cheat", name:"Cheat Master 8-Bit", originalName:"Cheat Master 8-Bit", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"stormking_basic", name:"Storm Scout", originalName:"Storm Scout", theme:"Básico", rarity:"Raro" },
-  { id:"stormking_gold", name:"Gold Storm Scout", originalName:"Gold Storm Scout", theme:"Dorado", rarity:"Especial" },
-  { id:"stormking_cheat", name:"Cheat Master Storm Scout", originalName:"Cheat Master Storm Scout", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"killswitch_basic", name:"Killswitch", originalName:"Killswitch", theme:"Básico", rarity:"Épico" },
-  { id:"killswitch_gold", name:"Gold Killswitch", originalName:"Gold Killswitch", theme:"Dorado", rarity:"Especial" },
-  { id:"killswitch_cheat", name:"Cheat Master Killswitch", originalName:"Cheat Master Killswitch", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"sonic_basic", name:"Sonic", originalName:"Sonic", theme:"Básico", rarity:"Épico" },
-  { id:"sonic_gold", name:"Gold Sonic", originalName:"Gold Sonic", theme:"Dorado", rarity:"Especial" },
-  { id:"sonic_cheat", name:"Cheat Master Sonic", originalName:"Cheat Master Sonic", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"tails_basic", name:"Tails", originalName:"Tails", theme:"Básico", rarity:"Épico" },
-  { id:"tails_gold", name:"Gold Tails", originalName:"Gold Tails", theme:"Dorado", rarity:"Especial" },
-  { id:"tails_cheat", name:"Cheat Master Tails", originalName:"Cheat Master Tails", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"shadow_basic", name:"Shadow", originalName:"Shadow", theme:"Básico", rarity:"Épico" },
-  { id:"shadow_gold", name:"Gold Shadow", originalName:"Gold Shadow", theme:"Dorado", rarity:"Especial" },
-  { id:"shadow_cheat", name:"Cheat Master Shadow", originalName:"Cheat Master Shadow", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"jackrabbit_basic", name:"Jackrabbit", originalName:"Jackrabbit", theme:"Básico", rarity:"Legendario" },
-  { id:"jackrabbit_gold", name:"Gold Jackrabbit", originalName:"Gold Jackrabbit", theme:"Dorado", rarity:"Especial" },
-  { id:"jackrabbit_cheat", name:"Cheat Master Jackrabbit", originalName:"Cheat Master Jackrabbit", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"klombo_basic", name:"Klombo", originalName:"Klombo", theme:"Básico", rarity:"Mítico" },
-  { id:"klombo_gold", name:"Gold Klombo", originalName:"Gold Klombo", theme:"Dorado", rarity:"Especial" },
-  { id:"klombo_cheat", name:"Cheat Master Klombo", originalName:"Cheat Master Klombo", theme:"Cheat Master", rarity:"Especial" },
-
-  { id:"crown_basic", name:"Crown", originalName:"Crown", theme:"Básico", rarity:"Mítico" },
-  { id:"crown_gold", name:"Gold Crown", originalName:"Gold Crown", theme:"Dorado", rarity:"Especial" },
-  { id:"crown_cheat", name:"Cheat Master Crown", originalName:"Cheat Master Crown", theme:"Cheat Master", rarity:"Especial" }
-].map(sprite => ({
-  ...sprite,
-  image: `${OVERRIDE_IMAGE_BASE}/${encodeURIComponent(sprite.id)}.png`,
-  findRate: "No disponible",
-  isNew: true,
-  season: "Override",
-  unreleased: false,
-  enabled: true
-}));
-
-// These 11 released entries are present in Fortnite.gg's current 47-sprite Override roster
-// but were not yet present in Sprite Vault.
-const FORTNITE_GG_SPRITES = [
-  {
-    id:"megaman_basic",
-    name:"Mega Man",
-    originalName:"Mega Man",
-    theme:"Básico",
-    rarity:"Raro",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_ImprovedSlide_L.webp`
+const OVERRIDE_VARIANTS = {
+  basic: {
+    idSuffix: "basic",
+    assetSuffix: "normal",
+    theme: "Básico",
+    label: name => name
   },
-
-  {
-    id:"overshield_basic",
-    name:"Overshield",
-    originalName:"Overshield",
-    theme:"Básico",
-    rarity:"Raro",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_L.webp`
+  gold: {
+    idSuffix: "gold",
+    assetSuffix: "gold",
+    theme: "Dorado",
+    label: name => `Gold ${name}`
   },
-  {
-    id:"overshield_gold",
-    name:"Gold Overshield",
-    originalName:"Gold Overshield",
-    theme:"Dorado",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_Gold_L.webp`
+  cheat: {
+    idSuffix: "cheat",
+    assetSuffix: "cheatmaster",
+    theme: "Cheat Master",
+    label: name => `Cheat Master ${name}`
   },
-  {
-    id:"overshield_cheat",
-    name:"Cheat Master Overshield",
-    originalName:"Cheat Master Overshield",
-    theme:"Cheat Master",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Overshield_Cheatmaster_L.webp`
+  hacker: {
+    idSuffix: "hacker",
+    assetSuffix: "loothacker",
+    theme: "Loot Hacker",
+    label: name => `Loot Hacker ${name}`
   },
-
-  {
-    id:"xray_basic",
-    name:"X-Ray",
-    originalName:"X-Ray",
-    theme:"Básico",
-    rarity:"Legendario",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_L.webp`
-  },
-  {
-    id:"xray_gold",
-    name:"Gold X-Ray",
-    originalName:"Gold X-Ray",
-    theme:"Dorado",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_Gold_L.webp`
-  },
-  {
-    id:"xray_cheat",
-    name:"Cheat Master X-Ray",
-    originalName:"Cheatmaster X-Ray",
-    theme:"Cheat Master",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerB_Cheatmaster_L.webp`
-  },
-
-  {
-    id:"onigiri_basic",
-    name:"Onigiri",
-    originalName:"Onigiri",
-    theme:"Básico",
-    rarity:"Raro",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_L.webp`
-  },
-  {
-    id:"onigiri_gold",
-    name:"Gold Onigiri",
-    originalName:"Gold Onigiri",
-    theme:"Dorado",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_Gold_L.webp`
-  },
-  {
-    id:"onigiri_cheat",
-    name:"Cheat Master Onigiri",
-    originalName:"Cheatmaster Onigiri",
-    theme:"Cheat Master",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_WinnerC_Cheatmaster_L.webp`
-  },
-
-  {
-    id:"crown_hacker",
-    name:"Loot Hacker Crown",
-    originalName:"Loot Hacker Crown",
-    theme:"Loot Hacker",
-    rarity:"Especial",
-    image:`${FORTNITE_GG_IMAGE_BASE}/T_Icon_BR_Creature_Sprite_Crown_Hacker_L.webp`
+  bounty: {
+    idSuffix: "bounty",
+    assetSuffix: "bountyhunter",
+    theme: "Bounty Hunter",
+    label: name => `Bounty Hunter ${name}`
   }
-].map(sprite => ({
-  ...sprite,
-  findRate: "No disponible",
-  isNew: true,
-  season: "Override",
-  unreleased: false,
-  enabled: true
-}));
+};
+
+const STANDARD_OVERRIDE_VARIANTS = ["basic", "gold", "cheat", "hacker", "bounty"];
+const RELEASED_FOUR = ["basic", "gold", "cheat", "hacker"];
+
+const OVERRIDE_FAMILIES = [
+  { id:"jonesy", asset:"jonesy", name:"Jonesy", rarity:"Raro", released:RELEASED_FOUR },
+  { id:"adventure", asset:"adventure", name:"Adventure", rarity:"Raro", released:RELEASED_FOUR },
+  {
+    id:"bush",
+    asset:"bushranger",
+    name:"Bush",
+    rarity:"Raro",
+    released:RELEASED_FOUR,
+    labels:{ hacker:"Loot Hacker Bushranger" }
+  },
+  { id:"sonic", asset:"sonic", name:"Sonic", rarity:"Épico", released:RELEASED_FOUR },
+  { id:"tails", asset:"tails", name:"Tails", rarity:"Épico", released:RELEASED_FOUR },
+  { id:"shadow", asset:"shadow", name:"Shadow", rarity:"Épico", released:RELEASED_FOUR },
+  { id:"8bit", asset:"blaster", name:"8-Bit", rarity:"Raro", released:RELEASED_FOUR },
+  { id:"jackrabbit", asset:"jazz", name:"Jackrabbit", rarity:"Legendario", released:RELEASED_FOUR },
+  {
+    id:"crown",
+    asset:"victorycrown",
+    name:"Crown",
+    rarity:"Mítico",
+    released:["basic", "gold", "cheat", "hacker", "bounty"]
+  },
+  { id:"killswitch", asset:"killswitch", name:"Killswitch", rarity:"Épico", released:RELEASED_FOUR },
+  { id:"klombo", asset:"klombo", name:"Klombo", rarity:"Mítico", released:RELEASED_FOUR },
+  { id:"overshield", asset:"overshield", name:"Overshield", rarity:"Raro", released:RELEASED_FOUR },
+  { id:"xray", asset:"xray", name:"X-Ray", rarity:"Legendario", released:RELEASED_FOUR },
+  { id:"onigiri", asset:"onigiri", name:"Onigiri", rarity:"Raro", released:RELEASED_FOUR },
+  { id:"stormking", asset:"stormscout", name:"Storm Scout", rarity:"Raro", released:RELEASED_FOUR },
+
+  {
+    id:"megaman",
+    asset:"megaman",
+    name:"Mega Man",
+    rarity:"Raro",
+    variants:["basic"],
+    released:["basic"]
+  },
+
+  { id:"blinky", asset:"blinky", name:"Blinky", rarity:"Épico", released:RELEASED_FOUR },
+  {
+    id:"crash",
+    asset:"crash",
+    name:"Crash Bandicoot",
+    rarity:"Épico",
+    released:RELEASED_FOUR,
+    labels:{ bounty:"Bounty Hunter Body Slam" }
+  },
+  { id:"pond", asset:"pond", name:"Pond", rarity:"Épico", released:RELEASED_FOUR },
+
+  { id:"birthday", asset:"birthday", name:"Birthday", rarity:"Épico", released:[] },
+  { id:"morgana", asset:"morgana", name:"Morgana", rarity:"Épico", released:[] }
+];
+
+const OVERRIDE_SPRITES = OVERRIDE_FAMILIES.flatMap(family => {
+  const variants = family.variants || STANDARD_OVERRIDE_VARIANTS;
+  const released = new Set(family.released || []);
+
+  return variants.map(key => {
+    const variant = OVERRIDE_VARIANTS[key];
+    const displayName = family.labels?.[key] || variant.label(family.name);
+
+    return {
+      id: `${family.id}_${variant.idSuffix}`,
+      name: displayName,
+      originalName: displayName,
+      theme: variant.theme,
+      rarity: key === "basic" ? family.rarity : "Especial",
+      image: `${OVERRIDE_ASSET_BASE}/${family.asset}_${variant.assetSuffix}.webp`,
+      findRate: "No disponible",
+      isNew: true,
+      season: "Override",
+      unreleased: !released.has(key),
+      enabled: true
+    };
+  });
+});
 
 const existingSpriteIds = new Set(SPRITES.map(sprite => sprite.id));
-for (const sprite of [...OVERRIDE_SPRITES, ...FORTNITE_GG_SPRITES]) {
+for (const sprite of OVERRIDE_SPRITES) {
   if (!existingSpriteIds.has(sprite.id)) {
     SPRITES.push(sprite);
     existingSpriteIds.add(sprite.id);
