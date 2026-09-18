@@ -11,15 +11,8 @@
     ? savedSeason
     : CURRENT_SEASON;
 
-  // Keep Gold/Dorado variants active in the tracker.
-  SPRITES.forEach(sprite => {
-    if (sprite.theme === "Dorado") {
-      sprite.unreleased = false;
-      sprite.enabled = true;
-    }
-  });
-
-  // Give Cheat Master variants their own visual identity while retaining the Vault style.
+  // Give the Override-only finishes their own visual identity.
+  // Explicit unreleased flags are never changed here.
   if (typeof THEME_VISUALS !== "undefined") {
     THEME_VISUALS["Cheat Master"] = {
       accent: "rgba(255,87,205,.92)",
@@ -27,6 +20,20 @@
       overlayHover: "linear-gradient(165deg,rgba(120,38,140,.18),rgba(31,13,54,.26))",
       border: "rgba(255,112,220,.34)",
       shadow: "rgba(134,40,153,.34)"
+    };
+    THEME_VISUALS["Loot Hacker"] = {
+      accent: "rgba(91,255,178,.92)",
+      overlay: "linear-gradient(165deg,rgba(20,102,72,.52),rgba(6,30,29,.78))",
+      overlayHover: "linear-gradient(165deg,rgba(34,139,96,.18),rgba(10,48,43,.26))",
+      border: "rgba(91,255,178,.34)",
+      shadow: "rgba(35,148,99,.32)"
+    };
+    THEME_VISUALS["Bounty Hunter"] = {
+      accent: "rgba(255,178,72,.94)",
+      overlay: "linear-gradient(165deg,rgba(116,65,17,.54),rgba(36,20,8,.8))",
+      overlayHover: "linear-gradient(165deg,rgba(153,86,22,.2),rgba(55,29,10,.28))",
+      border: "rgba(255,178,72,.36)",
+      shadow: "rgba(166,92,25,.34)"
     };
   }
 
@@ -56,6 +63,13 @@
       badge.className = `season-badge season-${season.toLowerCase()}`;
       badge.textContent = season === CURRENT_SEASON ? "OVERRIDE" : "RUNNERS";
       visual.append(badge);
+
+      if (sprite.unreleased === true) {
+        const upcoming = document.createElement("span");
+        upcoming.className = "unreleased-badge";
+        upcoming.textContent = "NO LANZADO";
+        visual.append(upcoming);
+      }
     }
 
     return fragment;
@@ -147,6 +161,42 @@
     .season-badge.season-runners {
       color: #c9adff;
       border-color: rgba(169,125,255,.3);
+    }
+
+    .unreleased-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 7;
+      padding: 5px 8px;
+      border: 1px solid rgba(255,190,93,.48);
+      border-radius: 999px;
+      background: rgba(25,15,5,.88);
+      color: #ffd28a;
+      font: 900 9px/1 Inter,sans-serif;
+      letter-spacing: .08em;
+      backdrop-filter: blur(7px);
+      pointer-events: none;
+    }
+
+    .sprite-card.is-unreleased .sprite-image {
+      filter: saturate(.58) brightness(.76);
+    }
+
+    .sprite-card.is-unreleased {
+      border-color: rgba(255,190,93,.18);
+    }
+
+    .sprite-card.is-unreleased .collection-button,
+    .sprite-card.is-unreleased .mastery-button {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .new-status-label.unreleased {
+      background: rgba(63,37,10,.9);
+      border-color: rgba(255,190,93,.38);
+      color: #ffd28a;
     }
 
     @media (max-width: 620px) {
