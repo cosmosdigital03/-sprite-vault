@@ -67,7 +67,12 @@ const SPRITE_ABILITIES = {
   wick: "Al derribar o eliminar a un jugador, revela a los demás enemigos cercanos. La marca dura más en cada nivel: 3 s, 3.5 s, 4 s, 4.5 s y 5 s.",
   ironmouse: "Regenera vida con el tiempo cuando tienes poca salud. Mientras se regenera, obtienes Camuflaje y gravedad reducida. La vida recuperada aumenta por nivel: 60, 70, 80, 90 y 100.",
   llama: "Al abrir cajas de munición, existe una probabilidad de mejorar un arma. Por nivel: 5%, 10%, 15%, 17% y 20%.",
-  peely: "Aparece cerca de zonas altas y montañosas. Emite un pulso que detecta jugadores con Sprites raros cercanos, pero también te marca en el mapa. El radio aumenta por nivel: 40 m, 50 m, 60 m, 70 m y 80 m."
+  peely: "Aparece cerca de zonas altas y montañosas. Emite un pulso que detecta jugadores con Sprites raros cercanos, pero también te marca en el mapa. El radio aumenta por nivel: 40 m, 50 m, 60 m, 70 m y 80 m.",
+  pond: "Salta poco después de aterrizar para activar un Super Salto. Las cargas se regeneran y el salto mejora al subir de nivel.",
+  crash: "Salta en el aire para activar un giro que daña y empuja a los enemigos cercanos. El daño aumenta y el enfriamiento disminuye al subir de nivel.",
+  blinky: "Al recibir daño, activa temporalmente un camuflaje. La duración aumenta al subir de nivel.",
+  birthday: "Abrir cofres puede generar pastel; al nivel máximo, las eliminaciones también pueden hacerlo. La probabilidad aumenta con cada nivel.",
+  morgana: "Aumenta la efectividad de los objetos de curación. La bonificación mejora al subir de nivel."
 };
 
 const VARIANT_BONUSES = {
@@ -76,11 +81,13 @@ const VARIANT_BONUSES = {
   "Galaxia": "Obtienes 20% más munición además del poder normal del Sprite.",
   "Gema": "Recibes 30% menos daño por caída además del poder normal del Sprite.",
   "Holográfico": "Tu escuadrón tiene 5% de probabilidad adicional de encontrar variantes raras al saquear cofres.",
-  "Cubo": "Obtienes el efecto Sobrecarga mientras estás dentro de la tormenta."
+  "Cubo": "Obtienes el efecto Sobrecarga mientras estás dentro de la tormenta.",
+  "Loot Hacker": "Aumenta la probabilidad de activar Loot Hacks al abrir cofres.",
+  "Bounty Hunter": "Variante Bounty Hunter asociada al sistema de recompensas y eliminaciones de esta variante."
 };
 
 function getSpriteBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack|cheat|hacker|bounty)$/i, "");
 }
 
 function getSpriteAbility(sprite) {
@@ -291,6 +298,10 @@ function populateThemes() {
     });
 }
 
+function isReleasedSprite(sprite) {
+  return sprite?.unreleased !== true;
+}
+
 function filteredSprites() {
   const query = state.search.trim().toLocaleLowerCase("es");
 
@@ -304,13 +315,14 @@ function filteredSprites() {
 
     const matchesTheme = state.theme === "all" || sprite.theme === state.theme;
 
+    const released = isReleasedSprite(sprite);
     const matchesStatus =
       state.status === "all" ||
       (state.status === "new" && sprite.isNew) ||
-      (state.status === "owned" && item.owned) ||
-      (state.status === "missing" && !item.owned) ||
-      (state.status === "mastered" && item.mastered) ||
-      (state.status === "unmastered" && item.owned && !item.mastered);
+      (state.status === "owned" && released && item.owned) ||
+      (state.status === "missing" && released && !item.owned) ||
+      (state.status === "mastered" && released && item.mastered) ||
+      (state.status === "unmastered" && released && item.owned && !item.mastered);
 
     return matchesText && matchesTheme && matchesStatus;
   });
@@ -344,8 +356,11 @@ function render() {
 
   if (state.status === "new") {
     sprites = [...sprites].sort((a,b) => {
-      const aMissing = !state.progress[a.id].owned;
-      const bMissing = !state.progress[b.id].owned;
+      const aUpcoming = !isReleasedSprite(a);
+      const bUpcoming = !isReleasedSprite(b);
+      if (aUpcoming !== bUpcoming) return aUpcoming ? 1 : -1;
+      const aMissing = isReleasedSprite(a) && !state.progress[a.id].owned;
+      const bMissing = isReleasedSprite(b) && !state.progress[b.id].owned;
       if (aMissing !== bMissing) return aMissing ? -1 : 1;
       return a.name.localeCompare(b.name,"es");
     });
@@ -398,9 +413,9 @@ function render() {
 }
 
 function renderNewGroup(sprites) {
-  const newTotal = SPRITES.filter(sprite => sprite.isNew).length;
+  const newTotal = SPRITES.filter(sprite => sprite.isNew && isReleasedSprite(sprite)).length;
   const newMissing = SPRITES.filter(
-    sprite => sprite.isNew && !state.progress[sprite.id].owned
+    sprite => sprite.isNew && isReleasedSprite(sprite) && !state.progress[sprite.id].owned
   ).length;
 
   const section = document.createElement("section");
@@ -438,9 +453,9 @@ function headingText() {
   };
 
   if (state.status === "new") {
-    const newTotal = SPRITES.filter(sprite => sprite.isNew).length;
+    const newTotal = SPRITES.filter(sprite => sprite.isNew && isReleasedSprite(sprite)).length;
     const newMissing = SPRITES.filter(
-      sprite => sprite.isNew && !state.progress[sprite.id].owned
+      sprite => sprite.isNew && isReleasedSprite(sprite) && !state.progress[sprite.id].owned
     ).length;
     return `Nuevos · te faltan ${newMissing} de ${newTotal}`;
   }
@@ -455,13 +470,16 @@ function createCard(sprite) {
   const card = fragment.querySelector(".sprite-card");
   const item = state.progress[sprite.id];
 
+  const released = isReleasedSprite(sprite);
+
   card.dataset.id = sprite.id;
-  card.classList.toggle("is-owned",item.owned);
-  card.classList.toggle("is-missing",!item.owned);
+  card.classList.toggle("is-owned",released && item.owned);
+  card.classList.toggle("is-missing",released && !item.owned);
+  card.classList.toggle("is-unreleased",!released);
 
   if (state.status === "new") {
     card.classList.add("new-filter-card");
-    card.classList.toggle("new-missing-highlight",!item.owned);
+    card.classList.toggle("new-missing-highlight",released && !item.owned);
   }
 
   applyThemeVisuals(card,sprite.theme);
@@ -480,9 +498,10 @@ function createCard(sprite) {
 
   const newStatusLabel = fragment.querySelector(".new-status-label");
   newStatusLabel.hidden = state.status !== "new";
-  newStatusLabel.textContent = item.owned ? "LO TIENES" : "TE FALTA";
-  newStatusLabel.classList.toggle("owned",item.owned);
-  newStatusLabel.classList.toggle("missing",!item.owned);
+  newStatusLabel.textContent = !released ? "NO LANZADO" : item.owned ? "LO TIENES" : "TE FALTA";
+  newStatusLabel.classList.toggle("owned",released && item.owned);
+  newStatusLabel.classList.toggle("missing",released && !item.owned);
+  newStatusLabel.classList.toggle("unreleased",!released);
 
   const visual = fragment.querySelector(".sprite-visual");
   visual.tabIndex = 0;
@@ -507,15 +526,15 @@ function createCard(sprite) {
   });
 
   const collection = fragment.querySelector(".collection-button");
-  collection.textContent = item.owned ? "✓ Lo tengo" : "+ Agregar";
-  collection.classList.toggle("active",item.owned);
-  collection.disabled = Boolean(state.publicProfile);
+  collection.textContent = !released ? "Próximamente" : item.owned ? "✓ Lo tengo" : "+ Agregar";
+  collection.classList.toggle("active",released && item.owned);
+  collection.disabled = !released || Boolean(state.publicProfile);
   collection.addEventListener("click",() => toggleOwned(sprite.id));
 
   const mastery = fragment.querySelector(".mastery-button");
-  mastery.textContent = item.mastered ? "♛ Dominado" : "Dominar";
-  mastery.classList.toggle("active",item.mastered);
-  mastery.disabled = !item.owned || Boolean(state.publicProfile);
+  mastery.textContent = !released ? "No disponible" : item.mastered ? "♛ Dominado" : "Dominar";
+  mastery.classList.toggle("active",released && item.mastered);
+  mastery.disabled = !released || !item.owned || Boolean(state.publicProfile);
   mastery.addEventListener("click",() => toggleMastered(sprite.id));
 
   return fragment;
@@ -523,6 +542,8 @@ function createCard(sprite) {
 
 function toggleOwned(id) {
   if (state.publicProfile) return;
+  const sprite = SPRITES.find(item => item.id === id);
+  if (!sprite || !isReleasedSprite(sprite)) return;
 
   const item = state.progress[id];
   item.owned = !item.owned;
@@ -542,6 +563,8 @@ function toggleOwned(id) {
 
 function toggleMastered(id) {
   if (state.publicProfile) return;
+  const sprite = SPRITES.find(item => item.id === id);
+  if (!sprite || !isReleasedSprite(sprite)) return;
 
   const item = state.progress[id];
   if (!item.owned) return;
@@ -557,10 +580,11 @@ function toggleMastered(id) {
 }
 
 function updateStats() {
-  const total = SPRITES.length;
-  const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
-  const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
-  const unmastered = SPRITES.filter(
+  const trackableSprites = SPRITES.filter(isReleasedSprite);
+  const total = trackableSprites.length;
+  const owned = trackableSprites.filter(sprite => state.progress[sprite.id].owned).length;
+  const mastered = trackableSprites.filter(sprite => state.progress[sprite.id].mastered).length;
+  const unmastered = trackableSprites.filter(
     sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered
   ).length;
   const missing = total-owned;
@@ -574,21 +598,16 @@ function updateStats() {
   elements.masteryBar.style.width = `${masteryPct}%`;
   elements.collectionPercent.textContent = `${collectionPct}% completado`;
   elements.masteryPercent.textContent = `${masteryPct}% dominado`;
-  elements.missingCount.textContent =
-    `${missing} ${missing===1 ? "Sprite" : "Sprites"}`;
+  elements.missingCount.textContent = `${missing} ${missing===1 ? "Sprite" : "Sprites"}`;
 
   if (elements.discordMissingHeadline) {
-    elements.discordMissingHeadline.textContent = missing === 1
-      ? "¿Te falta 1 Sprite?"
-      : `¿Te faltan ${missing} Sprites?`;
+    elements.discordMissingHeadline.textContent = missing === 1 ? "¿Te falta 1 Sprite?" : `¿Te faltan ${missing} Sprites?`;
   }
-
   if (!state.publicProfile) {
-    elements.heroSummary.textContent =
-      `${total} Sprites · Español · Guardado automático`;
+    elements.heroSummary.textContent = `${total} Sprites lanzados · ${SPRITES.length-total} próximos · Guardado automático`;
   }
 
-  elements.countAll.textContent = total;
+  elements.countAll.textContent = SPRITES.length;
   elements.countNew.textContent = newTotal;
   elements.countOwned.textContent = owned;
   elements.countMissing.textContent = missing;
@@ -597,16 +616,12 @@ function updateStats() {
 
   elements.progressRing.style.setProperty("--progress",collectionPct);
   elements.progressCircleValue.textContent = `${collectionPct}%`;
-
   elements.progressHeadline.textContent =
     collectionPct === 100 ? "¡Vault completado!" :
     collectionPct >= 75 ? "Ya casi completas el Vault" :
     collectionPct >= 40 ? "Tu colección está creciendo" :
-    owned > 0 ? "Buen comienzo" :
-    "Comienza tu colección";
-
-  elements.progressSummary.textContent =
-    `${owned} de ${total} Sprites agregados.`;
+    owned > 0 ? "Buen comienzo" : "Comienza tu colección";
+  elements.progressSummary.textContent = `${owned} de ${total} Sprites lanzados agregados.`;
 
   window.dispatchEvent(new CustomEvent("spritevault:collectionchange", {
     detail: { owned, mastered, missing, total, collectionPct }
@@ -699,16 +714,19 @@ function refreshDetail() {
   elements.detailVariantBonus.hidden = !variantBonus;
   elements.detailVariantBonusText.textContent = variantBonus;
 
-  elements.detailOwnedButton.textContent =
-    item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
-  elements.detailOwnedButton.classList.toggle("active",item.owned);
-  elements.detailOwnedButton.disabled = Boolean(state.publicProfile);
+  const released = isReleasedSprite(sprite);
 
-  elements.detailMasteryButton.textContent =
-    item.mastered ? "♛ Dominado" : "Marcar como dominado";
-  elements.detailMasteryButton.classList.toggle("active",item.mastered);
-  elements.detailMasteryButton.disabled =
-    !item.owned || Boolean(state.publicProfile);
+  elements.detailOwnedButton.textContent = !released
+    ? "Próximamente · No lanzado"
+    : item.owned ? "✓ Lo tengo" : "+ Agregar a mi colección";
+  elements.detailOwnedButton.classList.toggle("active",released && item.owned);
+  elements.detailOwnedButton.disabled = !released || Boolean(state.publicProfile);
+
+  elements.detailMasteryButton.textContent = !released
+    ? "No disponible"
+    : item.mastered ? "♛ Dominado" : "Marcar como dominado";
+  elements.detailMasteryButton.classList.toggle("active",released && item.mastered);
+  elements.detailMasteryButton.disabled = !released || !item.owned || Boolean(state.publicProfile);
 }
 
 function resetFilters() {
@@ -756,11 +774,14 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Gema", label: "Gema" },
   { theme: "Holográfico", label: "Holo" },
   { theme: "Cubo", label: "Cubo" },
-  { theme: "Pato", label: "Pato" }
+  { theme: "Pato", label: "Pato" },
+  { theme: "Cheat Master", label: "Cheat" },
+  { theme: "Loot Hacker", label: "Hacker" },
+  { theme: "Bounty Hunter", label: "Bounty" }
 ];
 
 function getCaptureBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack|cheat|hacker|bounty)$/i, "");
 }
 
 function getCaptureBaseLabel(group) {
@@ -771,14 +792,15 @@ function getCaptureBaseLabel(group) {
 }
 
 function renderCaptureView() {
-  const total = SPRITES.length;
-  const owned = SPRITES.filter(sprite => state.progress[sprite.id].owned).length;
+  const trackableSprites = SPRITES.filter(isReleasedSprite);
+  const total = trackableSprites.length;
+  const owned = trackableSprites.filter(sprite => state.progress[sprite.id].owned).length;
   const missing = total-owned;
-  const mastered = SPRITES.filter(sprite => state.progress[sprite.id].mastered).length;
+  const mastered = trackableSprites.filter(sprite => state.progress[sprite.id].mastered).length;
   const pct = total ? Math.round(owned/total*100) : 0;
 
   const sprites = state.captureView === "missing"
-    ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
+    ? trackableSprites.filter(sprite => !state.progress[sprite.id].owned)
     : [...SPRITES];
 
   elements.captureOwned.textContent = owned;
@@ -1207,8 +1229,8 @@ function drawCaptureExportCard(ctx,sprite,image,x,y,cardW,cardH,mode) {
 async function buildCaptureExportCanvas(mode) {
   const targetSprites = sortCaptureExportSprites(
     mode === "missing"
-      ? SPRITES.filter(sprite => !state.progress[sprite.id].owned)
-      : SPRITES.filter(sprite => state.progress[sprite.id].owned && !state.progress[sprite.id].mastered)
+      ? SPRITES.filter(sprite => isReleasedSprite(sprite) && !state.progress[sprite.id].owned)
+      : SPRITES.filter(sprite => isReleasedSprite(sprite) && state.progress[sprite.id].owned && !state.progress[sprite.id].mastered)
   );
 
   if (targetSprites.length === 0) {
