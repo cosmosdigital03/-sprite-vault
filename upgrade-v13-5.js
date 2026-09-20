@@ -176,7 +176,6 @@
   function drawCell(ctx, sprite, image, progress, variant, x, y, w, h) {
     const owned = Boolean(progress?.owned);
     const mastered = Boolean(progress?.mastered);
-    const goldLocked = false;
 
     const grad = ctx.createLinearGradient(x, y, x, y + h);
     grad.addColorStop(0, variant.top);
@@ -232,16 +231,9 @@
 
     // Status chip.
     const chipY = y + 7;
-    if (goldLocked) {
-      drawNoEntry(ctx, x + 16, chipY + 8, 7);
-      ctx.fillStyle = "#ffd7a0";
-      ctx.font = "900 8px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-      ctx.fillText("22 AGO", x + 29, chipY + 11);
-    } else {
-      ctx.fillStyle = owned ? "#61ff9b" : "#ff5d73";
-      ctx.font = "900 8px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-      ctx.fillText(owned ? "TENGO" : "FALTA", x + 8, chipY + 10);
-    }
+    ctx.fillStyle = owned ? "#61ff9b" : "#ff5d73";
+    ctx.font = "900 8px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+    ctx.fillText(owned ? "TENGO" : "FALTA", x + 8, chipY + 10);
 
     if (mastered) {
       ctx.fillStyle = "#ffd45a";
