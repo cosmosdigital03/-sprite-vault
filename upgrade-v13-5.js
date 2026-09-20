@@ -176,7 +176,7 @@
   function drawCell(ctx, sprite, image, progress, variant, x, y, w, h) {
     const owned = Boolean(progress?.owned);
     const mastered = Boolean(progress?.mastered);
-    const goldLocked = sprite.theme === "Dorado";
+    const goldLocked = false;
 
     const grad = ctx.createLinearGradient(x, y, x, y + h);
     grad.addColorStop(0, variant.top);
