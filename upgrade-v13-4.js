@@ -11,11 +11,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   function isLockedGold(sprite) {
-    return Boolean(
-      sprite &&
-      (sprite.season || "Runners") === CURRENT_SEASON &&
-      (sprite.theme === GOLD_THEME || /_gold$/i.test(sprite.id))
-    );
+    return false;
   }
 
   function spriteById(id) {
