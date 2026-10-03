@@ -35,6 +35,13 @@
       border: "rgba(255,178,72,.36)",
       shadow: "rgba(166,92,25,.34)"
     };
+    THEME_VISUALS["Trick or Treat"] = {
+      accent: "rgba(255,126,53,.96)",
+      overlay: "linear-gradient(165deg,rgba(116,45,13,.58),rgba(42,12,35,.82))",
+      overlayHover: "linear-gradient(165deg,rgba(164,66,19,.22),rgba(72,20,57,.30))",
+      border: "rgba(255,151,70,.40)",
+      shadow: "rgba(190,68,23,.36)"
+    };
   }
 
   const baseFilteredSprites = filteredSprites;
