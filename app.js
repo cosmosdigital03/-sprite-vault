@@ -72,7 +72,11 @@ const SPRITE_ABILITIES = {
   crash: "Salta en el aire para activar un giro que daña y empuja a los enemigos cercanos. El daño aumenta y el enfriamiento disminuye al subir de nivel.",
   blinky: "Al recibir daño, activa temporalmente un camuflaje. La duración aumenta al subir de nivel.",
   birthday: "Abrir cofres puede generar pastel; al nivel máximo, las eliminaciones también pueden hacerlo. La probabilidad aumenta con cada nivel.",
-  morgana: "Aumenta la efectividad de los objetos de curación. La bonificación mejora al subir de nivel."
+  morgana: "Aumenta la efectividad de los objetos de curación. La bonificación mejora al subir de nivel.",
+  spookydash: "Salta en el aire para atravesar algunos objetos. Gana cargas con el tiempo y el enfriamiento baja al subir de nivel.",
+  vampire: "Recupera vida al dañar a un enemigo. El porcentaje de vida recuperada aumenta al subir de nivel.",
+  thedeer: "Los ataques cuerpo a cuerpo infligen más daño. El daño adicional aumenta al subir de nivel.",
+  dumpsterdive: "La comida cura más. También puedes encontrar comida al salir de escondites y, ocasionalmente, al abrir contenedores."
 };
 
 const VARIANT_BONUSES = {
@@ -83,11 +87,12 @@ const VARIANT_BONUSES = {
   "Holográfico": "Tu escuadrón tiene 5% de probabilidad adicional de encontrar variantes raras al saquear cofres.",
   "Cubo": "Obtienes el efecto Sobrecarga mientras estás dentro de la tormenta.",
   "Loot Hacker": "Aumenta la probabilidad de activar Loot Hacks al abrir cofres.",
-  "Bounty Hunter": "Variante Bounty Hunter asociada al sistema de recompensas y eliminaciones de esta variante."
+  "Bounty Hunter": "Variante Bounty Hunter asociada al sistema de recompensas y eliminaciones de esta variante.",
+  "Trick or Treat": "Variante especial de Fortnitemares. Su forma y progresión dependen de las reglas del evento."
 };
 
 function getSpriteBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack|cheat|hacker|bounty)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|gem|holofoil|cube|quack|cheat|hacker|bounty|trick)$/i, "");
 }
 
 function getSpriteAbility(sprite) {
@@ -777,11 +782,12 @@ const CAPTURE_VARIANT_ORDER = [
   { theme: "Pato", label: "Pato" },
   { theme: "Cheat Master", label: "Cheat" },
   { theme: "Loot Hacker", label: "Hacker" },
-  { theme: "Bounty Hunter", label: "Bounty" }
+  { theme: "Bounty Hunter", label: "Bounty" },
+  { theme: "Trick or Treat", label: "Trick/Treat" }
 ];
 
 function getCaptureBaseKey(sprite) {
-  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack|cheat|hacker|bounty)$/i, "");
+  return sprite.id.replace(/_(basic|gold|candy|galaxy|holofoil|gem|cube|quack|cheat|hacker|bounty|trick)$/i, "");
 }
 
 function getCaptureBaseLabel(group) {
@@ -1033,12 +1039,17 @@ const CAPTURE_EXPORT_THEME_ORDER = [
   "Gema",
   "Holográfico",
   "Cubo",
-  "Pato"
+  "Pato",
+  "Cheat Master",
+  "Loot Hacker",
+  "Bounty Hunter",
+  "Trick or Treat"
 ];
 
 function loadCaptureImage(source) {
   return new Promise(resolve => {
     const image = new Image();
+    if (/^https?:\/\//i.test(source)) image.crossOrigin = "anonymous";
     image.onload = () => resolve(image);
     image.onerror = () => resolve(null);
     image.src = source;
@@ -1103,7 +1114,11 @@ function getCaptureExportPalette(sprite) {
     Gema: ["#114c47", "#041a18", "#49e6b2"],
     Holográfico: ["#204454", "#09171f", "#67dbe9"],
     Cubo: ["#4e156f", "#180522", "#c16aff"],
-    Pato: ["#1f6ba4", "#101b48", "#78d5ff"]
+    Pato: ["#1f6ba4", "#101b48", "#78d5ff"],
+    "Cheat Master": ["#5b1a6e", "#13081f", "#ff70dc"],
+    "Loot Hacker": ["#146648", "#061e1d", "#5bffb2"],
+    "Bounty Hunter": ["#744111", "#241408", "#ffb248"],
+    "Trick or Treat": ["#742d0d", "#2a0c23", "#ff973f"]
   };
   const values = special[sprite.theme] || special.Básico;
 
